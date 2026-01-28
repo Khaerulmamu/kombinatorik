@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simulasi interaktif melempar dua dadu - Pelajari kombinatorik dengan cara yang menyenangkan">
+    <title>Simulasi Dadu - Kombinatorik</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .nav-back {
+            margin-bottom: 20px;
+        }
+
+        .nav-back a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .nav-back a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* Left Side - Control Area */
+        .control-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dice-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .dice {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 15px;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .dice:hover {
+            transform: scale(1.05);
+        }
+
+        .dice:active {
+            transform: scale(0.95);
+        }
+
+        .dot {
+            width: 18px;
+            height: 18px;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(-5deg); }
+            20% { transform: rotate(5deg); }
+            30% { transform: rotate(-5deg); }
+            40% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            60% { transform: rotate(5deg); }
+            70% { transform: rotate(-5deg); }
+            80% { transform: rotate(5deg); }
+            90% { transform: rotate(-5deg); }
+        }
+
+        .dice.shaking {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .roll-button {
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .roll-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .roll-button:active {
+            transform: translateY(0);
+        }
+
+        .stats {
+            text-align: center;
+            width: 100%;
+        }
+
+        .stats h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats-text {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Right Side - Grid Area */
+        .grid-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .grid-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .grid-header h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .grid-header p {
+            color: #666;
+        }
+
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .outcome-item {
+            aspect-ratio: 1;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #999;
+            opacity: 0.3;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .outcome-item.unlocked {
+            opacity: 1;
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+            color: white;
+            border-color: #4caf50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            animation: unlock 0.5s ease-out;
+        }
+
+        @keyframes unlock {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .outcome-item.just-rolled {
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* Congratulations Modal */
+        .congrats-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .congrats-modal.show {
+            display: flex;
+        }
+
+        .congrats-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .congrats-content h2 {
+            font-size: 2.5rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        .congrats-content p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .reset-button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reset-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .dice {
+                width: 100px;
+                height: 100px;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 8px;
+            }
+
+            .outcome-item {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dice-container {
+                gap: 15px;
+            }
+
+            .dice {
+                width: 80px;
+                height: 80px;
+                padding: 10px;
+            }
+
+            .dot {
+                width: 14px;
+                height: 14px;
+            }
+
+            .roll-button {
+                padding: 15px 40px;
+                font-size: 1.2rem;
+            }
+
+            .outcomes-grid {
+                gap: 5px;
+            }
+
+            .outcome-item {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-back">
+        <a href="index.html">← Kembali ke Halaman Utama</a>
+    </div>
+
+    <div class="header">
+        <h1>🎲 Simulasi Dadu Interaktif</h1>
+        <p>Lempar dua dadu dan kumpulkan semua 36 kemungkinan hasil!</p>
+    </div>
+
+    <div class="container">
+        <!-- Left Side - Control Area -->
+        <div class="control-area">
+            <div class="dice-container">
+                <div class="dice" id="dice1" onclick="rollDice()">
+                    <!-- Dots will be added by JavaScript -->
+                </div>
+                <div class="dice" id="dice2" onclick="rollDice()">
+                    <!-- Dots will be added by JavaScript -->
+                </div>
+            </div>
+
+            <button class="roll-button" onclick="rollDice()">Lempar Dadu</button>
+
+            <div class="stats">
+                <h3>Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0/36</div>
+                </div>
+                <p class="stats-text">Hasil Terkumpul: <span id="collectedCount">0</span> dari 36</p>
+                <p class="stats-text">Total Lemparan: <span id="rollCount">0</span></p>
+            </div>
+        </div>
+
+        <!-- Right Side - Grid Area -->
+        <div class="grid-area">
+            <div class="grid-header">
+                <h2>Semua Kemungkinan Hasil</h2>
+                <p>36 kombinasi dari melempar dua dadu (1-6)</p>
+            </div>
+
+            <div class="outcomes-grid" id="outcomesGrid">
+                <!-- Grid items will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Congratulations Modal -->
+    <div class="congrats-modal" id="congratsModal">
+        <div class="congrats-content">
+            <h2>🎉 Selamat!</h2>
+            <p>Anda telah mengumpulkan semua 36 kemungkinan hasil!</p>
+            <p>Total lemparan: <span id="finalRollCount"></span></p>
+            <button class="reset-button" onclick="resetGame()">Main Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let unlockedOutcomes = new Set();
+        let rollCount = 0;
+        let dice1Value = 1;
+        let dice2Value = 1;
+
+        // Dice dot patterns for each face
+        const diceDotPatterns = {
+            1: [false, false, false, false, true, false, false, false, false],
+            2: [true, false, false, false, false, false, false, false, true],
+            3: [true, false, false, false, true, false, false, false, true],
+            4: [true, false, true, false, false, false, true, false, true],
+            5: [true, false, true, false, true, false, true, false, true],
+            6: [true, false, true, true, false, true, true, false, true]
+        };
+
+        // Initialize the game
+        function initGame() {
+            createOutcomesGrid();
+            updateDice(1, 1);
+            updateDice(2, 1);
+            updateProgress();
+        }
+
+        // Create the 6x6 outcomes grid
+        function createOutcomesGrid() {
+            const grid = document.getElementById('outcomesGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= 6; i++) {
+                for (let j = 1; j <= 6; j++) {
+                    const item = document.createElement('div');
+                    item.className = 'outcome-item';
+                    item.textContent = `${i} - ${j}`;
+                    item.dataset.outcome = `${i}-${j}`;
+                    grid.appendChild(item);
+                }
+            }
+        }
+
+        // Update dice display
+        function updateDice(diceNum, value) {
+            const dice = document.getElementById(`dice${diceNum}`);
+            dice.innerHTML = '';
+            
+            const pattern = diceDotPatterns[value];
+            pattern.forEach((showDot) => {
+                const dot = document.createElement('div');
+                if (showDot) {
+                    dot.className = 'dot';
+                }
+                dice.appendChild(dot);
+            });
+        }
+
+        // Roll the dice
+        function rollDice() {
+            // Add shake animation
+            const dice1Element = document.getElementById('dice1');
+            const dice2Element = document.getElementById('dice2');
+            
+            dice1Element.classList.add('shaking');
+            dice2Element.classList.add('shaking');
+
+            // Generate random values after a short delay
+            setTimeout(() => {
+                dice1Value = Math.floor(Math.random() * 6) + 1;
+                dice2Value = Math.floor(Math.random() * 6) + 1;
+
+                updateDice(1, dice1Value);
+                updateDice(2, dice2Value);
+
+                // Increment roll count
+                rollCount++;
+                document.getElementById('rollCount').textContent = rollCount;
+
+                // Unlock the corresponding outcome
+                unlockOutcome(dice1Value, dice2Value);
+
+                // Remove shake animation
+                dice1Element.classList.remove('shaking');
+                dice2Element.classList.remove('shaking');
+
+                // Update progress
+                updateProgress();
+
+                // Check if all outcomes are collected
+                if (unlockedOutcomes.size === 36) {
+                    setTimeout(showCongratulations, 500);
+                }
+            }, 500);
+        }
+
+        // Unlock an outcome in the grid
+        function unlockOutcome(value1, value2) {
+            const outcomeKey = `${value1}-${value2}`;
+            const wasLocked = !unlockedOutcomes.has(outcomeKey);
+            
+            unlockedOutcomes.add(outcomeKey);
+
+            const outcomeElement = document.querySelector(`[data-outcome="${outcomeKey}"]`);
+            if (outcomeElement) {
+                if (!outcomeElement.classList.contains('unlocked')) {
+                    outcomeElement.classList.add('unlocked');
+                }
+                outcomeElement.classList.add('just-rolled');
+                setTimeout(() => {
+                    outcomeElement.classList.remove('just-rolled');
+                }, 500);
+            }
+        }
+
+        // Update progress bar and stats
+        function updateProgress() {
+            const collected = unlockedOutcomes.size;
+            const percentage = (collected / 36) * 100;
+            
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = `${percentage}%`;
+            progressFill.textContent = `${collected}/36`;
+            
+            document.getElementById('collectedCount').textContent = collected;
+        }
+
+        // Show congratulations modal
+        function showCongratulations() {
+            document.getElementById('finalRollCount').textContent = rollCount;
+            document.getElementById('congratsModal').classList.add('show');
+        }
+
+        // Reset the game
+        function resetGame() {
+            unlockedOutcomes.clear();
+            rollCount = 0;
+            dice1Value = 1;
+            dice2Value = 1;
+
+            document.getElementById('rollCount').textContent = '0';
+            document.getElementById('congratsModal').classList.remove('show');
+
+            // Reset all outcome items
+            const outcomeItems = document.querySelectorAll('.outcome-item');
+            outcomeItems.forEach(item => {
+                item.classList.remove('unlocked', 'just-rolled');
+            });
+
+            updateDice(1, 1);
+            updateDice(2, 1);
+            updateProgress();
+        }
+
+        // Initialize game on page load
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
