@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive learning website for Combinatorics - Learn permutations, combinations, and more">
-    <title>Combinatorics - Interactive Learning</title>
+    <meta name="description" content="Website pembelajaran interaktif untuk Kombinatorik - Pelajari permutasi, kombinasi, dan lainnya">
+    <title>Kombinatorik - Pembelajaran Interaktif</title>
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -147,12 +147,12 @@
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl md:text-3xl font-bold text-indigo-600">
-                    🧮 Combinatorics
+                    🧮 Kombinatorik
                 </h1>
                 <div class="flex gap-4">
-                    <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Permutations section">Permutations</a>
-                    <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Combinations section">Combinations</a>
-                    <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Formula Reference section">Formulas</a>
+                    <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Permutasi">Permutasi</a>
+                    <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Kombinasi">Kombinasi</a>
+                    <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Referensi Rumus">Rumus</a>
                 </div>
             </div>
         </nav>
@@ -162,17 +162,17 @@
     <section class="container mx-auto px-4 py-12 md:py-20 fade-in">
         <div class="text-center max-w-4xl mx-auto">
             <h2 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-                Master Combinatorics
+                Kuasai Kombinatorik
             </h2>
             <p class="text-lg md:text-xl text-gray-600 mb-8">
-                Learn the fundamental concepts of counting, arrangements, and selections through interactive calculators and clear explanations.
+                Pelajari konsep dasar perhitungan, susunan, dan pemilihan melalui kalkulator interaktif dan penjelasan yang jelas.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#permutations" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg">
-                    Start Learning
+                    Mulai Belajar
                 </a>
                 <a href="#formulas" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition shadow-lg">
-                    View Formulas
+                    Lihat Rumus
                 </a>
             </div>
         </div>
@@ -181,14 +181,14 @@
     <!-- What is Combinatorics Section -->
     <section class="container mx-auto px-4 py-12">
         <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 class="text-3xl font-bold text-gray-800 mb-6">What is Combinatorics?</h3>
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Apa itu Kombinatorik?</h3>
             <p class="text-gray-600 text-lg leading-relaxed mb-4">
-                Combinatorics is a branch of mathematics concerning the study of finite or countable discrete structures. 
-                It involves counting, arranging, and selecting objects according to specific rules.
+                Kombinatorik adalah cabang matematika yang mempelajari struktur diskrit yang terbatas atau dapat dihitung. 
+                Ini melibatkan perhitungan, penyusunan, dan pemilihan objek sesuai dengan aturan tertentu.
             </p>
             <p class="text-gray-600 text-lg leading-relaxed">
-                The two fundamental concepts in combinatorics are <strong>permutations</strong> (arrangements where order matters) 
-                and <strong>combinations</strong> (selections where order doesn't matter).
+                Dua konsep fundamental dalam kombinatorik adalah <strong>permutasi</strong> (susunan di mana urutan penting) 
+                dan <strong>kombinasi</strong> (pemilihan di mana urutan tidak penting).
             </p>
         </div>
     </section>
@@ -198,32 +198,32 @@
         <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">🔄</span>
-                <h3 class="text-3xl font-bold text-gray-800">Permutations</h3>
+                <h3 class="text-3xl font-bold text-gray-800">Permutasi</h3>
             </div>
             
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">What are Permutations?</h4>
+                <h4 class="text-xl font-semibold text-gray-700 mb-3">Apa itu Permutasi?</h4>
                 <p class="text-gray-600 leading-relaxed mb-4">
-                    A permutation is an arrangement of objects in a specific order. The order matters in permutations.
-                    For example, ABC and BAC are different permutations of the same three letters.
+                    Permutasi adalah susunan objek dalam urutan tertentu. Urutan sangat penting dalam permutasi.
+                    Misalnya, ABC dan BAC adalah permutasi yang berbeda dari tiga huruf yang sama.
                 </p>
                 <div class="bg-indigo-50 p-4 rounded-lg">
                     <p class="font-mono text-indigo-800">
-                        Formula: P(n, r) = n! / (n - r)!
+                        Rumus: P(n, r) = n! / (n - r)!
                     </p>
                     <p class="text-sm text-gray-600 mt-2">
-                        Where n is the total number of items and r is the number of items to arrange.
+                        Di mana n adalah jumlah total item dan r adalah jumlah item yang akan disusun.
                     </p>
                 </div>
             </div>
 
             <!-- Permutation Calculator -->
             <div class="bg-gray-50 p-6 rounded-xl">
-                <h4 class="text-xl font-semibold text-gray-700 mb-4">Interactive Calculator</h4>
+                <h4 class="text-xl font-semibold text-gray-700 mb-4">Kalkulator Interaktif</h4>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="perm-n" class="block text-sm font-medium text-gray-700 mb-2">
-                            Total items (n):
+                            Total item (n):
                         </label>
                         <input 
                             type="number" 
@@ -237,7 +237,7 @@
                     </div>
                     <div>
                         <label for="perm-r" class="block text-sm font-medium text-gray-700 mb-2">
-                            Items to arrange (r):
+                            Item yang disusun (r):
                         </label>
                         <input 
                             type="number" 
@@ -254,11 +254,11 @@
                     onclick="calculatePermutation()" 
                     class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-md"
                 >
-                    Calculate Permutation
+                    Hitung Permutasi
                 </button>
                 <div id="perm-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
                 <div id="perm-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                    <p class="text-gray-700 font-medium">Result:</p>
+                    <p class="text-gray-700 font-medium">Hasil:</p>
                     <p class="text-3xl font-bold text-indigo-600" id="perm-value"></p>
                     <p class="text-sm text-gray-500 mt-2" id="perm-explanation"></p>
                 </div>
@@ -266,10 +266,10 @@
 
             <!-- Example -->
             <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h5 class="font-semibold text-gray-700 mb-2">Example:</h5>
+                <h5 class="font-semibold text-gray-700 mb-2">Contoh:</h5>
                 <p class="text-gray-600 text-sm">
-                    How many ways can you arrange 3 books from a shelf of 5 books?<br>
-                    Answer: P(5, 3) = 5! / (5-3)! = 5! / 2! = 60 ways
+                    Berapa banyak cara menyusun 3 buku dari rak yang berisi 5 buku?<br>
+                    Jawaban: P(5, 3) = 5! / (5-3)! = 5! / 2! = 60 cara
                 </p>
             </div>
         </div>
@@ -280,32 +280,32 @@
         <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">🎯</span>
-                <h3 class="text-3xl font-bold text-gray-800">Combinations</h3>
+                <h3 class="text-3xl font-bold text-gray-800">Kombinasi</h3>
             </div>
             
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">What are Combinations?</h4>
+                <h4 class="text-xl font-semibold text-gray-700 mb-3">Apa itu Kombinasi?</h4>
                 <p class="text-gray-600 leading-relaxed mb-4">
-                    A combination is a selection of objects where the order doesn't matter. 
-                    For example, selecting {A, B, C} is the same as selecting {C, B, A}.
+                    Kombinasi adalah pemilihan objek di mana urutan tidak penting. 
+                    Misalnya, memilih {A, B, C} sama dengan memilih {C, B, A}.
                 </p>
                 <div class="bg-green-50 p-4 rounded-lg">
                     <p class="font-mono text-green-800">
-                        Formula: C(n, r) = n! / (r! × (n - r)!)
+                        Rumus: C(n, r) = n! / (r! × (n - r)!)
                     </p>
                     <p class="text-sm text-gray-600 mt-2">
-                        Where n is the total number of items and r is the number of items to select.
+                        Di mana n adalah jumlah total item dan r adalah jumlah item yang akan dipilih.
                     </p>
                 </div>
             </div>
 
             <!-- Combination Calculator -->
             <div class="bg-gray-50 p-6 rounded-xl">
-                <h4 class="text-xl font-semibold text-gray-700 mb-4">Interactive Calculator</h4>
+                <h4 class="text-xl font-semibold text-gray-700 mb-4">Kalkulator Interaktif</h4>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="comb-n" class="block text-sm font-medium text-gray-700 mb-2">
-                            Total items (n):
+                            Total item (n):
                         </label>
                         <input 
                             type="number" 
@@ -319,7 +319,7 @@
                     </div>
                     <div>
                         <label for="comb-r" class="block text-sm font-medium text-gray-700 mb-2">
-                            Items to select (r):
+                            Item yang dipilih (r):
                         </label>
                         <input 
                             type="number" 
@@ -336,11 +336,11 @@
                     onclick="calculateCombination()" 
                     class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-md"
                 >
-                    Calculate Combination
+                    Hitung Kombinasi
                 </button>
                 <div id="comb-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
                 <div id="comb-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                    <p class="text-gray-700 font-medium">Result:</p>
+                    <p class="text-gray-700 font-medium">Hasil:</p>
                     <p class="text-3xl font-bold text-green-600" id="comb-value"></p>
                     <p class="text-sm text-gray-500 mt-2" id="comb-explanation"></p>
                 </div>
@@ -348,10 +348,10 @@
 
             <!-- Example -->
             <div class="mt-6 p-4 bg-green-50 rounded-lg">
-                <h5 class="font-semibold text-gray-700 mb-2">Example:</h5>
+                <h5 class="font-semibold text-gray-700 mb-2">Contoh:</h5>
                 <p class="text-gray-600 text-sm">
-                    How many ways can you choose 3 books from a shelf of 5 books?<br>
-                    Answer: C(5, 3) = 5! / (3! × 2!) = 10 ways
+                    Berapa banyak cara memilih 3 buku dari rak yang berisi 5 buku?<br>
+                    Jawaban: C(5, 3) = 5! / (3! × 2!) = 10 cara
                 </p>
             </div>
         </div>
@@ -362,39 +362,39 @@
         <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">📐</span>
-                <h3 class="text-3xl font-bold text-gray-800">Formula Reference</h3>
+                <h3 class="text-3xl font-bold text-gray-800">Referensi Rumus</h3>
             </div>
 
             <div class="space-y-6">
                 <!-- Factorial -->
                 <div class="border-l-4 border-purple-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Factorial (n!)</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Faktorial (n!)</h4>
                     <p class="font-mono text-purple-700 text-lg mb-2">n! = n × (n-1) × (n-2) × ... × 2 × 1</p>
-                    <p class="text-gray-600 text-sm">The product of all positive integers up to n. By definition, 0! = 1</p>
+                    <p class="text-gray-600 text-sm">Hasil perkalian semua bilangan bulat positif hingga n. Berdasarkan definisi, 0! = 1</p>
                 </div>
 
                 <!-- Permutation -->
                 <div class="border-l-4 border-indigo-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Permutation P(n, r)</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Permutasi P(n, r)</h4>
                     <p class="font-mono text-indigo-700 text-lg mb-2">P(n, r) = n! / (n - r)!</p>
-                    <p class="text-gray-600 text-sm">Number of ways to arrange r items from n items (order matters)</p>
+                    <p class="text-gray-600 text-sm">Jumlah cara menyusun r item dari n item (urutan penting)</p>
                 </div>
 
                 <!-- Combination -->
                 <div class="border-l-4 border-green-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Combination C(n, r)</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Kombinasi C(n, r)</h4>
                     <p class="font-mono text-green-700 text-lg mb-2">C(n, r) = n! / (r! × (n - r)!)</p>
-                    <p class="text-gray-600 text-sm">Number of ways to choose r items from n items (order doesn't matter)</p>
+                    <p class="text-gray-600 text-sm">Jumlah cara memilih r item dari n item (urutan tidak penting)</p>
                 </div>
 
                 <!-- Key Difference -->
                 <div class="bg-amber-50 p-4 rounded-lg">
-                    <h5 class="font-semibold text-gray-700 mb-2">🔑 Key Difference:</h5>
+                    <h5 class="font-semibold text-gray-700 mb-2">🔑 Perbedaan Utama:</h5>
                     <p class="text-gray-600 text-sm mb-2">
-                        <strong>Permutation:</strong> Order matters (ABC ≠ BAC)
+                        <strong>Permutasi:</strong> Urutan penting (ABC ≠ BAC)
                     </p>
                     <p class="text-gray-600 text-sm">
-                        <strong>Combination:</strong> Order doesn't matter ({A,B,C} = {C,B,A})
+                        <strong>Kombinasi:</strong> Urutan tidak penting ({A,B,C} = {C,B,A})
                     </p>
                 </div>
             </div>
@@ -405,10 +405,10 @@
     <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4 text-center">
             <p class="text-gray-300">
-                © 2026 Combinatorics Learning. Built with HTML5, Tailwind CSS, and Vanilla JavaScript.
+                © 2026 Pembelajaran Kombinatorik. Dibangun dengan HTML5, Tailwind CSS, dan Vanilla JavaScript.
             </p>
             <p class="text-gray-400 text-sm mt-2">
-                An interactive educational resource for learning combinatorics
+                Sumber pembelajaran interaktif untuk belajar kombinatorik
             </p>
         </div>
     </footer>
@@ -441,19 +441,19 @@
 
             // Validation
             if (isNaN(n) || isNaN(r) || n < 0 || r < 0) {
-                errorDiv.textContent = 'Please enter valid non-negative whole numbers.';
+                errorDiv.textContent = 'Silakan masukkan bilangan bulat non-negatif yang valid.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (r > n) {
-                errorDiv.textContent = 'r cannot be greater than n. You cannot arrange more items than you have.';
+                errorDiv.textContent = 'r tidak boleh lebih besar dari n. Anda tidak dapat menyusun lebih banyak item daripada yang Anda miliki.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (n > 170) {
-                errorDiv.textContent = 'n is too large. Please enter a value less than or equal to 170 to avoid calculation overflow.';
+                errorDiv.textContent = 'n terlalu besar. Silakan masukkan nilai kurang dari atau sama dengan 170 untuk menghindari overflow perhitungan.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -463,7 +463,7 @@
             
             // Check for overflow
             if (!isFinite(result)) {
-                errorDiv.textContent = 'The result is too large to calculate. Please try smaller values.';
+                errorDiv.textContent = 'Hasil terlalu besar untuk dihitung. Silakan coba nilai yang lebih kecil.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -492,19 +492,19 @@
 
             // Validation
             if (isNaN(n) || isNaN(r) || n < 0 || r < 0) {
-                errorDiv.textContent = 'Please enter valid non-negative whole numbers.';
+                errorDiv.textContent = 'Silakan masukkan bilangan bulat non-negatif yang valid.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (r > n) {
-                errorDiv.textContent = 'r cannot be greater than n. You cannot select more items than you have.';
+                errorDiv.textContent = 'r tidak boleh lebih besar dari n. Anda tidak dapat memilih lebih banyak item daripada yang Anda miliki.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (n > 170) {
-                errorDiv.textContent = 'n is too large. Please enter a value less than or equal to 170 to avoid calculation overflow.';
+                errorDiv.textContent = 'n terlalu besar. Silakan masukkan nilai kurang dari atau sama dengan 170 untuk menghindari overflow perhitungan.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -514,7 +514,7 @@
             
             // Check for overflow
             if (!isFinite(result)) {
-                errorDiv.textContent = 'The result is too large to calculate. Please try smaller values.';
+                errorDiv.textContent = 'Hasil terlalu besar untuk dihitung. Silakan coba nilai yang lebih kecil.';
                 errorDiv.classList.remove('hidden');
                 return;
             }

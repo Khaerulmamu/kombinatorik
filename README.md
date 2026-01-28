@@ -1,121 +1,121 @@
-# Combinatorics - Interactive Learning Website
+# Kombinatorik - Website Pembelajaran Interaktif
 
-An interactive, responsive, and modern single-page website for learning combinatorics. Built with HTML5, Tailwind CSS (via CDN), and Vanilla JavaScript.
+Website satu halaman yang interaktif, responsif, dan modern untuk belajar kombinatorik. Dibangun dengan HTML5, Tailwind CSS (via CDN), dan Vanilla JavaScript.
 
-## 🎯 Features
+## 🎯 Fitur
 
-- **Responsive Design**: Mobile-first approach that works seamlessly on all devices
-- **Interactive Calculators**: 
-  - Permutation calculator (P(n,r))
-  - Combination calculator (C(n,r))
-- **Educational Content**:
-  - Clear explanations of combinatorics concepts
-  - Formula references with detailed descriptions
-  - Real-world examples
-- **Modern UI**: Clean, professional design using Tailwind CSS
-- **No Dependencies**: Pure vanilla JavaScript - no frameworks required
+- **Desain Responsif**: Pendekatan mobile-first yang bekerja sempurna di semua perangkat
+- **Kalkulator Interaktif**: 
+  - Kalkulator permutasi (P(n,r))
+  - Kalkulator kombinasi (C(n,r))
+- **Konten Edukatif**:
+  - Penjelasan jelas tentang konsep kombinatorik
+  - Referensi rumus dengan deskripsi detail
+  - Contoh-contoh dunia nyata
+- **UI Modern**: Desain bersih dan profesional menggunakan Tailwind CSS
+- **Tanpa Dependensi**: Vanilla JavaScript murni - tidak memerlukan framework
 
-## 🚀 Getting Started
+## 🚀 Memulai
 
-### Prerequisites
+### Prasyarat
 
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No installation or build process required!
+- Browser web modern (Chrome, Firefox, Safari, Edge)
+- Tidak perlu instalasi atau proses build!
 
-### Running the Website
+### Menjalankan Website
 
-1. Clone this repository:
+1. Clone repositori ini:
    ```bash
    git clone https://github.com/Khaerulmamu/kombinatorik.git
    cd kombinatorik
    ```
 
-2. Open `index.html` in your web browser:
-   - Double-click the file, or
-   - Right-click and select "Open with" your preferred browser, or
-   - Use a local server (optional):
+2. Buka `index.html` di browser web Anda:
+   - Klik dua kali file tersebut, atau
+   - Klik kanan dan pilih "Buka dengan" browser pilihan Anda, atau
+   - Gunakan server lokal (opsional):
      ```bash
-     # Using Python 3
+     # Menggunakan Python 3
      python -m http.server 8000
      
-     # Using PHP
+     # Menggunakan PHP
      php -S localhost:8000
      
-     # Using Node.js http-server
+     # Menggunakan Node.js http-server
      npx http-server
      ```
 
-3. Navigate to `http://localhost:8000` if using a local server
+3. Buka `http://localhost:8000` jika menggunakan server lokal
 
-## 📚 What is Combinatorics?
+## 📚 Apa itu Kombinatorik?
 
-Combinatorics is a branch of mathematics concerning the study of finite or countable discrete structures. This website focuses on two fundamental concepts:
+Kombinatorik adalah cabang matematika yang mempelajari struktur diskrit yang terbatas atau dapat dihitung. Website ini berfokus pada dua konsep fundamental:
 
-### Permutations
-- **Definition**: Arrangements of objects where order matters
-- **Formula**: P(n, r) = n! / (n - r)!
-- **Example**: How many ways can you arrange 3 books from 5? Answer: 60 ways
+### Permutasi
+- **Definisi**: Susunan objek di mana urutan penting
+- **Rumus**: P(n, r) = n! / (n - r)!
+- **Contoh**: Berapa banyak cara menyusun 3 buku dari 5? Jawaban: 60 cara
 
-### Combinations
-- **Definition**: Selections of objects where order doesn't matter
-- **Formula**: C(n, r) = n! / (r! × (n - r)!)
-- **Example**: How many ways can you choose 3 books from 5? Answer: 10 ways
+### Kombinasi
+- **Definisi**: Pemilihan objek di mana urutan tidak penting
+- **Rumus**: C(n, r) = n! / (r! × (n - r)!)
+- **Contoh**: Berapa banyak cara memilih 3 buku dari 5? Jawaban: 10 cara
 
-## 🛠️ Technology Stack
+## 🛠️ Teknologi yang Digunakan
 
-- **HTML5**: Semantic markup for structure
-- **Tailwind CSS**: Utility-first CSS framework (loaded via CDN)
-- **Vanilla JavaScript**: No frameworks, pure JS for interactivity
+- **HTML5**: Markup semantik untuk struktur
+- **Tailwind CSS**: Framework CSS utility-first (dimuat via CDN)
+- **Vanilla JavaScript**: Tidak ada framework, JS murni untuk interaktivitas
 
-## 💡 How to Use
+## 💡 Cara Menggunakan
 
-### Permutation Calculator
-1. Navigate to the Permutations section
-2. Enter the total number of items (n)
-3. Enter the number of items to arrange (r)
-4. Click "Calculate Permutation" or press Enter
-5. View the result with explanation
+### Kalkulator Permutasi
+1. Navigasi ke bagian Permutasi
+2. Masukkan jumlah total item (n)
+3. Masukkan jumlah item yang akan disusun (r)
+4. Klik "Hitung Permutasi" atau tekan Enter
+5. Lihat hasil dengan penjelasan
 
-### Combination Calculator
-1. Navigate to the Combinations section
-2. Enter the total number of items (n)
-3. Enter the number of items to select (r)
-4. Click "Calculate Combination" or press Enter
-5. View the result with explanation
+### Kalkulator Kombinasi
+1. Navigasi ke bagian Kombinasi
+2. Masukkan jumlah total item (n)
+3. Masukkan jumlah item yang akan dipilih (r)
+4. Klik "Hitung Kombinasi" atau tekan Enter
+5. Lihat hasil dengan penjelasan
 
-## ✨ Key Capabilities
+## ✨ Kemampuan Utama
 
-- ✅ Responsive navigation menu
-- ✅ Smooth scrolling between sections
-- ✅ Interactive calculators with real-time validation
-- ✅ Clear visual feedback for results
-- ✅ Educational examples for each concept
-- ✅ Formula reference section
-- ✅ Mobile-optimized layout
-- ✅ Accessible design with semantic HTML
+- ✅ Menu navigasi responsif
+- ✅ Smooth scrolling antar bagian
+- ✅ Kalkulator interaktif dengan validasi real-time
+- ✅ Feedback visual yang jelas untuk hasil
+- ✅ Contoh edukatif untuk setiap konsep
+- ✅ Bagian referensi rumus
+- ✅ Layout yang dioptimalkan untuk mobile
+- ✅ Desain aksesibel dengan HTML semantik
 
-## 📱 Browser Support
+## 📱 Dukungan Browser
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- Chrome (terbaru)
+- Firefox (terbaru)
+- Safari (terbaru)
+- Edge (terbaru)
 
-## 🤝 Contributing
+## 🤝 Kontribusi
 
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
+Kontribusi sangat diterima! Jangan ragu untuk:
+- Melaporkan bug
+- Menyarankan fitur baru
+- Mengirim pull request
 
-## 📄 License
+## 📄 Lisensi
 
-This project is open source and available for educational purposes.
+Proyek ini adalah open source dan tersedia untuk tujuan edukatif.
 
-## 👨‍💻 Author
+## 👨‍💻 Pembuat
 
-Built as an educational resource for learning combinatorics through interactive examples.
+Dibangun sebagai sumber edukatif untuk belajar kombinatorik melalui contoh-contoh interaktif.
 
 ---
 
-**Note**: This is a static website with no backend. All calculations are performed client-side using JavaScript.
+**Catatan**: Ini adalah website statis tanpa backend. Semua perhitungan dilakukan di sisi klien menggunakan JavaScript.
