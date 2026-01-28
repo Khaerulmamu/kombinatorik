@@ -197,6 +197,137 @@
         </div>
     </section>
 
+    <!-- Pascal's Triangle Section -->
+    <section class="container mx-auto px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-4xl">📐</span>
+                <h3 class="text-3xl font-bold text-gray-800">Segitiga Pascal</h3>
+            </div>
+            
+            <div class="mb-8">
+                <h4 class="text-xl font-semibold text-gray-700 mb-3">Apa itu Segitiga Pascal?</h4>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Segitiga Pascal adalah susunan angka berbentuk segitiga di mana setiap angka adalah jumlah dari dua angka di atasnya. 
+                    Dinamakan dari matematikawan Prancis <strong>Blaise Pascal</strong> (1623-1662), meskipun segitiga ini sudah dikenal 
+                    jauh sebelumnya oleh matematikawan dari berbagai budaya.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Setiap baris dimulai dan diakhiri dengan angka 1, dan angka-angka di tengah adalah hasil penjumlahan dua angka 
+                    yang berada tepat di atasnya.
+                </p>
+            </div>
+
+            <!-- Pascal's Triangle Visualization -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl mb-8">
+                <h4 class="text-lg font-semibold text-gray-700 mb-4 text-center">Visualisasi Interaktif</h4>
+                
+                <div class="flex justify-center mb-4">
+                    <div class="flex gap-3 items-center">
+                        <label class="text-sm font-medium text-gray-700">Jumlah Baris:</label>
+                        <input type="number" id="pascalRows" min="1" max="10" value="7" 
+                               class="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <button onclick="generatePascalTriangle()" 
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+
+                <div id="pascalTriangle" class="overflow-x-auto">
+                    <!-- Pascal's Triangle will be generated here -->
+                </div>
+
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600">
+                        💡 <strong>Tip:</strong> Arahkan mouse ke angka untuk melihat nilai C(n,k)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Relationship with Combinations -->
+            <div class="mb-8">
+                <h4 class="text-xl font-semibold text-gray-700 mb-3">🔗 Hubungan dengan Kombinasi</h4>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Setiap angka di Segitiga Pascal merepresentasikan <strong>koefisien binomial</strong> atau nilai kombinasi C(n,k), di mana:
+                </p>
+                <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+                    <p class="font-mono text-indigo-800 text-center text-lg">
+                        Baris ke-n, Posisi ke-k = C(n, k) = n! / (k! × (n-k)!)
+                    </p>
+                </div>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start">
+                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span><strong>Baris 0:</strong> C(0,0) = 1</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span><strong>Baris 1:</strong> C(1,0) = 1, C(1,1) = 1</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span><strong>Baris 2:</strong> C(2,0) = 1, C(2,1) = 2, C(2,2) = 1</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span><strong>Baris 3:</strong> C(3,0) = 1, C(3,1) = 3, C(3,2) = 3, C(3,3) = 1</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Interesting Patterns -->
+            <div class="mb-8">
+                <h4 class="text-xl font-semibold text-gray-700 mb-3">✨ Pola Menarik dalam Segitiga Pascal</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
+                        <h5 class="font-semibold text-gray-700 mb-2">🔢 Jumlah Baris</h5>
+                        <p class="text-sm text-gray-600">Jumlah semua angka di baris ke-n adalah 2<sup>n</sup></p>
+                        <p class="text-xs text-gray-500 mt-1">Contoh: Baris 3 → 1+3+3+1 = 8 = 2³</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-700 mb-2">📊 Diagonal Fibonacci</h5>
+                        <p class="text-sm text-gray-600">Jumlah angka pada diagonal membentuk deret Fibonacci</p>
+                        <p class="text-xs text-gray-500 mt-1">1, 1, 2, 3, 5, 8, 13, ...</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                        <h5 class="font-semibold text-gray-700 mb-2">🎯 Simetri</h5>
+                        <p class="text-sm text-gray-600">Setiap baris simetris dari kiri ke kanan</p>
+                        <p class="text-xs text-gray-500 mt-1">C(n,k) = C(n, n-k)</p>
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-lg border-l-4 border-pink-500">
+                        <h5 class="font-semibold text-gray-700 mb-2">🧮 Pangkat 11</h5>
+                        <p class="text-sm text-gray-600">Beberapa baris pertama sama dengan pangkat 11</p>
+                        <p class="text-xs text-gray-500 mt-1">11⁰=1, 11¹=11, 11²=121, 11³=1331</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications -->
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <h4 class="text-lg font-semibold text-gray-700 mb-3">🎓 Aplikasi Segitiga Pascal</h4>
+                <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-start">
+                        <span class="text-blue-600 mr-2">✓</span>
+                        <span><strong>Aljabar:</strong> Ekspansi binomial (a+b)ⁿ</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 mr-2">✓</span>
+                        <span><strong>Probabilitas:</strong> Distribusi binomial</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 mr-2">✓</span>
+                        <span><strong>Kombinatorik:</strong> Menghitung kombinasi tanpa rumus</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 mr-2">✓</span>
+                        <span><strong>Pemrograman:</strong> Algoritma dan struktur data</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <!-- Permutations Section -->
     <section id="permutations" class="container mx-auto px-4 py-12">
         <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
@@ -429,6 +560,80 @@
             }
             return result;
         }
+
+        // Pascal's Triangle Functions
+        function generatePascalTriangle() {
+            const rows = parseInt(document.getElementById('pascalRows').value);
+            if (rows < 1 || rows > 10) {
+                alert('Silakan masukkan jumlah baris antara 1 dan 10');
+                return;
+            }
+
+            const container = document.getElementById('pascalTriangle');
+            container.innerHTML = '';
+
+            const triangle = [];
+            
+            // Generate Pascal's Triangle values
+            for (let n = 0; n < rows; n++) {
+                triangle[n] = [];
+                for (let k = 0; k <= n; k++) {
+                    if (k === 0 || k === n) {
+                        triangle[n][k] = 1;
+                    } else {
+                        triangle[n][k] = triangle[n-1][k-1] + triangle[n-1][k];
+                    }
+                }
+            }
+
+            // Create visual representation
+            const triangleDiv = document.createElement('div');
+            triangleDiv.className = 'flex flex-col items-center gap-2 py-4';
+
+            for (let n = 0; n < rows; n++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'flex gap-2';
+                
+                for (let k = 0; k <= n; k++) {
+                    const cell = document.createElement('div');
+                    const value = triangle[n][k];
+                    
+                    cell.className = 'w-12 h-12 flex items-center justify-center rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer';
+                    
+                    // Color coding based on value
+                    if (value === 1) {
+                        cell.className += ' bg-indigo-100 text-indigo-800 hover:bg-indigo-200';
+                    } else if (value % 2 === 0) {
+                        cell.className += ' bg-green-100 text-green-800 hover:bg-green-200';
+                    } else {
+                        cell.className += ' bg-purple-100 text-purple-800 hover:bg-purple-200';
+                    }
+                    
+                    cell.textContent = value;
+                    cell.title = `C(${n}, ${k}) = ${value}`;
+                    
+                    // Hover effect to show combination notation
+                    cell.addEventListener('mouseenter', function() {
+                        this.innerHTML = `<span class="text-xs">C(${n},${k})</span>`;
+                    });
+                    
+                    cell.addEventListener('mouseleave', function() {
+                        this.textContent = value;
+                    });
+                    
+                    rowDiv.appendChild(cell);
+                }
+                
+                triangleDiv.appendChild(rowDiv);
+            }
+
+            container.appendChild(triangleDiv);
+        }
+
+        // Generate Pascal's Triangle on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            generatePascalTriangle();
+        });
 
         // Calculate Permutation
         function calculatePermutation() {
