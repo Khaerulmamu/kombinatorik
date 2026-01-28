@@ -67,7 +67,7 @@ Combinatorics is a branch of mathematics concerning the study of finite or count
 - **Tailwind CSS**: Utility-first CSS framework (loaded via CDN)
 - **Vanilla JavaScript**: No frameworks, pure JS for interactivity
 
-## 💡 Usage
+## 💡 How to Use
 
 ### Permutation Calculator
 1. Navigate to the Permutations section
@@ -83,7 +83,7 @@ Combinatorics is a branch of mathematics concerning the study of finite or count
 4. Click "Calculate Combination" or press Enter
 5. View the result with explanation
 
-## 🎨 Features
+## ✨ Key Capabilities
 
 - ✅ Responsive navigation menu
 - ✅ Smooth scrolling between sections

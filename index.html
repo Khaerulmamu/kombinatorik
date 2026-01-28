@@ -96,6 +96,8 @@
         .bg-green-500 { background-color: #10b981; }
         .bg-gray-50 { background-color: #f9fafb; }
         .bg-gray-800 { background-color: #1f2937; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .text-red-700 { color: #b91c1c; }
         .px-8 { padding-left: 2rem; padding-right: 2rem; }
         .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
         .leading-relaxed { line-height: 1.625; }
@@ -148,9 +150,9 @@
                     🧮 Combinatorics
                 </h1>
                 <div class="flex gap-4">
-                    <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition">Permutations</a>
-                    <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition">Combinations</a>
-                    <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition">Formulas</a>
+                    <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Permutations section">Permutations</a>
+                    <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Combinations section">Combinations</a>
+                    <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigate to Formula Reference section">Formulas</a>
                 </div>
             </div>
         </nav>
@@ -227,6 +229,8 @@
                             type="number" 
                             id="perm-n" 
                             min="0" 
+                            max="170"
+                            step="1"
                             value="5"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         >
@@ -239,6 +243,8 @@
                             type="number" 
                             id="perm-r" 
                             min="0" 
+                            max="170"
+                            step="1"
                             value="3"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         >
@@ -250,6 +256,7 @@
                 >
                     Calculate Permutation
                 </button>
+                <div id="perm-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
                 <div id="perm-result" class="mt-4 p-4 bg-white rounded-lg hidden">
                     <p class="text-gray-700 font-medium">Result:</p>
                     <p class="text-3xl font-bold text-indigo-600" id="perm-value"></p>
@@ -304,6 +311,8 @@
                             type="number" 
                             id="comb-n" 
                             min="0" 
+                            max="170"
+                            step="1"
                             value="5"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         >
@@ -316,6 +325,8 @@
                             type="number" 
                             id="comb-r" 
                             min="0" 
+                            max="170"
+                            step="1"
                             value="3"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         >
@@ -327,6 +338,7 @@
                 >
                     Calculate Combination
                 </button>
+                <div id="comb-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
                 <div id="comb-result" class="mt-4 p-4 bg-white rounded-lg hidden">
                     <p class="text-gray-700 font-medium">Result:</p>
                     <p class="text-3xl font-bold text-green-600" id="comb-value"></p>
@@ -419,22 +431,42 @@
             const n = parseInt(document.getElementById('perm-n').value);
             const r = parseInt(document.getElementById('perm-r').value);
             const resultDiv = document.getElementById('perm-result');
+            const errorDiv = document.getElementById('perm-error');
             const valueElement = document.getElementById('perm-value');
             const explanationElement = document.getElementById('perm-explanation');
 
+            // Hide previous results and errors
+            resultDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+
             // Validation
             if (isNaN(n) || isNaN(r) || n < 0 || r < 0) {
-                alert('Please enter valid non-negative numbers');
+                errorDiv.textContent = 'Please enter valid non-negative whole numbers.';
+                errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (r > n) {
-                alert('r cannot be greater than n');
+                errorDiv.textContent = 'r cannot be greater than n. You cannot arrange more items than you have.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (n > 170) {
+                errorDiv.textContent = 'n is too large. Please enter a value less than or equal to 170 to avoid calculation overflow.';
+                errorDiv.classList.remove('hidden');
                 return;
             }
 
             // Calculate P(n, r) = n! / (n-r)!
             const result = factorial(n) / factorial(n - r);
+            
+            // Check for overflow
+            if (!isFinite(result)) {
+                errorDiv.textContent = 'The result is too large to calculate. Please try smaller values.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
             
             // Display result
             valueElement.textContent = result.toLocaleString();
@@ -450,22 +482,42 @@
             const n = parseInt(document.getElementById('comb-n').value);
             const r = parseInt(document.getElementById('comb-r').value);
             const resultDiv = document.getElementById('comb-result');
+            const errorDiv = document.getElementById('comb-error');
             const valueElement = document.getElementById('comb-value');
             const explanationElement = document.getElementById('comb-explanation');
 
+            // Hide previous results and errors
+            resultDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+
             // Validation
             if (isNaN(n) || isNaN(r) || n < 0 || r < 0) {
-                alert('Please enter valid non-negative numbers');
+                errorDiv.textContent = 'Please enter valid non-negative whole numbers.';
+                errorDiv.classList.remove('hidden');
                 return;
             }
 
             if (r > n) {
-                alert('r cannot be greater than n');
+                errorDiv.textContent = 'r cannot be greater than n. You cannot select more items than you have.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (n > 170) {
+                errorDiv.textContent = 'n is too large. Please enter a value less than or equal to 170 to avoid calculation overflow.';
+                errorDiv.classList.remove('hidden');
                 return;
             }
 
             // Calculate C(n, r) = n! / (r! * (n-r)!)
             const result = factorial(n) / (factorial(r) * factorial(n - r));
+            
+            // Check for overflow
+            if (!isFinite(result)) {
+                errorDiv.textContent = 'The result is too large to calculate. Please try smaller values.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
             
             // Display result
             valueElement.textContent = result.toLocaleString();
