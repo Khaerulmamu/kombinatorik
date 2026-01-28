@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "level": "Mudah",
+    "kategori": "Permutasi",
+    "pertanyaan": "Berapa banyak cara menyusun 3 buah buku yang berbeda secara berjajar di atas sebuah rak?",
+    "pilihan": ["3 cara", "6 cara", "9 cara", "12 cara"],
+    "jawaban": "6 cara",
+    "penjelasan": "Ini adalah masalah permutasi sederhana. Karena kita menyusun semua objek, kita menggunakan faktorial: $3! = 3 \\times 2 \\times 1 = 6$ cara."
+  },
+  {
+    "id": 2,
+    "level": "Mudah",
+    "kategori": "Kombinasi",
+    "pertanyaan": "Seorang siswa harus memilih 2 buah ekstrakurikuler dari 5 pilihan yang tersedia. Ada berapa banyak kombinasi pilihan yang mungkin?",
+    "pilihan": ["10 kombinasi", "20 kombinasi", "5 kombinasi", "15 kombinasi"],
+    "jawaban": "10 kombinasi",
+    "penjelasan": "Karena urutan memilih ekskul tidak penting, gunakan rumus kombinasi $nCr$: $C(5, 2) = \\frac{5!}{2!(5-2)!} = \\frac{120}{2 \\times 6} = 10$."
+  },
+  {
+    "id": 3,
+    "level": "Sedang",
+    "kategori": "Permutasi",
+    "pertanyaan": "Dalam sebuah lomba lari yang diikuti oleh 8 peserta, berapa banyak kemungkinan urutan juara 1, juara 2, dan juara 3 yang dapat terjadi?",
+    "pilihan": ["24 cara", "56 cara", "336 cara", "40.320 cara"],
+    "jawaban": "336 cara",
+    "penjelasan": "Urutan juara sangat penting (Juara 1 berbeda dengan Juara 2), maka gunakan permutasi $nPr$: $P(8, 3) = \\frac{8!}{(8-3)!} = 8 \\times 7 \\times 6 = 336$ cara."
+  },
+  {
+    "id": 4,
+    "level": "Sedang",
+    "kategori": "Kombinasi",
+    "pertanyaan": "Sebuah tim basket memiliki 10 pemain. Pelatih ingin memilih 5 orang untuk menjadi starter di pertandingan awal. Berapa banyak cara memilih tim starter tersebut?",
+    "pilihan": ["50 cara", "120 cara", "252 cara", "30.240 cara"],
+    "jawaban": "252 cara",
+    "penjelasan": "Memilih 5 pemain dari 10 tanpa memedulikan posisi spesifik menggunakan kombinasi: $C(10, 5) = \\frac{10!}{5!5!} = \\frac{30.240}{120} = 252$ cara."
+  },
+  {
+    "id": 5,
+    "level": "Sulit",
+    "kategori": "Kombinasi",
+    "pertanyaan": "Dalam sebuah pertemuan, setiap orang saling berjabat tangan satu sama lain tepat satu kali. Jika total terjadi 45 jabat tangan, berapa banyak orang yang hadir dalam pertemuan tersebut?",
+    "pilihan": ["9 orang", "10 orang", "11 orang", "45 orang"],
+    "jawaban": "10 orang",
+    "penjelasan": "Satu jabat tangan melibatkan 2 orang. Jika jumlah orang adalah $n$, maka $C(n, 2) = 45$. \\n $\\frac{n(n-1)}{2} = 45 \\rightarrow n(n-1) = 90$. \\n Bilangan yang berurutan yang hasilnya 90 adalah $10 \\times 9$, jadi $n = 10$."
+  }
+]
