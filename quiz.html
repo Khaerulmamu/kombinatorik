@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Kombinatorik - Kombinatorika</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        /* Fallback Tailwind utilities */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Option button states */
+        .option-correct {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border-color: #059669;
+        }
+        
+        .option-wrong {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+            border-color: #dc2626;
+        }
+        
+        .option-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Progress bar animation */
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* Card hover effect */
+        .level-card {
+            transition: all 0.3s ease;
+        }
+        
+        .level-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600 flex items-center gap-2">
+                🧮 Kombinatorika
+            </a>
+            <a href="index.html" aria-label="Kembali ke halaman utama" class="text-gray-600 hover:text-indigo-600 transition-colors">
+                ← Kembali
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Level Selection Screen -->
+        <div id="levelSelectionScreen" class="fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">🎯 Kuis Kombinatorik</h1>
+                <p class="text-gray-600">Pilih tingkat kesulitan untuk memulai kuis</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- Easy Level -->
+                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz('Mudah')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">😊</div>
+                        <h3 class="text-2xl font-bold text-green-600 mb-2">Mudah</h3>
+                        <p class="text-gray-600 mb-4">Pertanyaan dasar kombinatorik</p>
+                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block">
+                            Level Pemula
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medium Level -->
+                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz('Sedang')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🤔</div>
+                        <h3 class="text-2xl font-bold text-yellow-600 mb-2">Sedang</h3>
+                        <p class="text-gray-600 mb-4">Tantangan yang lebih kompleks</p>
+                        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg inline-block">
+                            Level Menengah
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hard Level -->
+                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz('Sulit')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🔥</div>
+                        <h3 class="text-2xl font-bold text-red-600 mb-2">Sulit</h3>
+                        <p class="text-gray-600 mb-4">Ujian kemampuan maksimal</p>
+                        <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg inline-block">
+                            Level Ahli
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="hidden">
+            <div class="max-w-3xl mx-auto">
+                <!-- Progress Bar -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-semibold text-gray-600" id="progressText">Pertanyaan 1 dari 5</span>
+                        <span class="text-sm font-semibold text-indigo-600" id="categoryTag">Permutasi</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="progress-bar bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-6 fade-in" id="questionCard">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" id="questionText">Loading question...</h2>
+                    
+                    <!-- Options -->
+                    <div class="space-y-4" id="optionsContainer">
+                        <!-- Options will be inserted here by JavaScript -->
+                    </div>
+                    
+                    <!-- Explanation Box (hidden initially) -->
+                    <div id="explanationBox" class="hidden mt-6 bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-lg slide-up">
+                        <h4 class="font-bold text-indigo-900 mb-2">💡 Penjelasan:</h4>
+                        <p class="text-indigo-800" id="explanationText"></p>
+                    </div>
+                    
+                    <!-- Next Button (hidden initially) -->
+                    <div id="nextButtonContainer" class="hidden mt-6">
+                        <button onclick="nextQuestion()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105">
+                            Pertanyaan Selanjutnya →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="hidden fade-in">
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 text-center">
+                <div class="text-6xl mb-4" id="resultEmoji">🎉</div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2" id="resultTitle">Selamat!</h2>
+                <p class="text-gray-600 mb-6" id="resultMessage">Anda telah menyelesaikan kuis</p>
+                
+                <div class="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl p-8 mb-6">
+                    <div class="text-6xl font-bold text-indigo-600 mb-2" id="scoreDisplay">0/5</div>
+                    <p class="text-gray-700 font-semibold">Skor Anda</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-100 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-600" id="correctCount">0</div>
+                        <p class="text-sm text-gray-600">Jawaban Benar</p>
+                    </div>
+                    <div class="bg-red-100 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                        <p class="text-sm text-gray-600">Jawaban Salah</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="location.reload()" class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all">
+                        🔄 Coba Lagi
+                    </button>
+                    <button onclick="window.location.href='index.html'" class="flex-1 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-all">
+                        🏠 Ke Beranda
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-600">
+            <p>&copy; 2026 Kombinatorika Learning. Built with HTML5, Tailwind CSS, and Vanilla JavaScript.</p>
+            <p class="text-sm mt-2">Interactive educational website for learning combinatorics</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global State
+        let questions = [];
+        let currentLevel = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+        let isAnswered = false;
+
+        // Utility: Shuffle Array
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Utility: Render LaTeX with KaTeX
+        function renderMath(element) {
+            if (window.renderMathInElement) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Load Questions from JSON
+        async function loadQuestions() {
+            try {
+                const response = await fetch('question.json');
+                questions = await response.json();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                alert('Gagal memuat pertanyaan. Pastikan file question.json tersedia.');
+            }
+        }
+
+        // Start Quiz with Selected Level
+        function startQuiz(level) {
+            currentLevel = level;
+            currentQuestionIndex = 0;
+            score = 0;
+            isAnswered = false;
+
+            // Filter questions by level
+            const filteredQuestions = questions.filter(q => q.level === level);
+            
+            // Shuffle questions
+            selectedQuestions = shuffle(filteredQuestions);
+            
+            // Shuffle options for each question
+            selectedQuestions = selectedQuestions.map(q => ({
+                ...q,
+                pilihan: shuffle([...q.pilihan])
+            }));
+
+            // Show quiz screen
+            document.getElementById('levelSelectionScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            // Display first question
+            displayQuestion();
+        }
+
+        // Display Current Question
+        function displayQuestion() {
+            isAnswered = false;
+            const question = selectedQuestions[currentQuestionIndex];
+            
+            // Update progress
+            const totalQuestions = selectedQuestions.length;
+            const progressPercent = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progressText').textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${totalQuestions}`;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('categoryTag').textContent = question.kategori;
+            
+            // Update question text
+            document.getElementById('questionText').textContent = question.pertanyaan;
+            
+            // Render options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.pilihan.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-4 border-2 border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all font-semibold text-gray-700';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(option, question.jawaban);
+                optionsContainer.appendChild(button);
+            });
+            
+            // Hide explanation and next button
+            document.getElementById('explanationBox').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            
+            // Render math in question
+            setTimeout(() => {
+                renderMath(document.getElementById('questionCard'));
+            }, 100);
+        }
+
+        // Handle Answer Selection
+        function selectAnswer(selectedOption, correctAnswer) {
+            if (isAnswered) return; // Prevent multiple selections
+            
+            isAnswered = true;
+            const question = selectedQuestions[currentQuestionIndex];
+            const optionButtons = document.querySelectorAll('#optionsContainer button');
+            
+            // Check if correct
+            const isCorrect = selectedOption === correctAnswer;
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Update button styles
+            optionButtons.forEach(button => {
+                // Disable all buttons
+                button.classList.add('option-disabled');
+                button.onclick = null;
+                
+                const buttonText = button.textContent;
+                
+                if (buttonText === correctAnswer) {
+                    // Highlight correct answer in green
+                    button.classList.remove('border-gray-300', 'hover:border-indigo-500', 'hover:bg-indigo-50');
+                    button.classList.add('option-correct');
+                    button.innerHTML = `✓ ${buttonText}`;
+                } else if (buttonText === selectedOption && !isCorrect) {
+                    // Highlight wrong answer in red
+                    button.classList.remove('border-gray-300', 'hover:border-indigo-500', 'hover:bg-indigo-50');
+                    button.classList.add('option-wrong');
+                    button.innerHTML = `✗ ${buttonText}`;
+                }
+            });
+            
+            // Show explanation
+            document.getElementById('explanationText').textContent = question.penjelasan;
+            document.getElementById('explanationBox').classList.remove('hidden');
+            
+            // Render math in explanation
+            setTimeout(() => {
+                renderMath(document.getElementById('explanationBox'));
+            }, 100);
+            
+            // Show next button or finish
+            if (currentQuestionIndex < selectedQuestions.length - 1) {
+                document.getElementById('nextButtonContainer').classList.remove('hidden');
+            } else {
+                // Last question - show finish button
+                const nextContainer = document.getElementById('nextButtonContainer');
+                nextContainer.innerHTML = `
+                    <button onclick="showResults()" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold py-4 px-6 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105">
+                        ✓ Lihat Hasil
+                    </button>
+                `;
+                nextContainer.classList.remove('hidden');
+            }
+        }
+
+        // Next Question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            // Add fade effect
+            const card = document.getElementById('questionCard');
+            card.classList.remove('fade-in');
+            card.classList.add('fade-out');
+            
+            setTimeout(() => {
+                displayQuestion();
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+            }, 300);
+        }
+
+        // Show Results
+        function showResults() {
+            const totalQuestions = selectedQuestions.length;
+            const wrongCount = totalQuestions - score;
+            const percentage = (score / totalQuestions) * 100;
+            
+            // Hide quiz screen
+            document.getElementById('quizScreen').classList.add('hidden');
+            
+            // Show result screen
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            // Update result display
+            document.getElementById('scoreDisplay').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('wrongCount').textContent = wrongCount;
+            
+            // Update message based on score
+            let emoji, title, message;
+            if (percentage === 100) {
+                emoji = '🎉';
+                title = 'Sempurna!';
+                message = 'Luar biasa! Anda menjawab semua pertanyaan dengan benar!';
+            } else if (percentage >= 80) {
+                emoji = '🌟';
+                title = 'Hebat!';
+                message = 'Kerja bagus! Anda memahami materi dengan sangat baik!';
+            } else if (percentage >= 60) {
+                emoji = '👍';
+                title = 'Bagus!';
+                message = 'Anda sudah cukup memahami materinya. Terus belajar!';
+            } else if (percentage >= 40) {
+                emoji = '💪';
+                title = 'Coba Lagi!';
+                message = 'Jangan menyerah! Pelajari kembali materinya dan coba lagi.';
+            } else {
+                emoji = '📚';
+                title = 'Tetap Semangat!';
+                message = 'Belajar membutuhkan waktu. Ulangi materi dan coba lagi!';
+            }
+            
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadQuestions();
+            
+            // Wait for KaTeX to load
+            const checkKaTeX = setInterval(() => {
+                if (window.renderMathInElement) {
+                    clearInterval(checkKaTeX);
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
