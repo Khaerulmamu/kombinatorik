@@ -41,7 +41,7 @@
     "kategori": "Kombinasi",
     "pertanyaan": "Dalam sebuah pertemuan, setiap orang saling berjabat tangan satu sama lain tepat satu kali. Jika total terjadi 45 jabat tangan, berapa banyak orang yang hadir dalam pertemuan tersebut?",
     "pilihan": ["9 orang", "10 orang", "11 orang", "45 orang"],
-    "jawaban": "10 orang",
+    "jawaban": "9 orang",
     "penjelasan": "Satu jabat tangan melibatkan 2 orang. Jika jumlah orang adalah $n$, maka $C(n, 2) = 45$. \\n $\\frac{n(n-1)}{2} = 45 \\rightarrow n(n-1) = 90$. \\n Bilangan yang berurutan yang hasilnya 90 adalah $10 \\times 9$, jadi $n = 10$."
   }
 ]
