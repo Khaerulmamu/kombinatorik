@@ -583,6 +583,122 @@
                     </p>
                 </div>
 
+                <!-- Sub-bagian Permutasi Siklis dengan Objek Berdampingan -->
+                <div class="mt-8 mb-8 border-t border-green-200 pt-6">
+                    <h5 class="text-xl font-semibold text-gray-700 mb-3">Permutasi Siklis dengan Objek yang Berdampingan</h5>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Dalam beberapa kasus, ada syarat khusus bahwa beberapa objek <strong>harus selalu berdampingan</strong> 
+                        (adjacent) dalam susunan melingkar. Untuk menyelesaikannya, kita anggap objek yang harus berdampingan 
+                        sebagai satu kesatuan (satu unit).
+                    </p>
+                    <div class="bg-green-50 p-4 rounded-lg mb-6">
+                        <p class="font-mono text-green-800 text-lg mb-2">
+                            P = (n - k)! × k!
+                        </p>
+                        <p class="text-sm text-gray-600">
+                            Di mana:<br>
+                            <strong>n</strong> = total objek yang akan disusun melingkar<br>
+                            <strong>k</strong> = jumlah objek yang harus selalu berdampingan
+                        </p>
+                        <p class="text-sm text-gray-500 mt-3">
+                            💡 Konsep: Anggap k objek berdampingan sebagai 1 unit, sehingga ada (n - k + 1) objek yang 
+                            disusun melingkar → (n - k)!. Kemudian k objek dalam unit dapat disusun → k!
+                        </p>
+                    </div>
+
+                    <!-- Contoh Soal 3 -->
+                    <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 3: Keluarga Duduk Melingkar</h5>
+                        <p class="text-gray-700 mb-3">
+                            <strong>Soal:</strong> Sebuah keluarga yang terdiri dari 5 orang (Ayah, Ibu, dan 3 anak) 
+                            akan duduk mengelilingi meja bundar. Jika kedua anak pertama harus duduk berdampingan, 
+                            berapa banyak cara mereka dapat duduk?
+                        </p>
+                        <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                            <li>Total orang: n = 5</li>
+                            <li>Objek yang harus berdampingan: k = 2 (kedua anak)</li>
+                            <li>Anggap 2 anak sebagai 1 unit, maka ada (5 - 2 + 1) = 4 "objek" untuk disusun melingkar</li>
+                            <li>Permutasi melingkar 4 objek: (4 - 1)! = 3! = 6</li>
+                            <li>2 anak dalam unit dapat bertukar posisi: 2! = 2</li>
+                            <li>Total: 3! × 2! = 6 × 2 = <strong class="text-green-700">12 cara</strong></li>
+                        </ul>
+                        <p class="text-sm text-gray-500 mt-3">
+                            💡 <em>Alternatif rumus langsung: (n - k)! × k! = (5 - 2)! × 2! = 3! × 2! = 12</em>
+                        </p>
+                    </div>
+
+                    <!-- Contoh Soal 4 -->
+                    <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 4: Rapat Komite</h5>
+                        <p class="text-gray-700 mb-3">
+                            <strong>Soal:</strong> Dalam sebuah rapat, 7 orang akan duduk mengelilingi meja bundar. 
+                            Jika ketiga perwakilan dari departemen yang sama harus duduk berdampingan, berapa banyak 
+                            susunan duduk yang mungkin?
+                        </p>
+                        <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                            <li>Total orang: n = 7</li>
+                            <li>Objek yang harus berdampingan: k = 3 (ketiga perwakilan)</li>
+                            <li>Menggunakan rumus: P = (n - k)! × k!</li>
+                            <li>P = (7 - 3)! × 3! = 4! × 3!</li>
+                            <li>P = 24 × 6 = <strong class="text-green-700">144 cara</strong></li>
+                        </ul>
+                        <p class="text-sm text-gray-500 mt-3">
+                            💡 <em>Anggap 3 perwakilan sebagai 1 blok, ada 5 "objek" disusun melingkar: (5-1)! = 24. 
+                            Dalam blok, 3 orang dapat disusun: 3! = 6. Total: 24 × 6 = 144</em>
+                        </p>
+                    </div>
+
+                    <!-- Kalkulator Permutasi Siklis dengan Objek Berdampingan -->
+                    <div class="bg-gray-50 p-6 rounded-xl mb-8">
+                        <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi Siklis dengan Objek Berdampingan</h4>
+                        <div class="mb-4">
+                            <label for="perm-circ-adj-n" class="block text-sm font-medium text-gray-700 mb-2">
+                                Total objek (n):
+                            </label>
+                            <input 
+                                type="number" 
+                                id="perm-circ-adj-n" 
+                                min="2" 
+                                max="20"
+                                step="1"
+                                value="5"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <label for="perm-circ-adj-k" class="block text-sm font-medium text-gray-700 mb-2">
+                                Objek yang harus berdampingan (k):
+                            </label>
+                            <input 
+                                type="number" 
+                                id="perm-circ-adj-k" 
+                                min="2" 
+                                max="20"
+                                step="1"
+                                value="2"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                            >
+                        </div>
+                        <button 
+                            onclick="calculateCircularPermutationAdjacent()" 
+                            class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-md"
+                        >
+                            Hitung Permutasi Siklis dengan Objek Berdampingan
+                        </button>
+                        <div id="perm-circ-adj-error" class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg hidden">
+                            <p class="text-red-700 font-medium" id="perm-circ-adj-error-msg"></p>
+                        </div>
+                        <div id="perm-circ-adj-result" class="mt-4 p-4 bg-white rounded-lg hidden">
+                            <p class="text-gray-700 font-medium">Hasil:</p>
+                            <p class="text-3xl font-bold text-green-600" id="perm-circ-adj-value"></p>
+                            <div class="mt-3 text-sm text-gray-600" id="perm-circ-adj-steps"></div>
+                            <p class="text-sm text-gray-500 mt-2" id="perm-circ-adj-explanation"></p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Calculator Permutasi Siklis -->
                 <div class="bg-gray-50 p-6 rounded-xl">
                     <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi Siklis</h4>
@@ -1279,6 +1395,78 @@
             // Display result
             valueElement.textContent = result.toLocaleString();
             explanationElement.textContent = formula + (reversible ? ' (dibagi 2 karena dapat dibalik)' : '');
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Calculate Circular Permutation with Adjacent Objects
+        function calculateCircularPermutationAdjacent() {
+            const n = parseInt(document.getElementById('perm-circ-adj-n').value);
+            const k = parseInt(document.getElementById('perm-circ-adj-k').value);
+            const resultDiv = document.getElementById('perm-circ-adj-result');
+            const errorDiv = document.getElementById('perm-circ-adj-error');
+            const errorMsg = document.getElementById('perm-circ-adj-error-msg');
+            const valueElement = document.getElementById('perm-circ-adj-value');
+            const stepsElement = document.getElementById('perm-circ-adj-steps');
+            const explanationElement = document.getElementById('perm-circ-adj-explanation');
+
+            // Hide previous results
+            resultDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+
+            // Validation
+            if (isNaN(n) || isNaN(k)) {
+                errorMsg.textContent = 'Silakan masukkan nilai yang valid untuk n dan k!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (n < 2) {
+                errorMsg.textContent = 'Total objek (n) minimal harus 2!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (k < 2) {
+                errorMsg.textContent = 'Objek yang berdampingan (k) minimal harus 2!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (k > n) {
+                errorMsg.textContent = 'Objek yang berdampingan (k) tidak boleh lebih dari total objek (n)!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (k === n) {
+                errorMsg.textContent = 'Jika semua objek harus berdampingan (k = n), gunakan kalkulator permutasi siklis biasa!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Calculate (n - k)! × k!
+            const nMinusK = n - k;
+            const factNMinusK = factorial(nMinusK);
+            const factK = factorial(k);
+            const result = factNMinusK * factK;
+
+            // Build step-by-step explanation
+            let steps = `<div class="space-y-2">`;
+            steps += `<p><strong>Langkah 1:</strong> Anggap ${k} objek yang berdampingan sebagai 1 unit</p>`;
+            steps += `<p class="ml-4">Jumlah "objek" yang akan disusun melingkar: n - k + 1 = ${n} - ${k} + 1 = ${n - k + 1}</p>`;
+            steps += `<p><strong>Langkah 2:</strong> Susun ${n - k + 1} objek melingkar</p>`;
+            steps += `<p class="ml-4">Permutasi siklis: (${n - k + 1} - 1)! = ${n - k}! = ${factNMinusK.toLocaleString()}</p>`;
+            steps += `<p><strong>Langkah 3:</strong> Susun ${k} objek dalam unit yang berdampingan</p>`;
+            steps += `<p class="ml-4">Permutasi: ${k}! = ${factK.toLocaleString()}</p>`;
+            steps += `<p><strong>Langkah 4:</strong> Kalikan kedua hasil</p>`;
+            steps += `<p class="ml-4">Total = ${factNMinusK.toLocaleString()} × ${factK.toLocaleString()} = ${result.toLocaleString()}</p>`;
+            steps += `</div>`;
+
+            // Display result
+            valueElement.textContent = result.toLocaleString() + ' cara';
+            stepsElement.innerHTML = steps;
+            explanationElement.textContent = `Rumus: (n - k)! × k! = (${n} - ${k})! × ${k}! = ${nMinusK}! × ${k}! = ${result.toLocaleString()}`;
             resultDiv.classList.remove('hidden');
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
