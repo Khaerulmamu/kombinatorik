@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simulasi interaktif melempar dua dadu - Pelajari kombinatorik dengan cara yang menyenangkan">
+    <title>Simulasi Dadu - Kombinatorik</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="dark-mode.js"></script>
+    
+    <style>
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* Fallback Tailwind-like utility classes */
+        .bg-gradient-to-br { background: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+        .from-blue-50 { --tw-gradient-from: #eff6ff; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(239, 246, 255, 0)); }
+        .to-indigo-100 { --tw-gradient-to: #e0e7ff; }
+        
+        /* Dice specific styles */
+        .dice {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 3px solid #4f46e5;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 15px;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+        
+        .dark .dice {
+            background: #374151;
+            border-color: #6366f1;
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+        }
+        
+        .dice:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        .dice:active {
+            transform: scale(0.95);
+        }
+        
+        .dot {
+            width: 18px;
+            height: 18px;
+            background: #4f46e5;
+            border-radius: 50%;
+        }
+        
+        .dark .dot {
+            background: #818cf8;
+        }
+        
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(-5deg); }
+            20% { transform: rotate(5deg); }
+            30% { transform: rotate(-5deg); }
+            40% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            60% { transform: rotate(5deg); }
+            70% { transform: rotate(-5deg); }
+            80% { transform: rotate(5deg); }
+            90% { transform: rotate(-5deg); }
+        }
+        
+        .dice.shaking {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        /* Progress bar */
+        .progress-fill {
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+            transition: width 0.5s ease;
+        }
+        
+        /* Outcome item styles */
+        .outcome-item {
+            aspect-ratio: 1;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #9ca3af;
+            opacity: 0.4;
+            transition: all 0.3s;
+        }
+        
+        .dark .outcome-item {
+            background: #374151;
+            border-color: #4b5563;
+            color: #6b7280;
+        }
+        
+        .outcome-item.unlocked {
+            opacity: 1;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            animation: unlock 0.5s ease-out;
+        }
+        
+        @keyframes unlock {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .outcome-item.just-rolled {
+            animation: pulse 0.5s ease-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .dice {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dice {
+                width: 80px;
+                height: 80px;
+                padding: 10px;
+            }
+            
+            .dot {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                    🧮 Kombinatorika
+                </h1>
+                <div class="flex gap-4 items-center">
+                    <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path class="dark-mode-sun" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            <path class="dark-mode-moon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">← Kembali</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-8 fade-in">
+        <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3">
+                🎲 Simulasi Dadu Interaktif
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Lempar dua dadu dan kumpulkan semua 36 kemungkinan hasil!
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Side - Control Area -->
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 fade-in">
+                    <div class="flex flex-col items-center">
+                        <!-- Dice Container -->
+                        <div class="flex gap-6 mb-8">
+                            <div class="dice" id="dice1" onclick="rollDice()">
+                                <!-- Dots will be added by JavaScript -->
+                            </div>
+                            <div class="dice" id="dice2" onclick="rollDice()">
+                                <!-- Dots will be added by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Roll Button -->
+                        <button 
+                            class="bg-indigo-600 dark:bg-indigo-500 text-white px-12 py-4 rounded-full font-bold text-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:shadow-lg mb-6 w-full"
+                            onclick="rollDice()">
+                            Lempar Dadu
+                        </button>
+
+                        <!-- Stats -->
+                        <div class="w-full text-center">
+                            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Progress</h3>
+                            <div class="w-full h-8 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-3">
+                                <div class="progress-fill h-full flex items-center justify-center text-white font-semibold text-sm" id="progressFill">
+                                    0/36
+                                </div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 mb-2">
+                                <span class="font-semibold">Hasil Terkumpul:</span> 
+                                <span id="collectedCount" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span> dari 36
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                <span class="font-semibold">Total Lemparan:</span> 
+                                <span id="rollCount" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Grid Area -->
+            <div class="lg:col-span-2">
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 fade-in">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Semua Kemungkinan Hasil</h2>
+                        <p class="text-gray-600 dark:text-gray-300">36 kombinasi dari melempar dua dadu (1-6)</p>
+                    </div>
+
+                    <div class="grid grid-cols-6 gap-2 md:gap-3" id="outcomesGrid">
+                        <!-- Grid items will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Congratulations Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center" id="congratsModal">
+        <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl p-10 max-w-md text-center fade-in">
+            <h2 class="text-4xl font-bold text-green-500 dark:text-green-400 mb-4">🎉 Selamat!</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-3">Anda telah mengumpulkan semua 36 kemungkinan hasil!</p>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                Total lemparan: <span id="finalRollCount" class="font-bold text-indigo-600 dark:text-indigo-400"></span>
+            </p>
+            <button 
+                class="bg-indigo-600 dark:bg-indigo-500 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:shadow-lg"
+                onclick="resetGame()">
+                Main Lagi
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-600 dark:text-gray-300">
+            <p class="mb-1">© 2026 Pembelajaran Kombinatorik. Dibangun dengan HTML5, Tailwind CSS, dan Vanilla JavaScript.</p>
+            <p>Sumber pembelajaran interaktif untuk belajar kombinatorik</p>
+        </div>
+    </footer>
+
+    <script>
+        // Game state
+        let unlockedOutcomes = new Set();
+        let rollCount = 0;
+        let dice1Value = 1;
+        let dice2Value = 1;
+
+        // Dice dot patterns for each face
+        const diceDotPatterns = {
+            1: [false, false, false, false, true, false, false, false, false],
+            2: [true, false, false, false, false, false, false, false, true],
+            3: [true, false, false, false, true, false, false, false, true],
+            4: [true, false, true, false, false, false, true, false, true],
+            5: [true, false, true, false, true, false, true, false, true],
+            6: [true, false, true, true, false, true, true, false, true]
+        };
+
+        // Initialize the game
+        function initGame() {
+            createOutcomesGrid();
+            updateDice(1, 1);
+            updateDice(2, 1);
+            updateProgress();
+        }
+
+        // Create the 6x6 outcomes grid
+        function createOutcomesGrid() {
+            const grid = document.getElementById('outcomesGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= 6; i++) {
+                for (let j = 1; j <= 6; j++) {
+                    const item = document.createElement('div');
+                    item.className = 'outcome-item';
+                    item.textContent = `${i} - ${j}`;
+                    item.dataset.outcome = `${i}-${j}`;
+                    grid.appendChild(item);
+                }
+            }
+        }
+
+        // Update dice display
+        function updateDice(diceNum, value) {
+            const dice = document.getElementById(`dice${diceNum}`);
+            dice.innerHTML = '';
+            
+            const pattern = diceDotPatterns[value];
+            pattern.forEach((showDot) => {
+                const dot = document.createElement('div');
+                if (showDot) {
+                    dot.className = 'dot';
+                }
+                dice.appendChild(dot);
+            });
+        }
+
+        // Roll the dice
+        function rollDice() {
+            // Add shake animation
+            const dice1Element = document.getElementById('dice1');
+            const dice2Element = document.getElementById('dice2');
+            
+            dice1Element.classList.add('shaking');
+            dice2Element.classList.add('shaking');
+
+            // Generate random values after a short delay
+            setTimeout(() => {
+                dice1Value = Math.floor(Math.random() * 6) + 1;
+                dice2Value = Math.floor(Math.random() * 6) + 1;
+
+                updateDice(1, dice1Value);
+                updateDice(2, dice2Value);
+
+                // Increment roll count
+                rollCount++;
+                document.getElementById('rollCount').textContent = rollCount;
+
+                // Unlock the corresponding outcome
+                unlockOutcome(dice1Value, dice2Value);
+
+                // Remove shake animation
+                dice1Element.classList.remove('shaking');
+                dice2Element.classList.remove('shaking');
+
+                // Update progress
+                updateProgress();
+
+                // Check if all outcomes are collected
+                if (unlockedOutcomes.size === 36) {
+                    setTimeout(showCongratulations, 500);
+                }
+            }, 500);
+        }
+
+        // Unlock an outcome in the grid
+        function unlockOutcome(value1, value2) {
+            const outcomeKey = `${value1}-${value2}`;
+            const wasLocked = !unlockedOutcomes.has(outcomeKey);
+            
+            unlockedOutcomes.add(outcomeKey);
+
+            const outcomeElement = document.querySelector(`[data-outcome="${outcomeKey}"]`);
+            if (outcomeElement) {
+                if (!outcomeElement.classList.contains('unlocked')) {
+                    outcomeElement.classList.add('unlocked');
+                }
+                outcomeElement.classList.add('just-rolled');
+                setTimeout(() => {
+                    outcomeElement.classList.remove('just-rolled');
+                }, 500);
+            }
+        }
+
+        // Update progress bar and stats
+        function updateProgress() {
+            const collected = unlockedOutcomes.size;
+            const percentage = (collected / 36) * 100;
+            
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = `${percentage}%`;
+            progressFill.textContent = `${collected}/36`;
+            
+            document.getElementById('collectedCount').textContent = collected;
+        }
+
+        // Show congratulations modal
+        function showCongratulations() {
+            document.getElementById('finalRollCount').textContent = rollCount;
+            const modal = document.getElementById('congratsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Reset the game
+        function resetGame() {
+            unlockedOutcomes.clear();
+            rollCount = 0;
+            dice1Value = 1;
+            dice2Value = 1;
+
+            document.getElementById('rollCount').textContent = '0';
+            const modal = document.getElementById('congratsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            // Reset all outcome items
+            const outcomeItems = document.querySelectorAll('.outcome-item');
+            outcomeItems.forEach(item => {
+                item.classList.remove('unlocked', 'just-rolled');
+            });
+
+            updateDice(1, 1);
+            updateDice(2, 1);
+            updateProgress();
+        }
+
+        // Initialize game on page load
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Kombinatorik - Kombinatorika</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="dark-mode.js"></script>
+    
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Fallback Tailwind utilities */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Option button states */
+        .option-correct {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border-color: #059669;
+        }
+        
+        .option-wrong {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+            border-color: #dc2626;
+        }
+        
+        .option-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Progress bar animation */
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* Card hover effect */
+        .material-card, .level-card {
+            transition: all 0.3s ease;
+        }
+        
+        .material-card:hover, .level-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Border for difficult level */
+        .difficult-border {
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <!-- Navbar -->
+    <header class="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                🧮 Kombinatorika
+            </a>
+            <div class="flex items-center gap-2">
+                <a href="index.html" aria-label="Kembali ke halaman utama" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    ← Kembali
+                </a>
+                <button id="darkModeToggle" class="ml-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Toggle dark mode">
+                    <span class="text-2xl">🌙</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Material Selection Screen -->
+        <div id="materialSelectionScreen" class="fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">🎯 Kuis Kombinatorik</h1>
+                <p class="text-gray-600 dark:text-gray-300">Pilih materi yang ingin Anda kerjakan</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <!-- Material 1: Aturan Perkalian -->
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(1, 'Aturan Perkalian')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">✖️</div>
+                        <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">Aturan Perkalian</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Prinsip dasar menghitung banyak cara</p>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-lg inline-block">
+                            Materi Dasar
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Material 2: Permutasi -->
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(2, 'Permutasi')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🔄</div>
+                        <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Permutasi</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Susunan dengan urutan penting</p>
+                        <div class="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-800 dark:text-indigo-300 px-4 py-2 rounded-lg inline-block">
+                            Penyusunan
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Material 3: Kombinasi -->
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(3, 'Kombinasi')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Kombinasi</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Pemilihan tanpa urutan</p>
+                        <div class="bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg inline-block">
+                            Pemilihan
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Selection Screen -->
+        <div id="levelSelectionScreen" class="hidden">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">🎯 Pilih Tingkat Kesulitan</h1>
+                <p class="text-gray-600 dark:text-gray-300 mb-2">Materi: <span id="selectedMaterialName" class="font-bold text-indigo-600 dark:text-indigo-400"></span></p>
+                <button onclick="backToMaterialSelection()" class="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    ← Ganti Materi
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- Easy Level -->
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(1, 'Mudah')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">😊</div>
+                        <h3 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Mudah</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Pertanyaan dasar</p>
+                        <div class="bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg inline-block mb-2">
+                            Level Pemula
+                        </div>
+                        <div id="level-1-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medium Level -->
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(2, 'Sedang')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🤔</div>
+                        <h3 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mb-2">Sedang</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Tantangan menengah</p>
+                        <div class="bg-yellow-50 dark:bg-amber-900/20 text-yellow-800 dark:text-yellow-300 px-4 py-2 rounded-lg inline-block mb-2">
+                            Level Menengah
+                        </div>
+                        <div id="level-2-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hard Level -->
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(3, 'Sulit')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🔥</div>
+                        <h3 class="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">Sulit</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Ujian maksimal</p>
+                        <div class="bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300 px-4 py-2 rounded-lg inline-block mb-2">
+                            Level Ahli
+                        </div>
+                        <div id="level-3-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="hidden">
+            <div class="max-w-3xl mx-auto">
+                <!-- Progress Bar -->
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-6 mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-semibold text-gray-600 dark:text-gray-300" id="progressText">Soal 1 dari 8</span>
+                        <span class="text-sm font-semibold text-indigo-600 dark:text-indigo-400" id="categoryTag">Permutasi</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                        <div id="progressBar" class="progress-bar bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full" style="width: 12.5%"></div>
+                    </div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 mb-6 fade-in" id="questionCard">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6" id="questionText">Loading question...</h2>
+                    
+                    <!-- Options -->
+                    <div class="space-y-4" id="optionsContainer">
+                        <!-- Options will be inserted here by JavaScript -->
+                    </div>
+                    
+                    <!-- Explanation Box (hidden initially) -->
+                    <div id="explanationBox" class="hidden mt-6 bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 dark:border-indigo-400 p-4 rounded-lg slide-up">
+                        <h4 class="font-bold text-indigo-900 dark:text-indigo-300 mb-2">💡 Penjelasan:</h4>
+                        <p class="text-indigo-800 dark:text-indigo-200" id="explanationText"></p>
+                    </div>
+                    
+                    <!-- Next Button (hidden initially) -->
+                    <div id="nextButtonContainer" class="hidden mt-6">
+                        <button onclick="nextQuestion()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105">
+                            Soal Selanjutnya →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="hidden fade-in">
+            <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 text-center">
+                <div class="text-6xl mb-4" id="resultEmoji">🎉</div>
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2" id="resultTitle">Selamat!</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-2" id="resultMessage">Anda telah menyelesaikan kuis</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                    Materi: <span id="resultMaterial" class="font-semibold"></span> | 
+                    Level: <span id="resultLevel" class="font-semibold"></span>
+                </p>
+                
+                <div class="bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl p-8 mb-6">
+                    <div class="text-6xl font-bold text-indigo-600 dark:text-indigo-400 mb-2" id="scoreDisplay">0/8</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-semibold">Skor Anda</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="correctCount">0</div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jawaban Benar</p>
+                    </div>
+                    <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-red-600 dark:text-red-400" id="wrongCount">0</div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jawaban Salah</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="location.reload()" class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all">
+                        🔄 Coba Lagi
+                    </button>
+                    <button onclick="window.location.href='index.html'" class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                        🏠 Ke Beranda
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
+            <p>&copy; 2026 Kombinatorika Learning. Built with HTML5, Tailwind CSS, and Vanilla JavaScript.</p>
+            <p class="text-sm mt-2">Interactive educational website for learning combinatorics</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global State
+        let questions = [];
+        let selectedMaterialId = 0;
+        let selectedMaterialName = '';
+        let selectedLevelId = 0;
+        let selectedLevelName = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+        let isAnswered = false;
+        const MAX_QUESTIONS = 8;
+
+        // Material ID Mapping
+        const materialMap = {
+            1: 'Aturan Perkalian',
+            2: 'Permutasi',
+            3: 'Kombinasi'
+        };
+
+        // Level ID Mapping
+        const levelMap = {
+            1: 'Mudah',
+            2: 'Sedang',
+            3: 'Sulit'
+        };
+
+        // Utility: Shuffle Array (Fisher-Yates)
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Utility: Render LaTeX with KaTeX
+        function renderMath(element) {
+            if (window.renderMathInElement) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Load Questions from JSON
+        async function loadQuestions() {
+            try {
+                // Add cache busting parameter to always get fresh data
+                const timestamp = new Date().getTime();
+                const response = await fetch(`question.json?t=${timestamp}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                questions = await response.json();
+                console.log(`Loaded ${questions.length} questions (fresh data)`);
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                alert('Gagal memuat pertanyaan. Pastikan file question.json tersedia.');
+            }
+        }
+
+        // Select Material (Step 1)
+        function selectMaterial(materialId, materialName) {
+            selectedMaterialId = materialId;
+            selectedMaterialName = materialName;
+            
+            // Hide material selection, show level selection
+            document.getElementById('materialSelectionScreen').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('materialSelectionScreen').classList.add('hidden');
+                document.getElementById('selectedMaterialName').textContent = materialName;
+                
+                // Update available questions count for each level
+                updateLevelAvailability();
+                
+                document.getElementById('levelSelectionScreen').classList.remove('hidden');
+                document.getElementById('levelSelectionScreen').classList.add('fade-in');
+            }, 300);
+        }
+        
+        // Update level availability display
+        function updateLevelAvailability() {
+            const levels = [1, 2, 3];
+            levels.forEach(levelId => {
+                const count = questions.filter(q => 
+                    q.material_id === selectedMaterialId && q.level_id === levelId
+                ).length;
+                
+                const badge = document.getElementById(`level-${levelId}-badge`);
+                if (badge) {
+                    badge.textContent = `${count} soal tersedia`;
+                    if (count === 0) {
+                        badge.classList.add('bg-red-100', 'text-red-800');
+                        badge.classList.remove('bg-blue-100', 'text-blue-800');
+                    } else {
+                        badge.classList.add('bg-blue-100', 'text-blue-800');
+                        badge.classList.remove('bg-red-100', 'text-red-800');
+                    }
+                }
+            });
+        }
+
+        // Back to Material Selection
+        function backToMaterialSelection() {
+            document.getElementById('levelSelectionScreen').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('levelSelectionScreen').classList.add('hidden');
+                document.getElementById('materialSelectionScreen').classList.remove('hidden', 'fade-out');
+                document.getElementById('materialSelectionScreen').classList.add('fade-in');
+            }, 300);
+        }
+
+        // Start Quiz with Selected Material and Level
+        function startQuiz(levelId, levelName) {
+            selectedLevelId = levelId;
+            selectedLevelName = levelName;
+            currentQuestionIndex = 0;
+            score = 0;
+            isAnswered = false;
+
+            // Filter questions by material_id AND level_id
+            const filteredQuestions = questions.filter(q => 
+                q.material_id === selectedMaterialId && q.level_id === selectedLevelId
+            );
+            
+            console.log(`Filtered questions: ${filteredQuestions.length} (Material: ${selectedMaterialId}, Level: ${selectedLevelId})`);
+            
+            if (filteredQuestions.length === 0) {
+                alert(`Belum ada soal untuk materi ${selectedMaterialName} level ${levelName}. Silakan pilih materi/level lain.`);
+                return;
+            }
+            
+            // Shuffle questions and take max 8 (or all if less than 8)
+            const shuffledQuestions = shuffle(filteredQuestions);
+            selectedQuestions = shuffledQuestions.slice(0, Math.min(MAX_QUESTIONS, shuffledQuestions.length));
+            
+            // Shuffle options for each question
+            selectedQuestions = selectedQuestions.map(q => ({
+                ...q,
+                opsi: shuffle([...q.opsi])
+            }));
+
+            console.log(`Selected ${selectedQuestions.length} questions for quiz`);
+
+            // Show quiz screen
+            document.getElementById('levelSelectionScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            // Apply red border if level is Sulit
+            const questionCard = document.getElementById('questionCard');
+            if (levelId === 3) {
+                questionCard.classList.add('difficult-border');
+            } else {
+                questionCard.classList.remove('difficult-border');
+            }
+            
+            // Display first question
+            displayQuestion();
+        }
+
+        // Display Current Question
+        function displayQuestion() {
+            isAnswered = false;
+            const question = selectedQuestions[currentQuestionIndex];
+            
+            // Update progress
+            const totalQuestions = selectedQuestions.length;
+            const progressPercent = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progressText').textContent = `Soal ${currentQuestionIndex + 1} dari ${totalQuestions}`;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('categoryTag').textContent = question.kategori || materialMap[question.material_id];
+            
+            // Update question text
+            document.getElementById('questionText').textContent = question.pertanyaan;
+            
+            // Render options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.opsi.forEach((option) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all font-semibold text-gray-700 dark:text-gray-200 dark:bg-gray-700';
+                button.textContent = `${option.id.toUpperCase()}. ${option.teks}`;
+                button.dataset.optionId = option.id;
+                button.onclick = () => selectAnswer(option.id, question.jawaban_benar_id);
+                optionsContainer.appendChild(button);
+            });
+            
+            // Hide explanation and next button
+            document.getElementById('explanationBox').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            
+            // Render math in question
+            setTimeout(() => {
+                renderMath(document.getElementById('questionCard'));
+            }, 100);
+        }
+
+        // Handle Answer Selection
+        function selectAnswer(selectedOptionId, correctAnswerId) {
+            if (isAnswered) return; // Prevent multiple selections
+            
+            isAnswered = true;
+            const question = selectedQuestions[currentQuestionIndex];
+            const optionButtons = document.querySelectorAll('#optionsContainer button');
+            
+            // Check if correct
+            const isCorrect = selectedOptionId === correctAnswerId;
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Update button styles
+            optionButtons.forEach(button => {
+                // Disable all buttons
+                button.classList.add('option-disabled');
+                button.onclick = null;
+                
+                const buttonOptionId = button.dataset.optionId;
+                
+                if (buttonOptionId === correctAnswerId) {
+                    // Highlight correct answer in green
+                    button.classList.remove('border-gray-300', 'dark:border-gray-600', 'hover:border-indigo-500', 'dark:hover:border-indigo-400', 'hover:bg-indigo-50', 'dark:hover:bg-indigo-900/20');
+                    button.classList.add('option-correct');
+                    const originalText = button.textContent;
+                    button.innerHTML = `✓ ${originalText}`;
+                } else if (buttonOptionId === selectedOptionId && !isCorrect) {
+                    // Highlight wrong answer in red
+                    button.classList.remove('border-gray-300', 'dark:border-gray-600', 'hover:border-indigo-500', 'dark:hover:border-indigo-400', 'hover:bg-indigo-50', 'dark:hover:bg-indigo-900/20');
+                    button.classList.add('option-wrong');
+                    const originalText = button.textContent;
+                    button.innerHTML = `✗ ${originalText}`;
+                }
+            });
+            
+            // Show explanation
+            document.getElementById('explanationText').textContent = question.penjelasan;
+            document.getElementById('explanationBox').classList.remove('hidden');
+            
+            // Render math in explanation
+            setTimeout(() => {
+                renderMath(document.getElementById('explanationBox'));
+            }, 100);
+            
+            // Show next button or finish
+            const totalQuestions = selectedQuestions.length;
+            if (currentQuestionIndex < totalQuestions - 1) {
+                document.getElementById('nextButtonContainer').innerHTML = `
+                    <button onclick="nextQuestion()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105">
+                        Soal Selanjutnya →
+                    </button>
+                `;
+                document.getElementById('nextButtonContainer').classList.remove('hidden');
+            } else {
+                // Last question - show finish button
+                const nextContainer = document.getElementById('nextButtonContainer');
+                nextContainer.innerHTML = `
+                    <button onclick="showResults()" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold py-4 px-6 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105">
+                        ✓ Lihat Hasil
+                    </button>
+                `;
+                nextContainer.classList.remove('hidden');
+            }
+        }
+
+        // Next Question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            // Add fade effect
+            const card = document.getElementById('questionCard');
+            card.classList.remove('fade-in');
+            card.classList.add('fade-out');
+            
+            setTimeout(() => {
+                displayQuestion();
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+            }, 300);
+        }
+
+        // Show Results
+        function showResults() {
+            const totalQuestions = selectedQuestions.length;
+            const wrongCount = totalQuestions - score;
+            const percentage = (score / totalQuestions) * 100;
+            
+            // Hide quiz screen
+            document.getElementById('quizScreen').classList.add('hidden');
+            
+            // Show result screen
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            // Update result display
+            document.getElementById('scoreDisplay').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('wrongCount').textContent = wrongCount;
+            document.getElementById('resultMaterial').textContent = selectedMaterialName;
+            document.getElementById('resultLevel').textContent = selectedLevelName;
+            
+            // Update message based on score
+            let emoji, title, message;
+            if (percentage === 100) {
+                emoji = '🎉';
+                title = 'Sempurna!';
+                message = 'Luar biasa! Anda menjawab semua pertanyaan dengan benar!';
+            } else if (percentage >= 80) {
+                emoji = '🌟';
+                title = 'Hebat!';
+                message = 'Kerja bagus! Anda memahami materi dengan sangat baik!';
+            } else if (percentage >= 60) {
+                emoji = '👍';
+                title = 'Bagus!';
+                message = 'Anda sudah cukup memahami materinya. Terus belajar!';
+            } else if (percentage >= 40) {
+                emoji = '💪';
+                title = 'Coba Lagi!';
+                message = 'Jangan menyerah! Pelajari kembali materinya dan coba lagi.';
+            } else {
+                emoji = '📚';
+                title = 'Tetap Semangat!';
+                message = 'Belajar membutuhkan waktu. Ulangi materi dan coba lagi!';
+            }
+            
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultMessage').textContent = message;
+            
+            // Save score to Google Sheets (placeholder)
+            saveScoreToGoogleSheets(selectedMaterialName, selectedLevelName, score, totalQuestions, percentage);
+        }
+
+        // Save Score to Google Sheets (Placeholder function)
+        function saveScoreToGoogleSheets(materialName, levelName, score, totalQuestions, percentage) {
+            // Placeholder for Google Sheets integration
+            // You need to create a Google Apps Script Web App to receive this data
+            
+            const data = {
+                timestamp: new Date().toISOString(),
+                material: materialName,
+                level: levelName,
+                score: score,
+                totalQuestions: totalQuestions,
+                percentage: percentage.toFixed(2),
+                userAgent: navigator.userAgent
+            };
+            
+            console.log('Score data to be saved:', data);
+            
+            // Example fetch to Google Apps Script Web App (uncomment and replace URL when ready)
+            /*
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then(() => {
+                console.log('Score saved to Google Sheets');
+            }).catch((error) => {
+                console.error('Error saving score:', error);
+            });
+            */
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadQuestions();
+            
+            // Wait for KaTeX to load
+            const checkKaTeX = setInterval(() => {
+                if (window.renderMathInElement) {
+                    clearInterval(checkKaTeX);
+                }
+            }, 100);
+        });
+    </script>
+
+    <!-- Background Music Player -->
+    <audio id="bgMusic" preload="metadata">
+        <!-- User needs to add the MP3 file to the repository -->
+        <!-- Example: <source src="assets/tante-culik-aku-dong-remix.mp3" type="audio/mpeg"> -->
+        <source src="https://khaerulmamu.github.io/kombinatorik/musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button (Fixed Position) -->
+    <button id="musicToggle" class="fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-50 group" title="Toggle Music">
+        <span id="musicIcon" class="text-2xl">▶️</span>
+    </button>
+
+    <script>
+        // Music Player Control
+        (function() {
+            const audio = document.getElementById('bgMusic');
+            const toggleBtn = document.getElementById('musicToggle');
+            const iconSpan = document.getElementById('musicIcon');
+            let isPlaying = false;
+
+            // Toggle play/pause
+            toggleBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    iconSpan.textContent = '▶️';
+                    toggleBtn.title = 'Play Music';
+                    isPlaying = false;
+                } else {
+                    audio.play().then(() => {
+                        iconSpan.textContent = '⏸️';
+                        toggleBtn.title = 'Pause Music';
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.error('Error playing audio:', error);
+                        alert('Error: Could not play music. Please check if the audio file exists.');
+                    });
+                }
+            });
+
+            // Handle when audio ends
+            audio.addEventListener('ended', () => {
+                iconSpan.textContent = '▶️';
+                toggleBtn.title = 'Play Music';
+                isPlaying = false;
+            });
+
+            // Handle audio errors
+            audio.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                iconSpan.textContent = '❌';
+                toggleBtn.title = 'Music file not found';
+                toggleBtn.disabled = true;
+                toggleBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+        })();
+    </script>
+</body>
+</html>
