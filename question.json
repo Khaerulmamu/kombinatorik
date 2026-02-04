@@ -1,3 +1,4 @@
+[
 
   {
     "id": 2101,
@@ -114,7 +115,7 @@
       { "id": "a", "teks": "8 cara" },
       { "id": "b", "teks": "12 cara" },
       { "id": "c", "teks": "16 cara" },
-      { "id": "d": "24 cara" }
+      { "id": "d", "teks": "24 cara" }
     ],
     "jawaban_benar_id": "b",
     "penjelasan": "Memilih 2 orang dari 4 dengan jabatan berbeda: $P(4, 2) = 4 \\times 3 = 12$ cara."
@@ -358,5 +359,5 @@
     ],
     "jawaban_benar_id": "a",
     "penjelasan": "Vokal (I,O,E,I,A) jadi 1 blok. Sisa konsonan (N,D,N,S) ada 4 huruf. Total unit = 1 (blok) + 4 (konsonan) = 5 unit. Unit disusun: $\\frac{5!}{2!}$ (N ada 2) = 60. Isi blok disusun: $\\frac{5!}{2!}$ (I ada 2) = 60. Total: $60 \\times 60 = 3.600$ cara."
-  },
-
+  }
+]
