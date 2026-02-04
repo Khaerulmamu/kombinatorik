@@ -1,4 +1,4 @@
-[
+
   {
     "id": 2101,
     "material_id": 2,
@@ -240,9 +240,7 @@
     ],
     "jawaban_benar_id": "a",
     "penjelasan": "Total 5 buku, unsur kembar 3 dan 2. Rumus: $\\frac{5!}{3!2!} = \\frac{120}{6 \\times 2} = 10$ cara."
-  }
-]
-[
+  },
   {
     "id": 2301,
     "material_id": 2,
@@ -362,127 +360,5 @@
     ],
     "jawaban_benar_id": "a",
     "penjelasan": "Vokal (I,O,E,I,A) jadi 1 blok. Sisa konsonan (N,D,N,S) ada 4 huruf. Total unit = 1 (blok) + 4 (konsonan) = 5 unit. Unit disusun: $\\frac{5!}{2!}$ (N ada 2) = 60. Isi blok disusun: $\\frac{5!}{2!}$ (I ada 2) = 60. Total: $60 \\times 60 = 3.600$ cara."
-  }
-]
-[
-  {
-    "id": 2201,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Unsur Sama",
-    "pertanyaan": "Berapa banyak susunan huruf berbeda yang dapat dibentuk dari kata 'MAMA'?",
-    "opsi": [
-      { "id": "a", "teks": "24 susunan" },
-      { "id": "b", "teks": "12 susunan" },
-      { "id": "c", "teks": "6 susunan" },
-      { "id": "d", "teks": "4 susunan" }
-    ],
-    "jawaban_benar_id": "c",
-    "penjelasan": "Kata 'MAMA' memiliki 4 huruf dengan huruf M muncul 2 kali dan A muncul 2 kali. Rumus: $\\frac{4!}{2!2!} = \\frac{24}{4} = 6$ susunan."
   },
-  {
-    "id": 2202,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Siklis",
-    "pertanyaan": "Ada 5 orang anggota OSIS yang sedang mengadakan rapat dengan posisi duduk mengelilingi sebuah meja bundar. Banyaknya posisi duduk yang berbeda adalah...",
-    "opsi": [
-      { "id": "a", "teks": "120 cara" },
-      { "id": "b", "teks": "60 cara" },
-      { "id": "c", "teks": "24 cara" },
-      { "id": "d", "teks": "12 cara" }
-    ],
-    "jawaban_benar_id": "c",
-    "penjelasan": "Gunakan rumus permutasi siklis: $(n-1)!$. Maka $(5-1)! = 4! = 4 \\times 3 \\times 2 \\times 1 = 24$ cara."
-  },
-  {
-    "id": 2203,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Angka Berdasarkan Syarat",
-    "pertanyaan": "Dari angka {1, 2, 3, 4, 5} akan disusun bilangan yang terdiri dari 3 angka berbeda. Berapa banyak bilangan ganjil yang dapat terbentuk?",
-    "opsi": [
-      { "id": "a", "teks": "60 bilangan" },
-      { "id": "b", "teks": "36 bilangan" },
-      { "id": "c", "teks": "24 bilangan" },
-      { "id": "d", "teks": "12 bilangan" }
-    ],
-    "jawaban_benar_id": "b",
-    "penjelasan": "Bilangan ganjil ditentukan oleh angka terakhir ({1, 3, 5} = 3 pilihan). Dua posisi lainnya diisi dari sisa 4 angka: $P(4, 2) = 12$. Total = $12 \\times 3 = 36$ bilangan."
-  },
-  {
-    "id": 2204,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Unsur Sama",
-    "pertanyaan": "Banyaknya susunan huruf yang dapat dibentuk dari kata 'MALAM' adalah...",
-    "opsi": [
-      { "id": "a", "teks": "120 susunan" },
-      { "id": "b", "teks": "60 susunan" },
-      { "id": "c", "teks": "30 susunan" },
-      { "id": "d", "teks": "20 susunan" }
-    ],
-    "jawaban_benar_id": "c",
-    "penjelasan": "Total 5 huruf, M muncul 2 kali, A muncul 2 kali. Rumus: $\\frac{5!}{2!2!} = \\frac{120}{4} = 30$ susunan."
-  },
-  {
-    "id": 2205,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Siklis dengan Syarat",
-    "pertanyaan": "Ayah, Ibu, dan 3 anaknya duduk melingkar untuk makan malam. Jika Ayah dan Ibu harus selalu duduk berdampingan, berapa banyak posisi duduk yang mungkin?",
-    "opsi": [
-      { "id": "a", "teks": "12 cara" },
-      { "id": "b", "teks": "24 cara" },
-      { "id": "c", "teks": "6 cara" },
-      { "id": "d", "teks": "48 cara" }
-    ],
-    "jawaban_benar_id": "a",
-    "penjelasan": "Ayah & Ibu dianggap 1 unit. Total unit jadi 4. Permutasi siklis 4 unit: $(4-1)! = 6$. Ayah & Ibu bisa bertukar posisi ($2! = 2$). Total $6 \\times 2 = 12$ cara."
-  },
-  {
-    "id": 2206,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi nPr",
-    "pertanyaan": "Dari 6 orang siswa, akan dipilih 4 orang untuk duduk berjajar di sebuah bangku panjang. Berapa banyak susunan posisi duduk yang dapat dibentuk?",
-    "opsi": [
-      { "id": "a", "teks": "15 cara" },
-      { "id": "b", "teks": "360 cara" },
-      { "id": "c", "teks": "720 cara" },
-      { "id": "d", "teks": "24 cara" }
-    ],
-    "jawaban_benar_id": "b",
-    "penjelasan": "Mengatur 4 objek dari 6 tersedia: $P(6, 4) = \\frac{6!}{(6-4)!} = 6 \\times 5 \\times 4 \\times 3 = 360$ cara."
-  },
-  {
-    "id": 2207,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Unsur Sama",
-    "pertanyaan": "Berapa banyak susunan huruf berbeda yang dapat dibentuk dari kata 'JURU'?",
-    "opsi": [
-      { "id": "a", "teks": "24 susunan" },
-      { "id": "b", "teks": "12 susunan" },
-      { "id": "c", "teks": "6 susunan" },
-      { "id": "d", "teks": "4 susunan" }
-    ],
-    "jawaban_benar_id": "b",
-    "penjelasan": "Total 4 huruf, U muncul 2 kali. Rumus: $\\frac{4!}{2!} = \\frac{24}{2} = 12$ susunan."
-  },
-  {
-    "id": 2208,
-    "material_id": 2,
-    "level_id": 2,
-    "kategori": "Permutasi Unsur Sama (Benda)",
-    "pertanyaan": "Ada 3 buku Matematika yang sama dan 2 buku Fisika yang sama. Jika kelima buku tersebut disusun berjajar, ada berapa banyak cara penyusunannya?",
-    "opsi": [
-      { "id": "a", "teks": "10 cara" },
-      { "id": "b", "teks": "20 cara" },
-      { "id": "c", "teks": "60 cara" },
-      { "id": "d", "teks": "120 cara" }
-    ],
-    "jawaban_benar_id": "a",
-    "penjelasan": "Total 5 buku, unsur kembar 3 dan 2. Rumus: $\\frac{5!}{3!2!} = \\frac{120}{6 \\times 2} = 10$ cara."
-  }
-]
+
