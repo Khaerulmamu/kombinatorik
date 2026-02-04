@@ -176,8 +176,11 @@
                         <div class="text-5xl mb-4">😊</div>
                         <h3 class="text-2xl font-bold text-green-600 mb-2">Mudah</h3>
                         <p class="text-gray-600 mb-4">Pertanyaan dasar</p>
-                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block">
+                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Pemula
+                        </div>
+                        <div id="level-1-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
                         </div>
                     </div>
                 </div>
@@ -188,8 +191,11 @@
                         <div class="text-5xl mb-4">🤔</div>
                         <h3 class="text-2xl font-bold text-yellow-600 mb-2">Sedang</h3>
                         <p class="text-gray-600 mb-4">Tantangan menengah</p>
-                        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg inline-block">
+                        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Menengah
+                        </div>
+                        <div id="level-2-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
                         </div>
                     </div>
                 </div>
@@ -200,8 +206,11 @@
                         <div class="text-5xl mb-4">🔥</div>
                         <h3 class="text-2xl font-bold text-red-600 mb-2">Sulit</h3>
                         <p class="text-gray-600 mb-4">Ujian maksimal</p>
-                        <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg inline-block">
+                        <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Ahli
+                        </div>
+                        <div id="level-3-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                            Memuat...
                         </div>
                     </div>
                 </div>
@@ -350,9 +359,18 @@
         // Load Questions from JSON
         async function loadQuestions() {
             try {
-                const response = await fetch('question.json');
+                // Add cache busting parameter to always get fresh data
+                const timestamp = new Date().getTime();
+                const response = await fetch(`question.json?t=${timestamp}`, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
                 questions = await response.json();
-                console.log(`Loaded ${questions.length} questions`);
+                console.log(`Loaded ${questions.length} questions (fresh data)`);
             } catch (error) {
                 console.error('Error loading questions:', error);
                 alert('Gagal memuat pertanyaan. Pastikan file question.json tersedia.');
@@ -369,9 +387,35 @@
             setTimeout(() => {
                 document.getElementById('materialSelectionScreen').classList.add('hidden');
                 document.getElementById('selectedMaterialName').textContent = materialName;
+                
+                // Update available questions count for each level
+                updateLevelAvailability();
+                
                 document.getElementById('levelSelectionScreen').classList.remove('hidden');
                 document.getElementById('levelSelectionScreen').classList.add('fade-in');
             }, 300);
+        }
+        
+        // Update level availability display
+        function updateLevelAvailability() {
+            const levels = [1, 2, 3];
+            levels.forEach(levelId => {
+                const count = questions.filter(q => 
+                    q.material_id === selectedMaterialId && q.level_id === levelId
+                ).length;
+                
+                const badge = document.getElementById(`level-${levelId}-badge`);
+                if (badge) {
+                    badge.textContent = `${count} soal tersedia`;
+                    if (count === 0) {
+                        badge.classList.add('bg-red-100', 'text-red-800');
+                        badge.classList.remove('bg-blue-100', 'text-blue-800');
+                    } else {
+                        badge.classList.add('bg-blue-100', 'text-blue-800');
+                        badge.classList.remove('bg-red-100', 'text-red-800');
+                    }
+                }
+            });
         }
 
         // Back to Material Selection
