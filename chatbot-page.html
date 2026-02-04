@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asisten AI Kombinatorik - Kombinatorika</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Marked.js for Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Tailwind Fallback Utilities -->
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .bg-gradient-to-br { background: linear-gradient(to bottom right, #eff6ff, #e0e7ff); }
+        .text-indigo-600 { color: #4f46e5; }
+        .bg-indigo-600 { background-color: #4f46e5; }
+        .hover\:bg-indigo-700:hover { background-color: #4338ca; }
+        
+        /* Markdown styling for bot messages */
+        .bot-message h1, .bot-message h2, .bot-message h3 {
+            font-weight: bold;
+            color: #4338ca;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .bot-message h3 { font-size: 1.25rem; }
+        .bot-message h4 { font-size: 1.125rem; font-weight: 600; color: #4f46e5; }
+        
+        .bot-message p {
+            margin-bottom: 0.75rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+        
+        .bot-message ul, .bot-message ol {
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #374151;
+        }
+        .bot-message ul { list-style-type: disc; }
+        .bot-message ol { list-style-type: decimal; }
+        .bot-message li { margin-bottom: 0.25rem; }
+        
+        .bot-message code {
+            background-color: #f3f4f6;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-family: monospace;
+        }
+        
+        .bot-message pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+        }
+        
+        .bot-message pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .bot-message strong {
+            font-weight: bold;
+            color: #111827;
+        }
+        
+        .bot-message em {
+            font-style: italic;
+        }
+        
+        .bot-message blockquote {
+            border-left: 4px solid #4f46e5;
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 0.75rem;
+            font-style: italic;
+            color: #6b7280;
+        }
+        
+        /* Typing indicator animation */
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+        
+        .typing-dot {
+            animation: typingDot 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        /* Message slide-in animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Scrollbar styling */
+        .messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .messages-container::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 4px;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <!-- Navbar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">🧮</span>
+                <a href="index.html" class="text-2xl font-bold text-indigo-600">Kombinatorika</a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="index.html#aturan-perkalian" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Aturan Perkalian">Aturan Perkalian</a>
+                <a href="index.html#permutasi" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Permutasi">Permutasi</a>
+                <a href="index.html#kombinasi" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Kombinasi">Kombinasi</a>
+                <a href="index.html#rumus" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Rumus">Rumus</a>
+                <a href="dice-simulation.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Dadu Simulation">🎲 Dadu</a>
+                <a href="anagram-visualizer.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Anagram Visualizer">📝 Anagram</a>
+                <a href="quiz.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Quiz">🎯 Kuis</a>
+                <a href="chatbot-page.html" class="text-indigo-600 font-semibold hover:text-indigo-700 transition" aria-label="Link to Chatbot">💬 Asisten AI</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-indigo-600 transition" aria-label="Toggle menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
+                <a href="index.html#aturan-perkalian" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Aturan Perkalian">Aturan Perkalian</a>
+                <a href="index.html#permutasi" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Permutasi">Permutasi</a>
+                <a href="index.html#kombinasi" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Kombinasi">Kombinasi</a>
+                <a href="index.html#rumus" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Rumus">Rumus</a>
+                <a href="dice-simulation.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Dadu">🎲 Dadu</a>
+                <a href="anagram-visualizer.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Anagram">📝 Anagram</a>
+                <a href="quiz.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Quiz">🎯 Kuis</a>
+                <a href="chatbot-page.html" class="text-indigo-600 font-semibold hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Chatbot">💬 Asisten AI</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-12">
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                💬 Asisten AI Kombinatorik
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8">
+                Tanya apa saja tentang kombinatorik, permutasi, kombinasi, dan matematika diskrit. AI akan membantu dengan penjelasan yang mudah dipahami!
+            </p>
+        </div>
+    </section>
+    
+    <!-- Chat Container -->
+    <section class="container mx-auto px-4 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                
+                <!-- Chat Header -->
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 text-white">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-2xl">
+                            🧮
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-lg">Asisten Kombinatorik</h2>
+                            <p class="text-sm text-indigo-100">Siap membantu pembelajaran Anda</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messages Area -->
+                <div id="messagesContainer" class="messages-container px-6 py-6 space-y-4 min-h-[500px] max-h-[600px] overflow-y-auto bg-gray-50">
+                    <!-- Welcome message will be inserted here -->
+                </div>
+                
+                <!-- Input Area -->
+                <div class="border-t border-gray-200 px-6 py-4 bg-white">
+                    <div class="flex gap-3">
+                        <input 
+                            type="text" 
+                            id="messageInput" 
+                            placeholder="Tanya apa saja tentang kombinatorik..."
+                            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        >
+                        <button 
+                            id="sendBtn"
+                            class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition font-semibold"
+                        >
+                            Kirim
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">
+                        💡 Tips: Tanya "Apa itu permutasi?" atau "Jelaskan kombinasi dengan contoh"
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-white mt-12 py-6 border-t border-gray-200">
+        <div class="container mx-auto px-4 text-center text-gray-600">
+            <p>&copy; 2026 Kombinatorika. Dibuat dengan ❤️ untuk pembelajaran matematika.</p>
+            <p class="text-sm mt-2">Powered by Gemini AI & Tailwind CSS</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Configuration
+        const API_URL = 'https://kombinatorik-chatbot.vercel.app/api/chat';
+        
+        // Configure marked.js
+        marked.setOptions({
+            breaks: true,        // Convert \n to <br>
+            gfm: true,          // GitHub Flavored Markdown
+            headerIds: false,   // No auto IDs
+            mangle: false       // Don't obfuscate emails
+        });
+        
+        // DOM Elements
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        // State
+        let isLoading = false;
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Initialize with welcome message
+        function init() {
+            const welcomeText = `Halo! 👋 Selamat datang di Asisten AI Kombinatorik.
+
+Saya di sini untuk membantu Anda memahami:
+- **Permutasi** - Susunan objek dengan urutan
+- **Kombinasi** - Pemilihan objek tanpa urutan
+- **Aturan Perkalian** - Counting principles
+- **Segitiga Pascal** - Koefisien binomial
+- **Rumus & Soal** - Step-by-step solutions
+
+Silakan tanya apa saja! 😊`;
+            
+            addMessage('bot', welcomeText);
+        }
+        
+        // Add message to chat
+        function addMessage(sender, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-slide-in flex ' + (sender === 'user' ? 'justify-end' : 'justify-start');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'max-w-[85%] px-5 py-3 rounded-2xl shadow-md';
+            
+            if (sender === 'user') {
+                bubble.className += ' bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-br-sm';
+                const content = document.createElement('div');
+                content.textContent = text;
+                bubble.appendChild(content);
+            } else {
+                bubble.className += ' bg-white text-gray-800 rounded-bl-sm bot-message';
+                // Parse markdown for bot messages
+                const htmlContent = marked.parse(text);
+                bubble.innerHTML = htmlContent;
+            }
+            
+            messageDiv.appendChild(bubble);
+            messagesContainer.appendChild(messageDiv);
+            
+            scrollToBottom();
+        }
+        
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'flex justify-start';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'px-5 py-3 rounded-2xl bg-white shadow-md rounded-bl-sm flex gap-1';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'w-2 h-2 bg-indigo-600 rounded-full typing-dot';
+                bubble.appendChild(dot);
+            }
+            
+            typingDiv.appendChild(bubble);
+            messagesContainer.appendChild(typingDiv);
+            scrollToBottom();
+        }
+        
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+        
+        // Scroll to bottom
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Send message
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            
+            if (!message || isLoading) return;
+            
+            // Add user message
+            addMessage('user', message);
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Set loading state
+            isLoading = true;
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Mengirim...';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                console.group('🤖 Chatbot API Call');
+                console.log('📤 Sending to:', API_URL);
+                console.log('📦 Message:', message);
+                console.log('⏱️ Timestamp:', new Date().toISOString());
+                console.groupEnd();
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+                
+                console.group('📥 API Response');
+                console.log('Status:', response.status);
+                console.log('Status Text:', response.statusText);
+                console.groupEnd();
+                
+                if (!response.ok) {
+                    let errorData;
+                    try {
+                        errorData = await response.json();
+                    } catch {
+                        errorData = await response.text();
+                    }
+                    
+                    console.group('❌ API Error');
+                    console.error('Status:', response.status);
+                    console.error('Error Data:', errorData);
+                    console.groupEnd();
+                    
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Response Data:', data);
+                
+                // Hide typing indicator
+                hideTypingIndicator();
+                
+                // Add bot response
+                const botMessage = data.response || 'Maaf, saya tidak mendapat respons dari AI.';
+                addMessage('bot', botMessage);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                hideTypingIndicator();
+                
+                addMessage('bot', 'Maaf, terjadi kesalahan saat menghubungi AI. Silakan coba lagi. 😔');
+            } finally {
+                // Reset loading state
+                isLoading = false;
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Kirim';
+                messageInput.focus();
+            }
+        }
+        
+        // Event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
