@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="dark-mode.js"></script>
     
     <!-- KaTeX for LaTeX rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -14,6 +15,11 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     
     <style>
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
         /* Fallback Tailwind utilities */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
@@ -98,16 +104,21 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
     <!-- Navbar -->
-    <header class="bg-white shadow-md">
+    <header class="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md">
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-bold text-indigo-600 flex items-center gap-2">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
                 🧮 Kombinatorika
             </a>
-            <a href="index.html" aria-label="Kembali ke halaman utama" class="text-gray-600 hover:text-indigo-600 transition-colors">
-                ← Kembali
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="index.html" aria-label="Kembali ke halaman utama" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    ← Kembali
+                </a>
+                <button id="darkModeToggle" class="ml-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Toggle dark mode">
+                    <span class="text-2xl">🌙</span>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -116,42 +127,42 @@
         <!-- Material Selection Screen -->
         <div id="materialSelectionScreen" class="fade-in">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">🎯 Kuis Kombinatorik</h1>
-                <p class="text-gray-600">Pilih materi yang ingin Anda kerjakan</p>
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">🎯 Kuis Kombinatorik</h1>
+                <p class="text-gray-600 dark:text-gray-300">Pilih materi yang ingin Anda kerjakan</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <!-- Material 1: Aturan Perkalian -->
-                <div class="material-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(1, 'Aturan Perkalian')">
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(1, 'Aturan Perkalian')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">✖️</div>
-                        <h3 class="text-2xl font-bold text-blue-600 mb-2">Aturan Perkalian</h3>
-                        <p class="text-gray-600 mb-4">Prinsip dasar menghitung banyak cara</p>
-                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg inline-block">
+                        <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">Aturan Perkalian</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Prinsip dasar menghitung banyak cara</p>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-lg inline-block">
                             Materi Dasar
                         </div>
                     </div>
                 </div>
                 
                 <!-- Material 2: Permutasi -->
-                <div class="material-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(2, 'Permutasi')">
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(2, 'Permutasi')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">🔄</div>
-                        <h3 class="text-2xl font-bold text-indigo-600 mb-2">Permutasi</h3>
-                        <p class="text-gray-600 mb-4">Susunan dengan urutan penting</p>
-                        <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg inline-block">
+                        <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Permutasi</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Susunan dengan urutan penting</p>
+                        <div class="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-800 dark:text-indigo-300 px-4 py-2 rounded-lg inline-block">
                             Penyusunan
                         </div>
                     </div>
                 </div>
                 
                 <!-- Material 3: Kombinasi -->
-                <div class="material-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(3, 'Kombinasi')">
+                <div class="material-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="selectMaterial(3, 'Kombinasi')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">🎯</div>
-                        <h3 class="text-2xl font-bold text-green-600 mb-2">Kombinasi</h3>
-                        <p class="text-gray-600 mb-4">Pemilihan tanpa urutan</p>
-                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block">
+                        <h3 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Kombinasi</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Pemilihan tanpa urutan</p>
+                        <div class="bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg inline-block">
                             Pemilihan
                         </div>
                     </div>
@@ -162,54 +173,54 @@
         <!-- Level Selection Screen -->
         <div id="levelSelectionScreen" class="hidden">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">🎯 Pilih Tingkat Kesulitan</h1>
-                <p class="text-gray-600 mb-2">Materi: <span id="selectedMaterialName" class="font-bold text-indigo-600"></span></p>
-                <button onclick="backToMaterialSelection()" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">🎯 Pilih Tingkat Kesulitan</h1>
+                <p class="text-gray-600 dark:text-gray-300 mb-2">Materi: <span id="selectedMaterialName" class="font-bold text-indigo-600 dark:text-indigo-400"></span></p>
+                <button onclick="backToMaterialSelection()" class="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                     ← Ganti Materi
                 </button>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <!-- Easy Level -->
-                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(1, 'Mudah')">
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(1, 'Mudah')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">😊</div>
-                        <h3 class="text-2xl font-bold text-green-600 mb-2">Mudah</h3>
-                        <p class="text-gray-600 mb-4">Pertanyaan dasar</p>
-                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block mb-2">
+                        <h3 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Mudah</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Pertanyaan dasar</p>
+                        <div class="bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Pemula
                         </div>
-                        <div id="level-1-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                        <div id="level-1-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
                             Memuat...
                         </div>
                     </div>
                 </div>
                 
                 <!-- Medium Level -->
-                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(2, 'Sedang')">
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(2, 'Sedang')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">🤔</div>
-                        <h3 class="text-2xl font-bold text-yellow-600 mb-2">Sedang</h3>
-                        <p class="text-gray-600 mb-4">Tantangan menengah</p>
-                        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg inline-block mb-2">
+                        <h3 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mb-2">Sedang</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Tantangan menengah</p>
+                        <div class="bg-yellow-50 dark:bg-amber-900/20 text-yellow-800 dark:text-yellow-300 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Menengah
                         </div>
-                        <div id="level-2-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                        <div id="level-2-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
                             Memuat...
                         </div>
                     </div>
                 </div>
                 
                 <!-- Hard Level -->
-                <div class="level-card bg-white rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(3, 'Sulit')">
+                <div class="level-card bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 cursor-pointer" onclick="startQuiz(3, 'Sulit')">
                     <div class="text-center">
                         <div class="text-5xl mb-4">🔥</div>
-                        <h3 class="text-2xl font-bold text-red-600 mb-2">Sulit</h3>
-                        <p class="text-gray-600 mb-4">Ujian maksimal</p>
-                        <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg inline-block mb-2">
+                        <h3 class="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">Sulit</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Ujian maksimal</p>
+                        <div class="bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300 px-4 py-2 rounded-lg inline-block mb-2">
                             Level Ahli
                         </div>
-                        <div id="level-3-badge" class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full inline-block">
+                        <div id="level-3-badge" class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm px-3 py-1 rounded-full inline-block">
                             Memuat...
                         </div>
                     </div>
@@ -221,19 +232,19 @@
         <div id="quizScreen" class="hidden">
             <div class="max-w-3xl mx-auto">
                 <!-- Progress Bar -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-6 mb-6">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-semibold text-gray-600" id="progressText">Soal 1 dari 8</span>
-                        <span class="text-sm font-semibold text-indigo-600" id="categoryTag">Permutasi</span>
+                        <span class="text-sm font-semibold text-gray-600 dark:text-gray-300" id="progressText">Soal 1 dari 8</span>
+                        <span class="text-sm font-semibold text-indigo-600 dark:text-indigo-400" id="categoryTag">Permutasi</span>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                         <div id="progressBar" class="progress-bar bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full" style="width: 12.5%"></div>
                     </div>
                 </div>
 
                 <!-- Question Card -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-6 fade-in" id="questionCard">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6" id="questionText">Loading question...</h2>
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 mb-6 fade-in" id="questionCard">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6" id="questionText">Loading question...</h2>
                     
                     <!-- Options -->
                     <div class="space-y-4" id="optionsContainer">
@@ -241,9 +252,9 @@
                     </div>
                     
                     <!-- Explanation Box (hidden initially) -->
-                    <div id="explanationBox" class="hidden mt-6 bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-lg slide-up">
-                        <h4 class="font-bold text-indigo-900 mb-2">💡 Penjelasan:</h4>
-                        <p class="text-indigo-800" id="explanationText"></p>
+                    <div id="explanationBox" class="hidden mt-6 bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 dark:border-indigo-400 p-4 rounded-lg slide-up">
+                        <h4 class="font-bold text-indigo-900 dark:text-indigo-300 mb-2">💡 Penjelasan:</h4>
+                        <p class="text-indigo-800 dark:text-indigo-200" id="explanationText"></p>
                     </div>
                     
                     <!-- Next Button (hidden initially) -->
@@ -258,28 +269,28 @@
 
         <!-- Result Screen -->
         <div id="resultScreen" class="hidden fade-in">
-            <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 text-center">
+            <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 text-center">
                 <div class="text-6xl mb-4" id="resultEmoji">🎉</div>
-                <h2 class="text-3xl font-bold text-gray-800 mb-2" id="resultTitle">Selamat!</h2>
-                <p class="text-gray-600 mb-2" id="resultMessage">Anda telah menyelesaikan kuis</p>
-                <p class="text-sm text-gray-500 mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2" id="resultTitle">Selamat!</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-2" id="resultMessage">Anda telah menyelesaikan kuis</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
                     Materi: <span id="resultMaterial" class="font-semibold"></span> | 
                     Level: <span id="resultLevel" class="font-semibold"></span>
                 </p>
                 
-                <div class="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl p-8 mb-6">
-                    <div class="text-6xl font-bold text-indigo-600 mb-2" id="scoreDisplay">0/8</div>
-                    <p class="text-gray-700 font-semibold">Skor Anda</p>
+                <div class="bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl p-8 mb-6">
+                    <div class="text-6xl font-bold text-indigo-600 dark:text-indigo-400 mb-2" id="scoreDisplay">0/8</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-semibold">Skor Anda</p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="bg-green-100 rounded-lg p-4">
-                        <div class="text-2xl font-bold text-green-600" id="correctCount">0</div>
-                        <p class="text-sm text-gray-600">Jawaban Benar</p>
+                    <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="correctCount">0</div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jawaban Benar</p>
                     </div>
-                    <div class="bg-red-100 rounded-lg p-4">
-                        <div class="text-2xl font-bold text-red-600" id="wrongCount">0</div>
-                        <p class="text-sm text-gray-600">Jawaban Salah</p>
+                    <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-red-600 dark:text-red-400" id="wrongCount">0</div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jawaban Salah</p>
                     </div>
                 </div>
                 
@@ -287,7 +298,7 @@
                     <button onclick="location.reload()" class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all">
                         🔄 Coba Lagi
                     </button>
-                    <button onclick="window.location.href='index.html'" class="flex-1 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-all">
+                    <button onclick="window.location.href='index.html'" class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
                         🏠 Ke Beranda
                     </button>
                 </div>
@@ -296,8 +307,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white mt-12 py-6">
-        <div class="container mx-auto px-4 text-center text-gray-600">
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
             <p>&copy; 2026 Kombinatorika Learning. Built with HTML5, Tailwind CSS, and Vanilla JavaScript.</p>
             <p class="text-sm mt-2">Interactive educational website for learning combinatorics</p>
         </div>
@@ -497,7 +508,7 @@
             
             question.opsi.forEach((option) => {
                 const button = document.createElement('button');
-                button.className = 'w-full text-left p-4 border-2 border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all font-semibold text-gray-700';
+                button.className = 'w-full text-left p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all font-semibold text-gray-700 dark:text-gray-200 dark:bg-gray-700';
                 button.textContent = `${option.id.toUpperCase()}. ${option.teks}`;
                 button.dataset.optionId = option.id;
                 button.onclick = () => selectAnswer(option.id, question.jawaban_benar_id);
@@ -538,13 +549,13 @@
                 
                 if (buttonOptionId === correctAnswerId) {
                     // Highlight correct answer in green
-                    button.classList.remove('border-gray-300', 'hover:border-indigo-500', 'hover:bg-indigo-50');
+                    button.classList.remove('border-gray-300', 'dark:border-gray-600', 'hover:border-indigo-500', 'dark:hover:border-indigo-400', 'hover:bg-indigo-50', 'dark:hover:bg-indigo-900/20');
                     button.classList.add('option-correct');
                     const originalText = button.textContent;
                     button.innerHTML = `✓ ${originalText}`;
                 } else if (buttonOptionId === selectedOptionId && !isCorrect) {
                     // Highlight wrong answer in red
-                    button.classList.remove('border-gray-300', 'hover:border-indigo-500', 'hover:bg-indigo-50');
+                    button.classList.remove('border-gray-300', 'dark:border-gray-600', 'hover:border-indigo-500', 'dark:hover:border-indigo-400', 'hover:bg-indigo-50', 'dark:hover:bg-indigo-900/20');
                     button.classList.add('option-wrong');
                     const originalText = button.textContent;
                     button.innerHTML = `✗ ${originalText}`;
