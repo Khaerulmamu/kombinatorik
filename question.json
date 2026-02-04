@@ -376,9 +376,7 @@
     ],
     "jawaban_benar_id": "b",
     "penjelasan": "Ini adalah kombinasi: $C(10,4) = \\frac{10!}{4! \\cdot 6!} = \\frac{10 \\times 9 \\times 8 \\times 7}{4 \\times 3 \\times 2 \\times 1} = 210$ tim."
-  }
-]
-[
+  },
   {
     "id": 2101,
     "material_id": 2,
@@ -494,7 +492,7 @@
       { "id": "a", "teks": "8 cara" },
       { "id": "b", "teks": "12 cara" },
       { "id": "c", "teks": "16 cara" },
-      { "id": "d": "24 cara" }
+      { "id": "d", "teks": "24 cara" }
     ],
     "jawaban_benar_id": "b",
     "penjelasan": "Memilih 2 orang dari 4 dengan jabatan berbeda: $P(4, 2) = 4 \\times 3 = 12$ cara."
