@@ -548,11 +548,10 @@ class ChatbotWidget {
 
 // Initialize chatbot when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Configuration (ganti apiUrl dengan URL Vercel API Anda)
     const chatbot = new ChatbotWidget({
-        apiUrl: 'YOUR_VERCEL_API_URL_HERE' // Ganti dengan URL API Vercel
+        // PASTIKAN URL-nya lengkap sampai ke folder /api/chat
+        apiUrl: 'https://kombinatorik-chatbot.vercel.app/api/chat' 
     });
     
-    // Make chatbot accessible globally (optional)
     window.chatbot = chatbot;
 });
