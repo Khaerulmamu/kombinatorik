@@ -694,5 +694,63 @@
             }, 100);
         });
     </script>
+
+    <!-- Background Music Player -->
+    <audio id="bgMusic" preload="metadata">
+        <!-- User needs to add the MP3 file to the repository -->
+        <!-- Example: <source src="assets/tante-culik-aku-dong-remix.mp3" type="audio/mpeg"> -->
+        <source src="tante-culik-aku-dong-remix.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button (Fixed Position) -->
+    <button id="musicToggle" class="fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-50 group" title="Toggle Music">
+        <span id="musicIcon" class="text-2xl">▶️</span>
+    </button>
+
+    <script>
+        // Music Player Control
+        (function() {
+            const audio = document.getElementById('bgMusic');
+            const toggleBtn = document.getElementById('musicToggle');
+            const iconSpan = document.getElementById('musicIcon');
+            let isPlaying = false;
+
+            // Toggle play/pause
+            toggleBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    iconSpan.textContent = '▶️';
+                    toggleBtn.title = 'Play Music';
+                    isPlaying = false;
+                } else {
+                    audio.play().then(() => {
+                        iconSpan.textContent = '⏸️';
+                        toggleBtn.title = 'Pause Music';
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.error('Error playing audio:', error);
+                        alert('Error: Could not play music. Please check if the audio file exists.');
+                    });
+                }
+            });
+
+            // Handle when audio ends
+            audio.addEventListener('ended', () => {
+                iconSpan.textContent = '▶️';
+                toggleBtn.title = 'Play Music';
+                isPlaying = false;
+            });
+
+            // Handle audio errors
+            audio.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                iconSpan.textContent = '❌';
+                toggleBtn.title = 'Music file not found';
+                toggleBtn.disabled = true;
+                toggleBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+        })();
+    </script>
 </body>
 </html>
