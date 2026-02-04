@@ -378,3 +378,125 @@
     "penjelasan": "Ini adalah kombinasi: $C(10,4) = \\frac{10!}{4! \\cdot 6!} = \\frac{10 \\times 9 \\times 8 \\times 7}{4 \\times 3 \\times 2 \\times 1} = 210$ tim."
   }
 ]
+[
+  {
+    "id": 2101,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi Dasar",
+    "pertanyaan": "Andi, Budi, dan Cici akan berfoto bersama secara berdampingan. Ada berapa banyak posisi urutan berdiri yang mungkin mereka buat?",
+    "opsi": [
+      { "id": "a", "teks": "3 cara" },
+      { "id": "b", "teks": "6 cara" },
+      { "id": "c", "teks": "9 cara" },
+      { "id": "d", "teks": "12 cara" }
+    ],
+    "jawaban_benar_id": "b",
+    "penjelasan": "Karena semua objek (3 orang) disusun, kita gunakan $3! = 3 \\times 2 \\times 1 = 6$ cara."
+  },
+  {
+    "id": 2102,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi nPr",
+    "pertanyaan": "Dari 5 orang kandidat, akan dipilih seorang Ketua dan seorang Sekretaris. Banyaknya susunan pengurus yang mungkin adalah...",
+    "opsi": [
+      { "id": "a", "teks": "10 cara" },
+      { "id": "b", "teks": "15 cara" },
+      { "id": "c", "teks": "20 cara" },
+      { "id": "d", "teks": "25 cara" }
+    ],
+    "jawaban_benar_id": "c",
+    "penjelasan": "Memilih 2 orang dari 5 dengan memperhatikan jabatan (urutan penting): $P(5, 2) = \\frac{5!}{(5-2)!} = 5 \\times 4 = 20$ cara."
+  },
+  {
+    "id": 2103,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi Kata",
+    "pertanyaan": "Banyaknya susunan huruf berbeda yang dapat dibentuk dari kata 'BISA' adalah...",
+    "opsi": [
+      { "id": "a", "teks": "4 cara" },
+      { "id": "b", "teks": "12 cara" },
+      { "id": "c", "teks": "16 cara" },
+      { "id": "d", "teks": "24 cara" }
+    ],
+    "jawaban_benar_id": "d",
+    "penjelasan": "Kata 'BISA' terdiri dari 4 huruf berbeda. Jumlah susunan = $4! = 4 \\times 3 \\times 2 \\times 1 = 24$ cara."
+  },
+  {
+    "id": 2104,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi Dasar",
+    "pertanyaan": "Seorang petugas perpustakaan ingin menyusun 4 buku pelajaran yang berbeda pada sebuah rak. Banyaknya cara menyusun buku tersebut adalah...",
+    "opsi": [
+      { "id": "a", "teks": "24 cara" },
+      { "id": "b", "teks": "12 cara" },
+      { "id": "c", "teks": "8 cara" },
+      { "id": "d", "teks": "4 cara" }
+    ],
+    "jawaban_benar_id": "a",
+    "penjelasan": "Menyusun 4 objek berbeda secara linear: $4! = 4 \\times 3 \\times 2 \\times 1 = 24$ cara."
+  },
+  {
+    "id": 2105,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi nPr",
+    "pertanyaan": "Dalam sebuah kompetisi yang diikuti 6 peserta, akan diberikan piala untuk Juara I, II, dan III. Berapa banyak kemungkinan pemenang piala tersebut?",
+    "opsi": [
+      { "id": "a", "teks": "18 cara" },
+      { "id": "b", "teks": "120 cara" },
+      { "id": "c", "teks": "216 cara" },
+      { "id": "d", "teks": "720 cara" }
+    ],
+    "jawaban_benar_id": "b",
+    "penjelasan": "Memilih 3 pemenang dari 6 peserta (urutan juara penting): $P(6, 3) = 6 \\times 5 \\times 4 = 120$ cara."
+  },
+  {
+    "id": 2106,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi Dasar",
+    "pertanyaan": "Terdapat 5 buah kursi yang disusun berjajar. Jika 5 orang akan duduk di kursi tersebut, ada berapa banyak posisi duduk yang berbeda?",
+    "opsi": [
+      { "id": "a", "teks": "25 cara" },
+      { "id": "b", "teks": "60 cara" },
+      { "id": "c", "teks": "100 cara" },
+      { "id": "d", "teks": "120 cara" }
+    ],
+    "jawaban_benar_id": "d",
+    "penjelasan": "Menyusun 5 orang pada 5 tempat: $5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$ cara."
+  },
+  {
+    "id": 2107,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi Angka",
+    "pertanyaan": "Berapa banyak bilangan yang terdiri dari 3 angka berbeda yang dapat dibentuk dari angka-angka {1, 2, 3}?",
+    "opsi": [
+      { "id": "a", "teks": "3 bilangan" },
+      { "id": "b", "teks": "6 bilangan" },
+      { "id": "c", "teks": "9 bilangan" },
+      { "id": "d", "teks": "27 bilangan" }
+    ],
+    "jawaban_benar_id": "b",
+    "penjelasan": "Menyusun 3 angka berbeda dari 3 angka yang tersedia: $3! = 3 \\times 2 \\times 1 = 6$ bilangan."
+  },
+  {
+    "id": 2108,
+    "material_id": 2,
+    "level_id": 1,
+    "kategori": "Permutasi nPr",
+    "pertanyaan": "Di sebuah klub basket yang beranggotakan 4 orang, akan dipilih seorang kapten dan wakil kapten. Banyaknya cara pemilihan adalah...",
+    "opsi": [
+      { "id": "a", "teks": "8 cara" },
+      { "id": "b", "teks": "12 cara" },
+      { "id": "c", "teks": "16 cara" },
+      { "id": "d": "24 cara" }
+    ],
+    "jawaban_benar_id": "b",
+    "penjelasan": "Memilih 2 orang dari 4 dengan jabatan berbeda: $P(4, 2) = 4 \\times 3 = 12$ cara."
+  }
+]
