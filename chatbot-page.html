@@ -11,6 +11,15 @@
     <!-- Marked.js for Markdown Rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
+    <!-- KaTeX CSS for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+    
+    <!-- KaTeX Auto-render Extension -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    
     <!-- Tailwind Fallback Utilities -->
     <style>
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
@@ -321,6 +330,20 @@ Silakan tanya apa saja! 😊`;
                 // Parse markdown for bot messages
                 const htmlContent = marked.parse(text);
                 bubble.innerHTML = htmlContent;
+                
+                // Render LaTeX math with KaTeX
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(bubble, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\[', right: '\\]', display: true},
+                            {left: '\\(', right: '\\)', display: false}
+                        ],
+                        throwOnError: false,
+                        errorColor: '#cc0000'
+                    });
+                }
             }
             
             messageDiv.appendChild(bubble);
