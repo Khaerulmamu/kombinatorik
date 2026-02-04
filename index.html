@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,9 @@
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Dark Mode Script - Load before body to prevent flash -->
+    <script src="dark-mode.js"></script>
+    
     <style>
         /* Custom animations and Tailwind-compatible fallback styles */
         @keyframes fadeIn {
@@ -17,6 +20,11 @@
         }
         .fade-in {
             animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         
         /* Fallback Tailwind-like utility classes */
@@ -140,30 +148,35 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
     
     <!-- Header -->
-    <header class="bg-white shadow-md">
+    <header class="bg-white dark:bg-gray-800 shadow-md">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl md:text-3xl font-bold text-indigo-600">
+                <h1 class="text-2xl md:text-3xl font-bold text-indigo-600 dark:text-indigo-400">
                     🧮 Kombinatorika
                 </h1>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex gap-4">
-                    <a href="#multiplication-rule" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Aturan Perkalian">Aturan Perkalian</a>
-                    <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Permutasi">Permutasi</a>
-                    <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Kombinasi">Kombinasi</a>
-                    <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Navigasi ke bagian Referensi Rumus">Rumus</a>
-                    <a href="dice-simulation.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Simulasi Dadu Interaktif">🎲 Dadu</a>
-                    <a href="anagram-visualizer.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Visualizer Anagram Interaktif">📝 Anagram</a>
-                    <a href="quiz.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Kuis Kombinatorik Interaktif">🎯 Kuis</a>
-                    <a href="chatbot-page.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Asisten AI Kombinatorik">💬 Asisten AI</a>
+                <div class="hidden md:flex gap-4 items-center">
+                    <a href="#multiplication-rule" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Navigasi ke bagian Aturan Perkalian">Aturan Perkalian</a>
+                    <a href="#permutations" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Navigasi ke bagian Permutasi">Permutasi</a>
+                    <a href="#combinations" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Navigasi ke bagian Kombinasi">Kombinasi</a>
+                    <a href="#formulas" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Navigasi ke bagian Referensi Rumus">Rumus</a>
+                    <a href="dice-simulation.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Simulasi Dadu Interaktif">🎲 Dadu</a>
+                    <a href="anagram-visualizer.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Visualizer Anagram Interaktif">📝 Anagram</a>
+                    <a href="quiz.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Kuis Kombinatorik Interaktif">🎯 Kuis</a>
+                    <a href="chatbot-page.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Asisten AI Kombinatorik">💬 Asisten AI</a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="ml-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Toggle dark mode">
+                        <span class="text-2xl">🌙</span>
+                    </button>
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-indigo-600 transition p-2" aria-label="Toggle menu">
+                <button id="mobileMenuBtn" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition p-2" aria-label="Toggle menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -172,14 +185,20 @@
             
             <!-- Mobile Menu Dropdown -->
             <div id="mobileMenu" class="hidden md:hidden mt-4 pb-2 flex flex-col gap-3">
-                <a href="#multiplication-rule" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Navigasi ke bagian Aturan Perkalian">Aturan Perkalian</a>
-                <a href="#permutations" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Navigasi ke bagian Permutasi">Permutasi</a>
-                <a href="#combinations" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Navigasi ke bagian Kombinasi">Kombinasi</a>
-                <a href="#formulas" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Navigasi ke bagian Referensi Rumus">Rumus</a>
-                <a href="dice-simulation.html" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Simulasi Dadu Interaktif">🎲 Dadu</a>
-                <a href="anagram-visualizer.html" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Visualizer Anagram Interaktif">📝 Anagram</a>
-                <a href="quiz.html" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Kuis Kombinatorik Interaktif">🎯 Kuis</a>
-                <a href="chatbot-page.html" class="text-gray-600 hover:text-indigo-600 transition py-2 px-4 rounded hover:bg-indigo-50" aria-label="Asisten AI Kombinatorik">💬 Asisten AI</a>
+                <a href="#multiplication-rule" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Navigasi ke bagian Aturan Perkalian">Aturan Perkalian</a>
+                <a href="#permutations" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Navigasi ke bagian Permutasi">Permutasi</a>
+                <a href="#combinations" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Navigasi ke bagian Kombinasi">Kombinasi</a>
+                <a href="#formulas" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Navigasi ke bagian Referensi Rumus">Rumus</a>
+                <a href="dice-simulation.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Simulasi Dadu Interaktif">🎲 Dadu</a>
+                <a href="anagram-visualizer.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Visualizer Anagram Interaktif">📝 Anagram</a>
+                <a href="quiz.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Kuis Kombinatorik Interaktif">🎯 Kuis</a>
+                <a href="chatbot-page.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700" aria-label="Asisten AI Kombinatorik">💬 Asisten AI</a>
+                
+                <!-- Dark Mode Toggle for Mobile -->
+                <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2 px-4 rounded hover:bg-indigo-50 dark:hover:bg-gray-700 text-left flex items-center gap-2">
+                    <span class="text-xl" id="mobileDarkModeIcon">🌙</span>
+                    <span>Dark Mode</span>
+                </button>
             </div>
         </nav>
     </header>
@@ -187,29 +206,29 @@
     <!-- Hero Section -->
     <section class="container mx-auto px-4 py-12 md:py-20 fade-in">
         <div class="text-center max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100 mb-6">
                 Kuasai Kombinatorika
             </h2>
-            <p class="text-lg md:text-xl text-gray-600 mb-8">
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Pelajari konsep dasar perhitungan, susunan, dan pemilihan melalui kalkulator interaktif dan penjelasan yang jelas.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="#permutations" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg">
+                <a href="#permutations" class="bg-indigo-600 dark:bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition shadow-lg">
                     Mulai Belajar
                 </a>
-                <a href="quiz.html" class="bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-yellow-700 transition shadow-lg">
+                <a href="quiz.html" class="bg-yellow-600 dark:bg-yellow-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-yellow-700 dark:hover:bg-yellow-600 transition shadow-lg">
                     🎯 Kuis Interaktif
                 </a>
-                <a href="chatbot-page.html" class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition shadow-lg">
+                <a href="chatbot-page.html" class="bg-purple-600 dark:bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 dark:hover:bg-purple-600 transition shadow-lg">
                     💬 Tanya Asisten AI
                 </a>
-                <a href="dice-simulation.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg">
+                <a href="dice-simulation.html" class="bg-blue-600 dark:bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition shadow-lg">
                     🎲 Simulasi Dadu
                 </a>
-                <a href="anagram-visualizer.html" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition shadow-lg">
+                <a href="anagram-visualizer.html" class="bg-green-600 dark:bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 dark:hover:bg-green-600 transition shadow-lg">
                     📝 Visualizer Anagram
                 </a>
-                <a href="#formulas" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition shadow-lg">
+                <a href="#formulas" class="bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition shadow-lg">
                     Lihat Rumus
                 </a>
             </div>
@@ -218,13 +237,13 @@
 
     <!-- What is Combinatorics Section -->
     <section class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 class="text-3xl font-bold text-gray-800 mb-6">Apa itu Kombinatorik?</h3>
-            <p class="text-gray-600 text-lg leading-relaxed mb-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
+            <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Apa itu Kombinatorik?</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-4">
                 Kombinatorik adalah cabang matematika yang mempelajari struktur diskrit yang terbatas atau dapat dihitung. 
                 Ini melibatkan perhitungan, penyusunan, dan pemilihan objek sesuai dengan aturan tertentu.
             </p>
-            <p class="text-gray-600 text-lg leading-relaxed">
+            <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                 Konsep fundamental dalam kombinatorik meliputi <strong>aturan perkalian</strong>, 
                 <strong>permutasi</strong> (susunan di mana urutan penting), 
                 dan <strong>kombinasi</strong> (pemilihan di mana urutan tidak penting).
@@ -234,121 +253,121 @@
 
     <!-- Multiplication Rule Section -->
     <section id="multiplication-rule" class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">✖️</span>
-                <h3 class="text-3xl font-bold text-gray-800">Aturan Perkalian</h3>
+                <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Aturan Perkalian</h3>
             </div>
             
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">Konsep Dasar</h4>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Konsep Dasar</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Aturan perkalian (Multiplication Rule) adalah prinsip dasar dalam kombinatorik yang menyatakan:
                     Jika suatu kegiatan dapat dilakukan dengan <strong>m</strong> cara dan kegiatan berikutnya dapat 
                     dilakukan dengan <strong>n</strong> cara, maka kedua kegiatan tersebut dapat dilakukan bersama-sama 
                     dengan <strong>m × n</strong> cara.
                 </p>
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <p class="font-mono text-blue-800 text-lg">
+                <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                    <p class="font-mono text-blue-800 dark:text-blue-300 text-lg">
                         Total Cara = m₁ × m₂ × m₃ × ... × mₙ
                     </p>
-                    <p class="text-sm text-gray-600 mt-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Di mana m₁, m₂, m₃, ..., mₙ adalah jumlah cara untuk setiap tahap kegiatan.
                     </p>
                 </div>
             </div>
 
             <!-- Example 1 -->
-            <div class="mb-6 p-5 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 1: Pakaian</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-6 p-5 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 1: Pakaian</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Andi memiliki 4 kemeja dan 3 celana. Berapa banyak kombinasi pakaian 
                     yang dapat dia kenakan?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Banyak cara memilih kemeja = 4</li>
                     <li>Banyak cara memilih celana = 3</li>
-                    <li>Dengan aturan perkalian: Total cara = 4 × 3 = <strong class="text-amber-700">12 kombinasi</strong></li>
+                    <li>Dengan aturan perkalian: Total cara = 4 × 3 = <strong class="text-amber-700 dark:text-amber-300">12 kombinasi</strong></li>
                 </ul>
             </div>
 
             <!-- Example 2 -->
-            <div class="mb-6 p-5 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 2: Nomor Kendaraan</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-6 p-5 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 2: Nomor Kendaraan</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Plat nomor kendaraan terdiri dari 2 huruf dan 3 angka. 
                     Berapa banyak plat nomor yang mungkin jika huruf boleh berulang dan angka boleh berulang?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Huruf pertama: 26 pilihan (A-Z)</li>
                     <li>Huruf kedua: 26 pilihan (boleh berulang)</li>
                     <li>Angka pertama: 10 pilihan (0-9)</li>
                     <li>Angka kedua: 10 pilihan</li>
                     <li>Angka ketiga: 10 pilihan</li>
-                    <li>Total cara = 26 × 26 × 10 × 10 × 10 = <strong class="text-amber-700">676,000 plat nomor</strong></li>
+                    <li>Total cara = 26 × 26 × 10 × 10 × 10 = <strong class="text-amber-700 dark:text-amber-300">676,000 plat nomor</strong></li>
                 </ul>
             </div>
 
             <!-- Example 3 -->
-            <div class="mb-8 p-5 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 3: Menu Restoran</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-8 p-5 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 3: Menu Restoran</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Sebuah restoran menyediakan 5 jenis makanan pembuka, 8 jenis makanan utama, 
                     dan 4 jenis pencuci mulut. Berapa banyak menu lengkap berbeda yang dapat dipilih?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Pilihan makanan pembuka = 5</li>
                     <li>Pilihan makanan utama = 8</li>
                     <li>Pilihan pencuci mulut = 4</li>
-                    <li>Total cara = 5 × 8 × 4 = <strong class="text-amber-700">160 menu lengkap</strong></li>
+                    <li>Total cara = 5 × 8 × 4 = <strong class="text-amber-700 dark:text-amber-300">160 menu lengkap</strong></li>
                 </ul>
             </div>
 
             <!-- Calculator -->
-            <div class="bg-gray-50 p-6 rounded-xl">
-                <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Aturan Perkalian</h4>
-                <p class="text-sm text-gray-600 mb-4">Masukkan jumlah cara untuk setiap tahap kegiatan (maksimal 5 tahap):</p>
+            <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Aturan Perkalian</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Masukkan jumlah cara untuk setiap tahap kegiatan (maksimal 5 tahap):</p>
                 <div class="space-y-3 mb-4">
                     <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-gray-700 w-24">Tahap 1:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200 w-24">Tahap 1:</label>
                         <input type="number" id="mult-1" min="1" value="4" 
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                     </div>
                     <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-gray-700 w-24">Tahap 2:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200 w-24">Tahap 2:</label>
                         <input type="number" id="mult-2" min="1" value="3" 
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                     </div>
                     <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-gray-700 w-24">Tahap 3:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200 w-24">Tahap 3:</label>
                         <input type="number" id="mult-3" min="0" value="0" 
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <span class="text-xs text-gray-500">(opsional)</span>
+                            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">(opsional)</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-gray-700 w-24">Tahap 4:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200 w-24">Tahap 4:</label>
                         <input type="number" id="mult-4" min="0" value="0" 
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <span class="text-xs text-gray-500">(opsional)</span>
+                            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">(opsional)</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-gray-700 w-24">Tahap 5:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200 w-24">Tahap 5:</label>
                         <input type="number" id="mult-5" min="0" value="0" 
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <span class="text-xs text-gray-500">(opsional)</span>
+                            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">(opsional)</span>
                     </div>
                 </div>
                 <button onclick="calculateMultiplication()" 
                     class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md">
                     Hitung Total Cara
                 </button>
-                <div id="mult-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                    <p class="text-gray-700 font-medium">Hasil:</p>
-                    <p class="text-3xl font-bold text-blue-600" id="mult-value"></p>
-                    <p class="text-sm text-gray-500 mt-2" id="mult-explanation"></p>
+                <div id="mult-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                    <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-300" id="mult-value"></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="mult-explanation"></p>
                 </div>
             </div>
         </div>
@@ -356,66 +375,66 @@
 
     <!-- Permutations Section -->
     <section id="permutations" class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">🔄</span>
-                <h3 class="text-3xl font-bold text-gray-800">Permutasi</h3>
+                <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Permutasi</h3>
             </div>
             
             <!-- 2.1 Permutasi Dasar -->
             <div class="mb-10">
-                <h4 class="text-2xl font-semibold text-indigo-700 mb-4">2.1 Permutasi Dasar</h4>
+                <h4 class="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-4">2.1 Permutasi Dasar</h4>
                 
-                <h5 class="text-xl font-semibold text-gray-700 mb-3">Konsep Dasar</h5>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h5 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Konsep Dasar</h5>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Permutasi adalah susunan objek dalam urutan tertentu. Dalam permutasi, <strong>urutan sangat penting</strong>.
                     Misalnya, ABC dan BAC adalah permutasi yang berbeda dari tiga huruf yang sama.
                 </p>
-                <div class="bg-indigo-50 p-4 rounded-lg mb-6">
-                    <p class="font-mono text-indigo-800 text-lg">
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg mb-6">
+                    <p class="font-mono text-indigo-800 dark:text-indigo-300 text-lg">
                         P(n, r) = n! / (n - r)!
                     </p>
-                    <p class="text-sm text-gray-600 mt-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Di mana <strong>n</strong> = jumlah total item, <strong>r</strong> = jumlah item yang akan disusun
                     </p>
                 </div>
 
                 <!-- Example -->
-                <div class="mb-6 p-5 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 1: Menyusun Buku</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-6 p-5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 1: Menyusun Buku</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Berapa banyak cara menyusun 3 buku dari rak yang berisi 5 buku?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Diketahui: n = 5, r = 3</li>
                         <li>Rumus: P(5, 3) = 5! / (5-3)!</li>
                         <li>P(5, 3) = 5! / 2!</li>
                         <li>P(5, 3) = (5 × 4 × 3 × 2 × 1) / (2 × 1)</li>
-                        <li>P(5, 3) = 120 / 2 = <strong class="text-indigo-700">60 cara</strong></li>
+                        <li>P(5, 3) = 120 / 2 = <strong class="text-indigo-700 dark:text-indigo-300">60 cara</strong></li>
                     </ul>
                 </div>
 
-                <div class="mb-8 p-5 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 2: Memilih Pengurus</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-8 p-5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 2: Memilih Pengurus</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Dari 8 anggota klub, akan dipilih ketua, sekretaris, dan bendahara. 
                         Berapa banyak susunan pengurus yang mungkin?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Diketahui: n = 8, r = 3 (jabatan berbeda, urutan penting)</li>
                         <li>P(8, 3) = 8! / (8-3)! = 8! / 5!</li>
-                        <li>P(8, 3) = 8 × 7 × 6 = <strong class="text-indigo-700">336 susunan</strong></li>
+                        <li>P(8, 3) = 8 × 7 × 6 = <strong class="text-indigo-700 dark:text-indigo-300">336 susunan</strong></li>
                     </ul>
                 </div>
 
                 <!-- Calculator Permutasi Dasar -->
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi Dasar</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Permutasi Dasar</h4>
                     <div class="grid md:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="perm-n" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="perm-n" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                                 Total item (n):
                             </label>
                             <input 
@@ -425,11 +444,11 @@
                                 max="170"
                                 step="1"
                                 value="5"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                             >
                         </div>
                         <div>
-                            <label for="perm-r" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="perm-r" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                                 Item yang disusun (r):
                             </label>
                             <input 
@@ -439,7 +458,7 @@
                                 max="170"
                                 step="1"
                                 value="3"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                             >
                         </div>
                     </div>
@@ -449,75 +468,75 @@
                     >
                         Hitung Permutasi
                     </button>
-                    <div id="perm-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
-                    <div id="perm-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                        <p class="text-gray-700 font-medium">Hasil:</p>
-                        <p class="text-3xl font-bold text-indigo-600" id="perm-value"></p>
-                        <p class="text-sm text-gray-500 mt-2" id="perm-explanation"></p>
+                    <div id="perm-error" class="mt-2 p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg hidden text-sm"></div>
+                    <div id="perm-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                        <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
+                        <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-300" id="perm-value"></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="perm-explanation"></p>
                     </div>
                 </div>
             </div>
 
             <!-- 2.2 Permutasi dengan Unsur Sama -->
-            <div class="mb-10 border-t-2 border-gray-200 pt-8">
-                <h4 class="text-2xl font-semibold text-purple-700 mb-4">2.2 Permutasi dengan Unsur Sama</h4>
+            <div class="mb-10 border-t-2 border-gray-200 dark:border-gray-700 pt-8">
+                <h4 class="text-2xl font-semibold text-purple-700 dark:text-purple-300 mb-4">2.2 Permutasi dengan Unsur Sama</h4>
                 
-                <h5 class="text-xl font-semibold text-gray-700 mb-3">Konsep Dasar</h5>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h5 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Konsep Dasar</h5>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Jika dalam suatu susunan terdapat unsur yang sama, maka beberapa susunan akan identik. 
                     Oleh karena itu, kita harus membagi dengan faktorial dari jumlah unsur yang sama.
                 </p>
-                <div class="bg-purple-50 p-4 rounded-lg mb-6">
-                    <p class="font-mono text-purple-800 text-lg">
+                <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg mb-6">
+                    <p class="font-mono text-purple-800 dark:text-purple-300 text-lg">
                         P = n! / (k₁! × k₂! × k₃! × ... × kₙ!)
                     </p>
-                    <p class="text-sm text-gray-600 mt-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Di mana <strong>n</strong> = total unsur, <strong>k₁, k₂, k₃, ...</strong> = jumlah masing-masing unsur yang sama
                     </p>
                 </div>
 
                 <!-- Example -->
-                <div class="mb-6 p-5 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 1: Kata MAMA</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-6 p-5 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 1: Kata MAMA</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Berapa banyak cara menyusun huruf-huruf dalam kata "MAMA"?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Total huruf: n = 4</li>
                         <li>Huruf M muncul 2 kali, huruf A muncul 2 kali</li>
                         <li>Rumus: P = 4! / (2! × 2!)</li>
                         <li>P = 24 / (2 × 2)</li>
-                        <li>P = 24 / 4 = <strong class="text-purple-700">6 cara</strong></li>
+                        <li>P = 24 / 4 = <strong class="text-purple-700 dark:text-purple-300">6 cara</strong></li>
                         <li class="mt-2 font-medium">Cara: MAMA, MAAM, AMMA, AMAM, AAMMA, AAMM</li>
                     </ul>
                 </div>
 
-                <div class="mb-8 p-5 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 2: Kata MISSISSIPPI</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-8 p-5 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 2: Kata MISSISSIPPI</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Berapa banyak cara menyusun huruf-huruf dalam kata "MISSISSIPPI"?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Total huruf: n = 11</li>
                         <li>M = 1, I = 4, S = 4, P = 2</li>
                         <li>Rumus: P = 11! / (1! × 4! × 4! × 2!)</li>
                         <li>P = 39,916,800 / (1 × 24 × 24 × 2)</li>
-                        <li>P = 39,916,800 / 1,152 = <strong class="text-purple-700">34,650 cara</strong></li>
+                        <li>P = 39,916,800 / 1,152 = <strong class="text-purple-700 dark:text-purple-300">34,650 cara</strong></li>
                     </ul>
                 </div>
 
                 <!-- Calculator Permutasi dengan Unsur Sama -->
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi dengan Unsur Sama</h4>
-                    <p class="text-sm text-gray-600 mb-4">Masukkan kata atau urutan (huruf/angka):</p>
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Permutasi dengan Unsur Sama</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Masukkan kata atau urutan (huruf/angka):</p>
                     <div class="mb-4">
                         <input 
                             type="text" 
                             id="perm-rep-input" 
                             placeholder="Contoh: MAMA, MISSISSIPPI, 112233"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 uppercase"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 uppercase dark:bg-gray-700 dark:text-white"
                         >
                     </div>
                     <button 
@@ -526,140 +545,140 @@
                     >
                         Hitung Permutasi
                     </button>
-                    <div id="perm-rep-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                        <p class="text-gray-700 font-medium">Hasil:</p>
+                    <div id="perm-rep-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                        <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
                         <p class="text-3xl font-bold text-purple-600" id="perm-rep-value"></p>
-                        <div class="text-sm text-gray-600 mt-3" id="perm-rep-explanation"></div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300 mt-3" id="perm-rep-explanation"></div>
                     </div>
                 </div>
             </div>
 
             <!-- 2.3 Permutasi Siklis -->
-            <div class="mb-8 border-t-2 border-gray-200 pt-8">
-                <h4 class="text-2xl font-semibold text-green-700 mb-4">2.3 Permutasi Siklis (Circular Permutation)</h4>
+            <div class="mb-8 border-t-2 border-gray-200 dark:border-gray-700 pt-8">
+                <h4 class="text-2xl font-semibold text-green-700 dark:text-green-300 mb-4">2.3 Permutasi Siklis (Circular Permutation)</h4>
                 
-                <h5 class="text-xl font-semibold text-gray-700 mb-3">Konsep Dasar</h5>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h5 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Konsep Dasar</h5>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Permutasi siklis adalah permutasi objek yang disusun melingkar. Karena tidak ada titik awal 
                     yang tetap dalam lingkaran, maka permutasi yang sama dapat dihitung beberapa kali jika 
                     menggunakan rumus biasa.
                 </p>
-                <div class="bg-green-50 p-4 rounded-lg mb-6">
-                    <p class="font-mono text-green-800 text-lg">
+                <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg mb-6">
+                    <p class="font-mono text-green-800 dark:text-green-300 text-lg">
                         P(siklis) = (n - 1)!
                     </p>
-                    <p class="text-sm text-gray-600 mt-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Di mana <strong>n</strong> = jumlah objek yang disusun melingkar
                     </p>
                 </div>
 
                 <!-- Example -->
-                <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 1: Duduk Melingkar</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-6 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 1: Duduk Melingkar</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Berapa banyak cara 5 orang duduk mengelilingi meja bundar?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Jumlah orang: n = 5</li>
                         <li>Rumus: P(siklis) = (n - 1)!</li>
                         <li>P(siklis) = (5 - 1)! = 4!</li>
-                        <li>P(siklis) = 4 × 3 × 2 × 1 = <strong class="text-green-700">24 cara</strong></li>
+                        <li>P(siklis) = 4 × 3 × 2 × 1 = <strong class="text-green-700 dark:text-green-300">24 cara</strong></li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-3">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                         💡 <em>Mengapa (n-1)? Karena dalam lingkaran, kita bisa memilih satu orang sebagai patokan tetap, 
                         lalu menyusun n-1 orang lainnya.</em>
                     </p>
                 </div>
 
-                <div class="mb-8 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 2: Gelang Manik-manik</h5>
-                    <p class="text-gray-700 mb-3">
+                <div class="mb-8 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 2: Gelang Manik-manik</h5>
+                    <p class="text-gray-700 dark:text-gray-200 mb-3">
                         <strong>Soal:</strong> Berapa banyak cara menyusun 6 manik-manik berbeda pada sebuah gelang?
                     </p>
-                    <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                    <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                         <li>Jumlah manik: n = 6</li>
                         <li>Karena gelang dapat dibalik, rumus: P = (n - 1)! / 2</li>
-                        <li>P = 5! / 2 = 120 / 2 = <strong class="text-green-700">60 cara</strong></li>
+                        <li>P = 5! / 2 = 120 / 2 = <strong class="text-green-700 dark:text-green-300">60 cara</strong></li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-3">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                         💡 <em>Dibagi 2 karena gelang dapat dibalik (clockwise = counterclockwise)</em>
                     </p>
                 </div>
 
                 <!-- Sub-bagian Permutasi Siklis dengan Objek Berdampingan -->
-                <div class="mt-8 mb-8 border-t border-green-200 pt-6">
-                    <h5 class="text-xl font-semibold text-gray-700 mb-3">Permutasi Siklis dengan Objek yang Berdampingan</h5>
-                    <p class="text-gray-600 leading-relaxed mb-4">
+                <div class="mt-8 mb-8 border-t border-green-200 dark:border-gray-700 pt-6">
+                    <h5 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Permutasi Siklis dengan Objek yang Berdampingan</h5>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                         Dalam beberapa kasus, ada syarat khusus bahwa beberapa objek <strong>harus selalu berdampingan</strong> 
                         (adjacent) dalam susunan melingkar. Untuk menyelesaikannya, kita anggap objek yang harus berdampingan 
                         sebagai satu kesatuan (satu unit).
                     </p>
-                    <div class="bg-green-50 p-4 rounded-lg mb-6">
-                        <p class="font-mono text-green-800 text-lg mb-2">
+                    <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg mb-6">
+                        <p class="font-mono text-green-800 dark:text-green-300 text-lg mb-2">
                             P = (n - k)! × k!
                         </p>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 dark:text-gray-300">
                             Di mana:<br>
                             <strong>n</strong> = total objek yang akan disusun melingkar<br>
                             <strong>k</strong> = jumlah objek yang harus selalu berdampingan
                         </p>
-                        <p class="text-sm text-gray-500 mt-3">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                             💡 Konsep: Anggap k objek berdampingan sebagai 1 unit, sehingga ada (n - k + 1) objek yang 
                             disusun melingkar → (n - k)!. Kemudian k objek dalam unit dapat disusun → k!
                         </p>
                     </div>
 
                     <!-- Contoh Soal 3 -->
-                    <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                        <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 3: Keluarga Duduk Melingkar</h5>
-                        <p class="text-gray-700 mb-3">
+                    <div class="mb-6 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 3: Keluarga Duduk Melingkar</h5>
+                        <p class="text-gray-700 dark:text-gray-200 mb-3">
                             <strong>Soal:</strong> Sebuah keluarga yang terdiri dari 5 orang (Ayah, Ibu, dan 3 anak) 
                             akan duduk mengelilingi meja bundar. Jika kedua anak pertama harus duduk berdampingan, 
                             berapa banyak cara mereka dapat duduk?
                         </p>
-                        <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                        <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                        <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                             <li>Total orang: n = 5</li>
                             <li>Objek yang harus berdampingan: k = 2 (kedua anak)</li>
                             <li>Anggap 2 anak sebagai 1 unit, maka ada (5 - 2 + 1) = 4 "objek" untuk disusun melingkar</li>
                             <li>Permutasi melingkar 4 objek: (4 - 1)! = 3! = 6</li>
                             <li>2 anak dalam unit dapat bertukar posisi: 2! = 2</li>
-                            <li>Total: 3! × 2! = 6 × 2 = <strong class="text-green-700">12 cara</strong></li>
+                            <li>Total: 3! × 2! = 6 × 2 = <strong class="text-green-700 dark:text-green-300">12 cara</strong></li>
                         </ul>
-                        <p class="text-sm text-gray-500 mt-3">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                             💡 <em>Alternatif rumus langsung: (n - k)! × k! = (5 - 2)! × 2! = 3! × 2! = 12</em>
                         </p>
                     </div>
 
                     <!-- Contoh Soal 4 -->
-                    <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                        <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 4: Rapat Komite</h5>
-                        <p class="text-gray-700 mb-3">
+                    <div class="mb-6 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 4: Rapat Komite</h5>
+                        <p class="text-gray-700 dark:text-gray-200 mb-3">
                             <strong>Soal:</strong> Dalam sebuah rapat, 7 orang akan duduk mengelilingi meja bundar. 
                             Jika ketiga perwakilan dari departemen yang sama harus duduk berdampingan, berapa banyak 
                             susunan duduk yang mungkin?
                         </p>
-                        <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                        <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                        <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                        <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                             <li>Total orang: n = 7</li>
                             <li>Objek yang harus berdampingan: k = 3 (ketiga perwakilan)</li>
                             <li>Menggunakan rumus: P = (n - k)! × k!</li>
                             <li>P = (7 - 3)! × 3! = 4! × 3!</li>
-                            <li>P = 24 × 6 = <strong class="text-green-700">144 cara</strong></li>
+                            <li>P = 24 × 6 = <strong class="text-green-700 dark:text-green-300">144 cara</strong></li>
                         </ul>
-                        <p class="text-sm text-gray-500 mt-3">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                             💡 <em>Anggap 3 perwakilan sebagai 1 blok, ada 5 "objek" disusun melingkar: (5-1)! = 24. 
                             Dalam blok, 3 orang dapat disusun: 3! = 6. Total: 24 × 6 = 144</em>
                         </p>
                     </div>
 
                     <!-- Kalkulator Permutasi Siklis dengan Objek Berdampingan -->
-                    <div class="bg-gray-50 p-6 rounded-xl mb-8">
-                        <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi Siklis dengan Objek Berdampingan</h4>
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl mb-8">
+                        <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Permutasi Siklis dengan Objek Berdampingan</h4>
                         <div class="mb-4">
-                            <label for="perm-circ-adj-n" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="perm-circ-adj-n" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                                 Total objek (n):
                             </label>
                             <input 
@@ -669,11 +688,11 @@
                                 max="20"
                                 step="1"
                                 value="5"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500"
                             >
                         </div>
                         <div class="mb-4">
-                            <label for="perm-circ-adj-k" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="perm-circ-adj-k" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                                 Objek yang harus berdampingan (k):
                             </label>
                             <input 
@@ -683,7 +702,7 @@
                                 max="20"
                                 step="1"
                                 value="2"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500"
                             >
                         </div>
                         <button 
@@ -692,23 +711,23 @@
                         >
                             Hitung Permutasi Siklis dengan Objek Berdampingan
                         </button>
-                        <div id="perm-circ-adj-error" class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg hidden">
-                            <p class="text-red-700 font-medium" id="perm-circ-adj-error-msg"></p>
+                        <div id="perm-circ-adj-error" class="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 rounded-lg hidden">
+                            <p class="text-red-700 dark:text-red-300 font-medium" id="perm-circ-adj-error-msg"></p>
                         </div>
-                        <div id="perm-circ-adj-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                            <p class="text-gray-700 font-medium">Hasil:</p>
-                            <p class="text-3xl font-bold text-green-600" id="perm-circ-adj-value"></p>
-                            <div class="mt-3 text-sm text-gray-600" id="perm-circ-adj-steps"></div>
-                            <p class="text-sm text-gray-500 mt-2" id="perm-circ-adj-explanation"></p>
+                        <div id="perm-circ-adj-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                            <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
+                            <p class="text-3xl font-bold text-green-600 dark:text-green-300" id="perm-circ-adj-value"></p>
+                            <div class="mt-3 text-sm text-gray-600 dark:text-gray-300" id="perm-circ-adj-steps"></div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="perm-circ-adj-explanation"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Calculator Permutasi Siklis -->
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Permutasi Siklis</h4>
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Permutasi Siklis</h4>
                     <div class="mb-4">
-                        <label for="perm-circ-n" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="perm-circ-n" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                             Jumlah objek (n):
                         </label>
                         <input 
@@ -718,7 +737,7 @@
                             max="20"
                             step="1"
                             value="5"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500"
                         >
                     </div>
                     <div class="mb-4">
@@ -726,9 +745,9 @@
                             <input 
                                 type="checkbox" 
                                 id="perm-circ-reversible"
-                                class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                class="w-4 h-4 text-green-600 dark:text-green-300 border-gray-300 dark:border-gray-600 rounded focus:ring-green-500"
                             >
-                            <span class="text-sm text-gray-700">Objek dapat dibalik (seperti gelang, kalung)</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-200">Objek dapat dibalik (seperti gelang, kalung)</span>
                         </label>
                     </div>
                     <button 
@@ -737,10 +756,10 @@
                     >
                         Hitung Permutasi Siklis
                     </button>
-                    <div id="perm-circ-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                        <p class="text-gray-700 font-medium">Hasil:</p>
-                        <p class="text-3xl font-bold text-green-600" id="perm-circ-value"></p>
-                        <p class="text-sm text-gray-500 mt-2" id="perm-circ-explanation"></p>
+                    <div id="perm-circ-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                        <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
+                        <p class="text-3xl font-bold text-green-600 dark:text-green-300" id="perm-circ-value"></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="perm-circ-explanation"></p>
                     </div>
                 </div>
             </div>
@@ -749,41 +768,41 @@
 
     <!-- Combinations Section -->
     <section id="combinations" class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">🎯</span>
-                <h3 class="text-3xl font-bold text-gray-800">Kombinasi</h3>
+                <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Kombinasi</h3>
             </div>
             
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">Konsep Dasar</h4>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Konsep Dasar</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Kombinasi adalah pemilihan objek di mana <strong>urutan tidak penting</strong>. 
                     Berbeda dengan permutasi, dalam kombinasi memilih {A, B, C} sama dengan memilih {C, B, A}.
                 </p>
-                <div class="bg-green-50 p-4 rounded-lg mb-6">
-                    <p class="font-mono text-green-800 text-lg">
+                <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg mb-6">
+                    <p class="font-mono text-green-800 dark:text-green-300 text-lg">
                         C(n, r) = n! / (r! × (n - r)!)
                     </p>
-                    <p class="text-sm text-gray-600 mt-2">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Di mana <strong>n</strong> = jumlah total item, <strong>r</strong> = jumlah item yang akan dipilih
                     </p>
                 </div>
 
-                <div class="mb-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                    <h5 class="font-semibold text-gray-800 mb-2">🔑 Perbedaan Permutasi dan Kombinasi</h5>
+                <div class="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+                    <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">🔑 Perbedaan Permutasi dan Kombinasi</h5>
                     <div class="grid md:grid-cols-2 gap-4 text-sm">
                         <div>
-                            <p class="font-semibold text-indigo-700 mb-1">Permutasi</p>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                            <p class="font-semibold text-indigo-700 dark:text-indigo-300 mb-1">Permutasi</p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
                                 <li>Urutan <strong>penting</strong></li>
                                 <li>ABC ≠ BAC ≠ CAB</li>
                                 <li>Contoh: Podium juara</li>
                             </ul>
                         </div>
                         <div>
-                            <p class="font-semibold text-green-700 mb-1">Kombinasi</p>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                            <p class="font-semibold text-green-700 dark:text-green-300 mb-1">Kombinasi</p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
                                 <li>Urutan <strong>tidak penting</strong></li>
                                 <li>ABC = BAC = CAB</li>
                                 <li>Contoh: Tim panitia</li>
@@ -794,58 +813,58 @@
             </div>
 
             <!-- Examples -->
-            <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 1: Memilih Buku</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-6 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 1: Memilih Buku</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Berapa banyak cara memilih 3 buku dari rak yang berisi 5 buku?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Diketahui: n = 5, r = 3</li>
                     <li>Urutan tidak penting (memilih buku A, B, C sama dengan C, B, A)</li>
                     <li>Rumus: C(5, 3) = 5! / (3! × (5-3)!)</li>
                     <li>C(5, 3) = 5! / (3! × 2!)</li>
                     <li>C(5, 3) = (5 × 4 × 3!) / (3! × 2 × 1)</li>
-                    <li>C(5, 3) = (5 × 4) / 2 = 20 / 2 = <strong class="text-green-700">10 cara</strong></li>
+                    <li>C(5, 3) = (5 × 4) / 2 = 20 / 2 = <strong class="text-green-700 dark:text-green-300">10 cara</strong></li>
                 </ul>
             </div>
 
-            <div class="mb-6 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 2: Memilih Tim</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-6 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 2: Memilih Tim</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Dari 10 siswa, akan dipilih 4 siswa untuk menjadi tim debat. 
                     Berapa banyak cara memilih tim tersebut?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Diketahui: n = 10, r = 4</li>
                     <li>C(10, 4) = 10! / (4! × 6!)</li>
                     <li>C(10, 4) = (10 × 9 × 8 × 7) / (4 × 3 × 2 × 1)</li>
-                    <li>C(10, 4) = 5,040 / 24 = <strong class="text-green-700">210 cara</strong></li>
+                    <li>C(10, 4) = 5,040 / 24 = <strong class="text-green-700 dark:text-green-300">210 cara</strong></li>
                 </ul>
             </div>
 
-            <div class="mb-8 p-5 bg-green-50 rounded-lg border-l-4 border-green-500">
-                <h5 class="font-semibold text-gray-800 mb-2">📌 Contoh Soal 3: Memilih Ekstrakurikuler</h5>
-                <p class="text-gray-700 mb-3">
+            <div class="mb-8 p-5 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+                <h5 class="font-semibold text-gray-800 dark:text-gray-100 mb-2">📌 Contoh Soal 3: Memilih Ekstrakurikuler</h5>
+                <p class="text-gray-700 dark:text-gray-200 mb-3">
                     <strong>Soal:</strong> Sekolah menyediakan 8 pilihan ekstrakurikuler. Setiap siswa harus memilih 
                     3 ekstrakurikuler. Berapa banyak kombinasi yang bisa dipilih?
                 </p>
-                <p class="text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
-                <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                <p class="text-gray-700 dark:text-gray-200 mb-2"><strong>Penyelesaian:</strong></p>
+                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1 ml-4">
                     <li>Diketahui: n = 8, r = 3</li>
                     <li>C(8, 3) = 8! / (3! × 5!)</li>
                     <li>C(8, 3) = (8 × 7 × 6) / (3 × 2 × 1)</li>
-                    <li>C(8, 3) = 336 / 6 = <strong class="text-green-700">56 kombinasi</strong></li>
+                    <li>C(8, 3) = 336 / 6 = <strong class="text-green-700 dark:text-green-300">56 kombinasi</strong></li>
                 </ul>
             </div>
 
             <!-- Combination Calculator -->
-            <div class="bg-gray-50 p-6 rounded-xl">
-                <h4 class="text-xl font-semibold text-gray-700 mb-4">🧮 Kalkulator Kombinasi</h4>
+            <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">🧮 Kalkulator Kombinasi</h4>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label for="comb-n" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="comb-n" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                             Total item (n):
                         </label>
                         <input 
@@ -855,11 +874,11 @@
                             max="170"
                             step="1"
                             value="5"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         >
                     </div>
                     <div>
-                        <label for="comb-r" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="comb-r" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                             Item yang dipilih (r):
                         </label>
                         <input 
@@ -869,7 +888,7 @@
                             max="170"
                             step="1"
                             value="3"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         >
                     </div>
                 </div>
@@ -879,11 +898,11 @@
                 >
                     Hitung Kombinasi
                 </button>
-                <div id="comb-error" class="mt-2 p-3 bg-red-50 text-red-700 rounded-lg hidden text-sm"></div>
-                <div id="comb-result" class="mt-4 p-4 bg-white rounded-lg hidden">
-                    <p class="text-gray-700 font-medium">Hasil:</p>
-                    <p class="text-3xl font-bold text-green-600" id="comb-value"></p>
-                    <p class="text-sm text-gray-500 mt-2" id="comb-explanation"></p>
+                <div id="comb-error" class="mt-2 p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg hidden text-sm"></div>
+                <div id="comb-result" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg hidden">
+                    <p class="text-gray-700 dark:text-gray-200 font-medium">Hasil:</p>
+                    <p class="text-3xl font-bold text-green-600 dark:text-green-300" id="comb-value"></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="comb-explanation"></p>
                 </div>
             </div>
         </div>
@@ -891,20 +910,20 @@
 
     <!-- Pascal's Triangle Section -->
     <section class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">📐</span>
-                <h3 class="text-3xl font-bold text-gray-800">Segitiga Pascal</h3>
+                <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Segitiga Pascal</h3>
             </div>
             
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">Apa itu Segitiga Pascal?</h4>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">Apa itu Segitiga Pascal?</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Segitiga Pascal adalah susunan angka berbentuk segitiga di mana setiap angka adalah jumlah dari dua angka di atasnya. 
                     Dinamakan dari matematikawan Prancis <strong>Blaise Pascal</strong> (1623-1662), meskipun segitiga ini sudah dikenal 
                     jauh sebelumnya oleh matematikawan dari berbagai budaya.
                 </p>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Setiap baris dimulai dan diakhiri dengan angka 1, dan angka-angka di tengah adalah hasil penjumlahan dua angka 
                     yang berada tepat di atasnya.
                 </p>
@@ -912,13 +931,13 @@
 
             <!-- Pascal's Triangle Visualization -->
             <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl mb-8">
-                <h4 class="text-lg font-semibold text-gray-700 mb-4 text-center">Visualisasi Interaktif</h4>
+                <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4 text-center">Visualisasi Interaktif</h4>
                 
                 <div class="flex justify-center mb-4">
                     <div class="flex gap-3 items-center">
-                        <label class="text-sm font-medium text-gray-700">Jumlah Baris:</label>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Jumlah Baris:</label>
                         <input type="number" id="pascalRows" min="1" max="10" value="7" 
-                               class="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                               class="w-20 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         <button onclick="generatePascalTriangle()" 
                                 class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
                             Generate
@@ -931,7 +950,7 @@
                 </div>
 
                 <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-600">
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
                         💡 <strong>Tip:</strong> Arahkan mouse ke angka untuk melihat nilai C(n,k)
                     </p>
                 </div>
@@ -939,30 +958,30 @@
 
             <!-- Relationship with Combinations -->
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">🔗 Hubungan dengan Kombinasi</h4>
-                <p class="text-gray-600 leading-relaxed mb-4">
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">🔗 Hubungan dengan Kombinasi</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                     Setiap angka di Segitiga Pascal merepresentasikan <strong>koefisien binomial</strong> atau nilai kombinasi C(n,k), di mana:
                 </p>
                 <div class="bg-indigo-50 p-4 rounded-lg mb-4">
-                    <p class="font-mono text-indigo-800 text-center text-lg">
+                    <p class="font-mono text-indigo-800 dark:text-indigo-300 text-center text-lg">
                         Baris ke-n, Posisi ke-k = C(n, k) = n! / (k! × (n-k)!)
                     </p>
                 </div>
-                <ul class="space-y-3 text-gray-600">
+                <ul class="space-y-3 text-gray-600 dark:text-gray-300">
                     <li class="flex items-start">
-                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span class="text-indigo-600 dark:text-indigo-300 font-bold mr-2">•</span>
                         <span><strong>Baris 0:</strong> C(0,0) = 1</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span class="text-indigo-600 dark:text-indigo-300 font-bold mr-2">•</span>
                         <span><strong>Baris 1:</strong> C(1,0) = 1, C(1,1) = 1</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span class="text-indigo-600 dark:text-indigo-300 font-bold mr-2">•</span>
                         <span><strong>Baris 2:</strong> C(2,0) = 1, C(2,1) = 2, C(2,2) = 1</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-indigo-600 font-bold mr-2">•</span>
+                        <span class="text-indigo-600 dark:text-indigo-300 font-bold mr-2">•</span>
                         <span><strong>Baris 3:</strong> C(3,0) = 1, C(3,1) = 3, C(3,2) = 3, C(3,3) = 1</span>
                     </li>
                 </ul>
@@ -970,49 +989,49 @@
 
             <!-- Interesting Patterns -->
             <div class="mb-8">
-                <h4 class="text-xl font-semibold text-gray-700 mb-3">✨ Pola Menarik dalam Segitiga Pascal</h4>
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-3">✨ Pola Menarik dalam Segitiga Pascal</h4>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
-                        <h5 class="font-semibold text-gray-700 mb-2">🔢 Jumlah Baris</h5>
-                        <p class="text-sm text-gray-600">Jumlah semua angka di baris ke-n adalah 2<sup>n</sup></p>
-                        <p class="text-xs text-gray-500 mt-1">Contoh: Baris 3 → 1+3+3+1 = 8 = 2³</p>
+                    <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border-l-4 border-amber-500">
+                        <h5 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">🔢 Jumlah Baris</h5>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jumlah semua angka di baris ke-n adalah 2<sup>n</sup></p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Contoh: Baris 3 → 1+3+3+1 = 8 = 2³</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-                        <h5 class="font-semibold text-gray-700 mb-2">📊 Diagonal Fibonacci</h5>
-                        <p class="text-sm text-gray-600">Jumlah angka pada diagonal membentuk deret Fibonacci</p>
-                        <p class="text-xs text-gray-500 mt-1">1, 1, 2, 3, 5, 8, 13, ...</p>
+                    <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-l-4 border-green-500">
+                        <h5 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">📊 Diagonal Fibonacci</h5>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Jumlah angka pada diagonal membentuk deret Fibonacci</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">1, 1, 2, 3, 5, 8, 13, ...</p>
                     </div>
-                    <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
-                        <h5 class="font-semibold text-gray-700 mb-2">🎯 Simetri</h5>
-                        <p class="text-sm text-gray-600">Setiap baris simetris dari kiri ke kanan</p>
-                        <p class="text-xs text-gray-500 mt-1">C(n,k) = C(n, n-k)</p>
+                    <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border-l-4 border-purple-500">
+                        <h5 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">🎯 Simetri</h5>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Setiap baris simetris dari kiri ke kanan</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">C(n,k) = C(n, n-k)</p>
                     </div>
                     <div class="bg-pink-50 p-4 rounded-lg border-l-4 border-pink-500">
-                        <h5 class="font-semibold text-gray-700 mb-2">🧮 Pangkat 11</h5>
-                        <p class="text-sm text-gray-600">Beberapa baris pertama sama dengan pangkat 11</p>
-                        <p class="text-xs text-gray-500 mt-1">11⁰=1, 11¹=11, 11²=121, 11³=1331</p>
+                        <h5 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">🧮 Pangkat 11</h5>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Beberapa baris pertama sama dengan pangkat 11</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">11⁰=1, 11¹=11, 11²=121, 11³=1331</p>
                     </div>
                 </div>
             </div>
 
             <!-- Applications -->
-            <div class="bg-blue-50 p-6 rounded-lg">
-                <h4 class="text-lg font-semibold text-gray-700 mb-3">🎓 Aplikasi Segitiga Pascal</h4>
-                <ul class="space-y-2 text-gray-600">
+            <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+                <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">🎓 Aplikasi Segitiga Pascal</h4>
+                <ul class="space-y-2 text-gray-600 dark:text-gray-300">
                     <li class="flex items-start">
-                        <span class="text-blue-600 mr-2">✓</span>
+                        <span class="text-blue-600 dark:text-blue-300 mr-2">✓</span>
                         <span><strong>Aljabar:</strong> Ekspansi binomial (a+b)ⁿ</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-blue-600 mr-2">✓</span>
+                        <span class="text-blue-600 dark:text-blue-300 mr-2">✓</span>
                         <span><strong>Probabilitas:</strong> Distribusi binomial</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-blue-600 mr-2">✓</span>
+                        <span class="text-blue-600 dark:text-blue-300 mr-2">✓</span>
                         <span><strong>Kombinatorik:</strong> Menghitung kombinasi tanpa rumus</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-blue-600 mr-2">✓</span>
+                        <span class="text-blue-600 dark:text-blue-300 mr-2">✓</span>
                         <span><strong>Pemrograman:</strong> Algoritma dan struktur data</span>
                     </li>
                 </ul>
@@ -1022,41 +1041,41 @@
 
     <!-- Formula Reference Section -->
     <section id="formulas" class="container mx-auto px-4 py-12">
-        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 max-w-4xl mx-auto border dark:border-gray-700">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-4xl">📐</span>
-                <h3 class="text-3xl font-bold text-gray-800">Referensi Rumus</h3>
+                <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Referensi Rumus</h3>
             </div>
 
             <div class="space-y-6">
                 <!-- Factorial -->
                 <div class="border-l-4 border-purple-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Faktorial (n!)</h4>
-                    <p class="font-mono text-purple-700 text-lg mb-2">n! = n × (n-1) × (n-2) × ... × 2 × 1</p>
-                    <p class="text-gray-600 text-sm">Hasil perkalian semua bilangan bulat positif hingga n. Berdasarkan definisi, 0! = 1</p>
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Faktorial (n!)</h4>
+                    <p class="font-mono text-purple-700 dark:text-purple-300 text-lg mb-2">n! = n × (n-1) × (n-2) × ... × 2 × 1</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Hasil perkalian semua bilangan bulat positif hingga n. Berdasarkan definisi, 0! = 1</p>
                 </div>
 
                 <!-- Permutation -->
                 <div class="border-l-4 border-indigo-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Permutasi P(n, r)</h4>
-                    <p class="font-mono text-indigo-700 text-lg mb-2">P(n, r) = n! / (n - r)!</p>
-                    <p class="text-gray-600 text-sm">Jumlah cara menyusun r item dari n item (urutan penting)</p>
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Permutasi P(n, r)</h4>
+                    <p class="font-mono text-indigo-700 dark:text-indigo-300 text-lg mb-2">P(n, r) = n! / (n - r)!</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Jumlah cara menyusun r item dari n item (urutan penting)</p>
                 </div>
 
                 <!-- Combination -->
                 <div class="border-l-4 border-green-500 pl-4">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-2">Kombinasi C(n, r)</h4>
-                    <p class="font-mono text-green-700 text-lg mb-2">C(n, r) = n! / (r! × (n - r)!)</p>
-                    <p class="text-gray-600 text-sm">Jumlah cara memilih r item dari n item (urutan tidak penting)</p>
+                    <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Kombinasi C(n, r)</h4>
+                    <p class="font-mono text-green-700 dark:text-green-300 text-lg mb-2">C(n, r) = n! / (r! × (n - r)!)</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Jumlah cara memilih r item dari n item (urutan tidak penting)</p>
                 </div>
 
                 <!-- Key Difference -->
-                <div class="bg-amber-50 p-4 rounded-lg">
-                    <h5 class="font-semibold text-gray-700 mb-2">🔑 Perbedaan Utama:</h5>
-                    <p class="text-gray-600 text-sm mb-2">
+                <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg">
+                    <h5 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">🔑 Perbedaan Utama:</h5>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">
                         <strong>Permutasi:</strong> Urutan penting (ABC ≠ BAC)
                     </p>
-                    <p class="text-gray-600 text-sm">
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">
                         <strong>Kombinasi:</strong> Urutan tidak penting ({A,B,C} = {C,B,A})
                     </p>
                 </div>
@@ -1067,10 +1086,10 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-gray-300">
+            <p class="text-gray-300 dark:text-gray-600">
                 © 2026 Pembelajaran Kombinatorik. Dibangun dengan HTML5, Tailwind CSS, dan Vanilla JavaScript.
             </p>
-            <p class="text-gray-400 text-sm mt-2">
+            <p class="text-gray-400 dark:text-gray-500 text-sm mt-2">
                 Sumber pembelajaran interaktif untuk belajar kombinatorik
             </p>
         </div>
