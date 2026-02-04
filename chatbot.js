@@ -5,7 +5,7 @@
 
 class ChatbotWidget {
     constructor(config = {}) {
-        this.apiUrl = config.apiUrl || 'YOUR_VERCEL_API_URL_HERE'; // Ganti dengan URL API Vercel
+        this.apiUrl = config.apiUrl || 'https://kombinatorik-chatbot.vercel.app/'; // Ganti dengan URL API Vercel
         this.isOpen = false;
         this.messages = [];
         this.isLoading = false;
