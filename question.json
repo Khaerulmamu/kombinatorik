@@ -118,9 +118,7 @@
     ],
     "jawaban_benar_id": "b",
     "penjelasan": "Memilih 2 orang dari 4 dengan jabatan berbeda: $P(4, 2) = 4 \\times 3 = 12$ cara."
-  }
-]
-[
+  },
   {
     "id": 2201,
     "material_id": 2,
