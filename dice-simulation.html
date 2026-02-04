@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,13 @@
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="dark-mode.js"></script>
     
     <style>
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
         /* Custom animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -41,6 +46,12 @@
             box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
         }
         
+        .dark .dice {
+            background: #374151;
+            border-color: #6366f1;
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+        }
+        
         .dice:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 15px rgba(79, 70, 229, 0.3);
@@ -55,6 +66,10 @@
             height: 18px;
             background: #4f46e5;
             border-radius: 50%;
+        }
+        
+        .dark .dot {
+            background: #818cf8;
         }
         
         /* Shake Animation */
@@ -95,6 +110,12 @@
             color: #9ca3af;
             opacity: 0.4;
             transition: all 0.3s;
+        }
+        
+        .dark .outcome-item {
+            background: #374151;
+            border-color: #4b5563;
+            color: #6b7280;
         }
         
         .outcome-item.unlocked {
@@ -143,16 +164,22 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 min-h-screen">
     <!-- Navbar -->
-    <header class="bg-white shadow-md">
+    <header class="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold text-indigo-600">
+                <h1 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                     🧮 Kombinatorika
                 </h1>
-                <div class="flex gap-4">
-                    <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">← Kembali</a>
+                <div class="flex gap-4 items-center">
+                    <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path class="dark-mode-sun" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            <path class="dark-mode-moon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">← Kembali</a>
                 </div>
             </div>
         </nav>
@@ -161,10 +188,10 @@
     <!-- Hero Section -->
     <section class="container mx-auto px-4 py-8 fade-in">
         <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3">
                 🎲 Simulasi Dadu Interaktif
             </h2>
-            <p class="text-lg text-gray-600">
+            <p class="text-lg text-gray-600 dark:text-gray-300">
                 Lempar dua dadu dan kumpulkan semua 36 kemungkinan hasil!
             </p>
         </div>
@@ -175,7 +202,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Left Side - Control Area -->
             <div class="lg:col-span-1">
-                <div class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 fade-in">
                     <div class="flex flex-col items-center">
                         <!-- Dice Container -->
                         <div class="flex gap-6 mb-8">
@@ -189,26 +216,26 @@
 
                         <!-- Roll Button -->
                         <button 
-                            class="bg-indigo-600 text-white px-12 py-4 rounded-full font-bold text-xl hover:bg-indigo-700 transition-all hover:shadow-lg mb-6 w-full"
+                            class="bg-indigo-600 dark:bg-indigo-500 text-white px-12 py-4 rounded-full font-bold text-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:shadow-lg mb-6 w-full"
                             onclick="rollDice()">
                             Lempar Dadu
                         </button>
 
                         <!-- Stats -->
                         <div class="w-full text-center">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Progress</h3>
-                            <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden mb-3">
+                            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">Progress</h3>
+                            <div class="w-full h-8 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-3">
                                 <div class="progress-fill h-full flex items-center justify-center text-white font-semibold text-sm" id="progressFill">
                                     0/36
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-2">
+                            <p class="text-gray-600 dark:text-gray-300 mb-2">
                                 <span class="font-semibold">Hasil Terkumpul:</span> 
-                                <span id="collectedCount" class="text-indigo-600 font-bold">0</span> dari 36
+                                <span id="collectedCount" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span> dari 36
                             </p>
-                            <p class="text-gray-600">
+                            <p class="text-gray-600 dark:text-gray-300">
                                 <span class="font-semibold">Total Lemparan:</span> 
-                                <span id="rollCount" class="text-indigo-600 font-bold">0</span>
+                                <span id="rollCount" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span>
                             </p>
                         </div>
                     </div>
@@ -217,10 +244,10 @@
 
             <!-- Right Side - Grid Area -->
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+                <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl p-8 fade-in">
                     <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Semua Kemungkinan Hasil</h2>
-                        <p class="text-gray-600">36 kombinasi dari melempar dua dadu (1-6)</p>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Semua Kemungkinan Hasil</h2>
+                        <p class="text-gray-600 dark:text-gray-300">36 kombinasi dari melempar dua dadu (1-6)</p>
                     </div>
 
                     <div class="grid grid-cols-6 gap-2 md:gap-3" id="outcomesGrid">
@@ -233,14 +260,14 @@
 
     <!-- Congratulations Modal -->
     <div class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center" id="congratsModal">
-        <div class="bg-white rounded-2xl p-10 max-w-md text-center fade-in">
-            <h2 class="text-4xl font-bold text-green-500 mb-4">🎉 Selamat!</h2>
-            <p class="text-xl text-gray-600 mb-3">Anda telah mengumpulkan semua 36 kemungkinan hasil!</p>
-            <p class="text-lg text-gray-600 mb-6">
-                Total lemparan: <span id="finalRollCount" class="font-bold text-indigo-600"></span>
+        <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl p-10 max-w-md text-center fade-in">
+            <h2 class="text-4xl font-bold text-green-500 dark:text-green-400 mb-4">🎉 Selamat!</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-3">Anda telah mengumpulkan semua 36 kemungkinan hasil!</p>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                Total lemparan: <span id="finalRollCount" class="font-bold text-indigo-600 dark:text-indigo-400"></span>
             </p>
             <button 
-                class="bg-indigo-600 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-indigo-700 transition-all hover:shadow-lg"
+                class="bg-indigo-600 dark:bg-indigo-500 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:shadow-lg"
                 onclick="resetGame()">
                 Main Lagi
             </button>
@@ -248,8 +275,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white mt-12">
-        <div class="container mx-auto px-4 py-6 text-center text-gray-600">
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-600 dark:text-gray-300">
             <p class="mb-1">© 2026 Pembelajaran Kombinatorik. Dibangun dengan HTML5, Tailwind CSS, dan Vanilla JavaScript.</p>
             <p>Sumber pembelajaran interaktif untuk belajar kombinatorik</p>
         </div>
