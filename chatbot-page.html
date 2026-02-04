@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="dark-mode.js"></script>
     
     <!-- Marked.js for Markdown Rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -22,6 +23,11 @@
     
     <!-- Tailwind Fallback Utilities -->
     <style>
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
         .bg-gradient-to-br { background: linear-gradient(to bottom right, #eff6ff, #e0e7ff); }
         .text-indigo-600 { color: #4f46e5; }
@@ -35,19 +41,29 @@
             margin-top: 1rem;
             margin-bottom: 0.5rem;
         }
+        .dark .bot-message h1, .dark .bot-message h2, .dark .bot-message h3 {
+            color: #a78bfa;
+        }
         .bot-message h3 { font-size: 1.25rem; }
         .bot-message h4 { font-size: 1.125rem; font-weight: 600; color: #4f46e5; }
+        .dark .bot-message h4 { color: #a78bfa; }
         
         .bot-message p {
             margin-bottom: 0.75rem;
             color: #374151;
             line-height: 1.6;
         }
+        .dark .bot-message p {
+            color: #d1d5db;
+        }
         
         .bot-message ul, .bot-message ol {
             margin-left: 1.5rem;
             margin-bottom: 0.75rem;
             color: #374151;
+        }
+        .dark .bot-message ul, .dark .bot-message ol {
+            color: #d1d5db;
         }
         .bot-message ul { list-style-type: disc; }
         .bot-message ol { list-style-type: decimal; }
@@ -60,6 +76,10 @@
             font-size: 0.875rem;
             font-family: monospace;
         }
+        .dark .bot-message code {
+            background-color: #374151;
+            color: #e5e7eb;
+        }
         
         .bot-message pre {
             background-color: #1f2937;
@@ -68,6 +88,10 @@
             border-radius: 0.5rem;
             overflow-x: auto;
             margin-bottom: 0.75rem;
+        }
+        .dark .bot-message pre {
+            background-color: #111827;
+            color: #f9fafb;
         }
         
         .bot-message pre code {
@@ -79,6 +103,9 @@
         .bot-message strong {
             font-weight: bold;
             color: #111827;
+        }
+        .dark .bot-message strong {
+            color: #f3f4f6;
         }
         
         .bot-message em {
@@ -92,6 +119,10 @@
             margin-bottom: 0.75rem;
             font-style: italic;
             color: #6b7280;
+        }
+        .dark .bot-message blockquote {
+            border-left-color: #818cf8;
+            color: #9ca3af;
         }
         
         /* Typing indicator animation */
@@ -137,58 +168,85 @@
             background: #f3f4f6;
             border-radius: 4px;
         }
+        .dark .messages-container::-webkit-scrollbar-track {
+            background: #374151;
+        }
         
         .messages-container::-webkit-scrollbar-thumb {
             background: #9ca3af;
             border-radius: 4px;
         }
+        .dark .messages-container::-webkit-scrollbar-thumb {
+            background: #6b7280;
+        }
         
         .messages-container::-webkit-scrollbar-thumb:hover {
             background: #6b7280;
         }
+        .dark .messages-container::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 min-h-screen">
     
     <!-- Navbar -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
+    <header class="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <span class="text-3xl">🧮</span>
-                <a href="index.html" class="text-2xl font-bold text-indigo-600">Kombinatorika</a>
+                <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Kombinatorika</a>
             </div>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6">
-                <a href="index.html#aturan-perkalian" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Aturan Perkalian">Aturan Perkalian</a>
-                <a href="index.html#permutasi" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Permutasi">Permutasi</a>
-                <a href="index.html#kombinasi" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Kombinasi">Kombinasi</a>
-                <a href="index.html#rumus" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Rumus">Rumus</a>
-                <a href="dice-simulation.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Dadu Simulation">🎲 Dadu</a>
-                <a href="anagram-visualizer.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Anagram Visualizer">📝 Anagram</a>
-                <a href="quiz.html" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Link to Quiz">🎯 Kuis</a>
-                <a href="chatbot-page.html" class="text-indigo-600 font-semibold hover:text-indigo-700 transition" aria-label="Link to Chatbot">💬 Asisten AI</a>
+                <a href="index.html#aturan-perkalian" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Aturan Perkalian">Aturan Perkalian</a>
+                <a href="index.html#permutasi" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Permutasi">Permutasi</a>
+                <a href="index.html#kombinasi" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Kombinasi">Kombinasi</a>
+                <a href="index.html#rumus" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Rumus">Rumus</a>
+                <a href="dice-simulation.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Dadu Simulation">🎲 Dadu</a>
+                <a href="anagram-visualizer.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Anagram Visualizer">📝 Anagram</a>
+                <a href="quiz.html" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Link to Quiz">🎯 Kuis</a>
+                <a href="chatbot-page.html" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 transition" aria-label="Link to Chatbot">💬 Asisten AI</a>
+                <button id="darkModeToggle" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Toggle dark mode">
+                    <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                    <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </button>
             </div>
             
             <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-indigo-600 transition" aria-label="Toggle menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+            <div class="md:hidden flex items-center gap-4">
+                <button id="darkModeToggleMobile" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Toggle dark mode">
+                    <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                    <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </button>
+                <button id="mobileMenuBtn" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </nav>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700">
             <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
-                <a href="index.html#aturan-perkalian" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Aturan Perkalian">Aturan Perkalian</a>
-                <a href="index.html#permutasi" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Permutasi">Permutasi</a>
-                <a href="index.html#kombinasi" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Kombinasi">Kombinasi</a>
-                <a href="index.html#rumus" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Rumus">Rumus</a>
-                <a href="dice-simulation.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Dadu">🎲 Dadu</a>
-                <a href="anagram-visualizer.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Anagram">📝 Anagram</a>
-                <a href="quiz.html" class="text-gray-600 hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Quiz">🎯 Kuis</a>
-                <a href="chatbot-page.html" class="text-indigo-600 font-semibold hover:bg-indigo-50 px-3 py-2 rounded transition" aria-label="Mobile link to Chatbot">💬 Asisten AI</a>
+                <a href="index.html#aturan-perkalian" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Aturan Perkalian">Aturan Perkalian</a>
+                <a href="index.html#permutasi" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Permutasi">Permutasi</a>
+                <a href="index.html#kombinasi" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Kombinasi">Kombinasi</a>
+                <a href="index.html#rumus" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Rumus">Rumus</a>
+                <a href="dice-simulation.html" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Dadu">🎲 Dadu</a>
+                <a href="anagram-visualizer.html" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Anagram">📝 Anagram</a>
+                <a href="quiz.html" class="text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Quiz">🎯 Kuis</a>
+                <a href="chatbot-page.html" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-3 py-2 rounded transition" aria-label="Mobile link to Chatbot">💬 Asisten AI</a>
             </div>
         </div>
     </header>
@@ -196,10 +254,10 @@
     <!-- Hero Section -->
     <section class="container mx-auto px-4 py-12">
         <div class="text-center max-w-3xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                 💬 Asisten AI Kombinatorik
             </h1>
-            <p class="text-lg md:text-xl text-gray-600 mb-8">
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Tanya apa saja tentang kombinatorik, permutasi, kombinasi, dan matematika diskrit. AI akan membantu dengan penjelasan yang mudah dipahami!
             </p>
         </div>
@@ -208,7 +266,7 @@
     <!-- Chat Container -->
     <section class="container mx-auto px-4 pb-12">
         <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden">
                 
                 <!-- Chat Header -->
                 <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 text-white">
@@ -224,18 +282,18 @@
                 </div>
                 
                 <!-- Messages Area -->
-                <div id="messagesContainer" class="messages-container px-6 py-6 space-y-4 min-h-[500px] max-h-[600px] overflow-y-auto bg-gray-50">
+                <div id="messagesContainer" class="messages-container px-6 py-6 space-y-4 min-h-[500px] max-h-[600px] overflow-y-auto bg-gray-50 dark:bg-gray-700">
                     <!-- Welcome message will be inserted here -->
                 </div>
                 
                 <!-- Input Area -->
-                <div class="border-t border-gray-200 px-6 py-4 bg-white">
+                <div class="border-t border-gray-200 dark:border-gray-600 px-6 py-4 bg-white dark:bg-gray-800">
                     <div class="flex gap-3">
                         <input 
                             type="text" 
                             id="messageInput" 
                             placeholder="Tanya apa saja tentang kombinatorik..."
-                            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         >
                         <button 
                             id="sendBtn"
@@ -244,7 +302,7 @@
                             Kirim
                         </button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
                         💡 Tips: Tanya "Apa itu permutasi?" atau "Jelaskan kombinasi dengan contoh"
                     </p>
                 </div>
@@ -254,8 +312,8 @@
     </section>
     
     <!-- Footer -->
-    <footer class="bg-white mt-12 py-6 border-t border-gray-200">
-        <div class="container mx-auto px-4 text-center text-gray-600">
+    <footer class="bg-white dark:bg-gray-800 border dark:border-gray-700 mt-12 py-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
             <p>&copy; 2026 Kombinatorika. Dibuat dengan ❤️ untuk pembelajaran matematika.</p>
             <p class="text-sm mt-2">Powered by Gemini AI & Tailwind CSS</p>
         </div>
@@ -326,7 +384,7 @@ Silakan tanya apa saja! 😊`;
                 content.textContent = text;
                 bubble.appendChild(content);
             } else {
-                bubble.className += ' bg-white text-gray-800 rounded-bl-sm bot-message';
+                bubble.className += ' bg-white dark:bg-gray-800 border dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-bl-sm bot-message';
                 // Parse markdown for bot messages
                 const htmlContent = marked.parse(text);
                 bubble.innerHTML = htmlContent;
@@ -359,11 +417,11 @@ Silakan tanya apa saja! 😊`;
             typingDiv.className = 'flex justify-start';
             
             const bubble = document.createElement('div');
-            bubble.className = 'px-5 py-3 rounded-2xl bg-white shadow-md rounded-bl-sm flex gap-1';
+            bubble.className = 'px-5 py-3 rounded-2xl bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-md rounded-bl-sm flex gap-1';
             
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('div');
-                dot.className = 'w-2 h-2 bg-indigo-600 rounded-full typing-dot';
+                dot.className = 'w-2 h-2 bg-indigo-600 dark:bg-indigo-400 rounded-full typing-dot';
                 bubble.appendChild(dot);
             }
             
