@@ -5,7 +5,7 @@
 
 class ChatbotWidget {
     constructor(config = {}) {
-        this.apiUrl = config.apiUrl || 'https://kombinatorik-chatbot.vercel.app/'; // Ganti dengan URL API Vercel
+        this.apiUrl = config.apiUrl || 'https://kombinatorik-chatbot.vercel.app/api/chat'; // Fixed: Added /api/chat endpoint
         this.isOpen = false;
         this.messages = [];
         this.isLoading = false;
@@ -506,24 +506,54 @@ class ChatbotWidget {
             return this.getDemoResponse(message);
         }
 
-        // Real API call to Vercel
-        const response = await fetch(this.apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: message,
-                conversation_history: this.messages.slice(-10) // Send last 10 messages for context
-            })
-        });
+        try {
+            // Real API call to Vercel with timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+            const response = await fetch(this.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message
+                }),
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId);
+
+            // Log response for debugging
+            console.log('API Response Status:', response.status);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
+                throw new Error(`API Error: ${response.status} - ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log('API Response Data:', data);
+            
+            return data.response || data.message || 'Maaf, saya tidak mengerti.';
+        } catch (error) {
+            // Detailed error logging
+            console.error('API Call Error Details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            });
+
+            // User-friendly error messages
+            if (error.name === 'AbortError') {
+                throw new Error('Request timeout. Server membutuhkan waktu terlalu lama untuk merespons.');
+            } else if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                throw new Error('Network error. Pastikan Anda terhubung ke internet dan CORS sudah dikonfigurasi di backend.');
+            } else {
+                throw error;
+            }
         }
-
-        const data = await response.json();
-        return data.response || data.message || 'Maaf, saya tidak mengerti.';
     }
 
     getDemoResponse(message) {
